@@ -4,96 +4,33 @@
 
 ;; environment variables
 ;; (setenv "PATH" (concat "/Users/dzhu/bin:" (getenv "PATH")))
-(setenv "PATH" (concat "C:\\Program Files\\Git\\mingw32\\bin;" (getenv "PATH")))
-(setenv "PATH" (concat "C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319;" (getenv "PATH")))
-;; exec-path
-(setq exec-path (append exec-path '("C:\\Program Files\\Git\\mingw32\\bin")))
+(if (equal system-type "windows-nt")
+	(progn
+	  (setenv "PATH" (concat "C:\\Program Files\\Git\\mingw32\\bin;" (getenv "PATH")))
+	  (setenv "PATH" (concat "C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319;" (getenv "PATH")))
 
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/"))
-;;(package-initialize)
-
-;; font
-;;(set-frame-font "Monaco 10")
-(set-frame-font "Consolas 10")
-
-;; ediff
-(setq ediff-window-setup-function 'ediff-setup-windows-plain)
-;(setq ediff-window-setup-function 'ediff-setup-windows-multiframe)
-(setq ediff-split-window-function 'split-window-horizontally) ;; vertical!!
-
-;; vc-diff
-(eval-after-load "vc-hooks"
-  '(define-key vc-prefix-map "=" 'vc-ediff))
-
-;; erase-buffer
-(put 'erase-buffer 'disabled nil)
-
-;; tab
-;;(setq-default indent-tabs-mode nil)
-(setq-default tab-width 4)
-(add-hook 'java-mode-hook
-		  (lambda ()
-			(setq indent-tabs-mode nil)
-			(c-set-offset 'substatement-open 0)
-			(if (assoc 'inexpr-class c-offsets-alist)
-				(c-set-offset 'inexpr-class 0))))
-(add-hook 'csharp-mode-hook
-		  (lambda ()
-			(setq indent-tabs-mode nil)
-			(c-set-offset 'substatement-open 0)
-			(c-set-offset 'inline-open 0)
-			(c-set-offset 'case-label '+)
-			(if (assoc 'inexpr-class c-offsets-alist)
-				(c-set-offset 'inexpr-class 0))))
-
-;; perl
-(defalias 'perl-mode 'cperl-mode)
-(add-to-list 'auto-mode-alist '("\\.t?\\'" . cperl-mode))
-
-;; c
-(setq c-default-style "linux"
-      c-basic-offset 4)
-
-;;auto-complete
-;;(require 'auto-complete)
-;;(global-auto-complete-mode t)
-
-;; web-mode
-;;(require 'web-mode)
-;(setq web-mode-markup-indent-offset 2)
-;(setq web-mode-css-indent-offset 2)
-;(setq web-mode-code-indent-offset 2)
-;; (setq web-mode-markup-indent-offset 4)
-;; (setq web-mode-css-indent-offset 4)
-;; (setq web-mode-code-indent-offset 4)
-;; (setq web-mode-script-padding 4)
-;; (setq web-mode-style-padding 4)
-;; (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-;; (add-to-list 'auto-mode-alist '("\\.jsp?\\'" . web-mode))
-;; (add-to-list 'auto-mode-alist '("\\.vue?\\'" . web-mode))
-;; (add-hook 'web-mode-hook
-;; 		  (lambda ()
-;; 			(setq indent-tabs-mode nil)))
-
-;; zencoding-mode
-;;(require 'zencoding-mode)
-;;(add-hook 'html-mode-hook 'zencoding-mode)
-;;(add-hook 'web-mode-hook 'zencoding-mode)
-
-;; clojure
-;; (require 'clojure-mode)
-;;(require 'cider-mode)
-
-;; rainbow-mode
-;; (require 'rainbow-mode)
-
-(package-initialize)
-
-;; dired
-(setq dired-listing-switches "-alh")
-(setq dired-dwimq-target t)
+	  ;; exec-path
+	  (setq exec-path (append exec-path '("C:\\Program Files\\Git\\mingw32\\bin")))
+	  (set-frame-font "Consolas 10")
+	  )
+  (setenv "PATH" (concat "/Users/dzhu/bin:/usr/local/bin:/Library/TeX/texbin:/sw/bin:"
+						 "/Users/dzhu/tools/apache-maven-3.3.9/bin:"
+						 "/usr/local/share/dotnet:"
+						 (getenv "PATH")))
+  (set-frame-font "Monaco 10")
+  ;;(set-frame-font "-apple-Songti_SC-medium-normal-normal-*-*-*-*-*-p-0-iso10646-1")
+  (when (display-graphic-p)
+	(dolist (charset '(kana han symbol cjk-misc bopomofo))
+	  (set-fontset-font (frame-parameter nil 'font)
+						charset
+						"-*-PingFang SC-normal-normal-normal-*-*-*-*-*-p-0-iso10646-1")))
+  (global-set-key (kbd "C-. h")
+				  (lambda ()
+					(interactive)
+					(find-file "/Users/dzhu/Documents/notes/desktop.org")
+					(read-only-mode 1)
+					))
+  )
 
 ;; transparent frame
 ;;(set-frame-parameter (selected-frame) 'alpha '(<active> [<inactive>]))
@@ -127,6 +64,98 @@
 ;;(set-face-attribute 'vertical-border nil :foreground "purple")
 (set-face-attribute 'vertical-border nil :foreground "gray")
 
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/"))
+;; web-mode
+;;(require 'web-mode)
+;; (setq web-mode-markup-indent-offset 4)
+;; (setq web-mode-css-indent-offset 4)
+;; (setq web-mode-code-indent-offset 4)
+;; (setq web-mode-script-padding 4)
+;; (setq web-mode-style-padding 4)
+;; (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+;; (add-to-list 'auto-mode-alist '("\\.jsp?\\'" . web-mode))
+;; (add-to-list 'auto-mode-alist '("\\.vue?\\'" . web-mode))
+;; (add-hook 'web-mode-hook
+;; 		  (lambda ()
+;; 			(setq indent-tabs-mode nil)))
+
+;; clojure
+;; (require 'clojure-mode)
+;;(require 'cider-mode)
+
+;; rainbow-mode
+;; (require 'rainbow-mode)
+
+(package-initialize)
+
+;; ediff
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+;(setq ediff-window-setup-function 'ediff-setup-windows-multiframe)
+(setq ediff-split-window-function 'split-window-horizontally) ;; vertical!!
+
+;; vc-diff
+(eval-after-load "vc-hooks"
+  '(define-key vc-prefix-map "=" 'vc-ediff))
+
+;; enable disabled functions
+(put 'erase-buffer 'disabled nil)
+(put 'upcase-region 'disabled nil)
+
+;; tab
+;;(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+
+(add-hook 'java-mode-hook
+		  (lambda ()
+			(setq indent-tabs-mode nil)
+			(c-set-offset 'substatement-open 0)
+			(if (assoc 'inexpr-class c-offsets-alist)
+				(c-set-offset 'inexpr-class 0))))
+
+(add-hook 'csharp-mode-hook
+		  (lambda ()
+			(setq indent-tabs-mode nil)
+			(c-set-offset 'substatement-open 0)
+			(c-set-offset 'inline-open 0)
+			(c-set-offset 'case-label '+)
+			(if (assoc 'inexpr-class c-offsets-alist)
+				(c-set-offset 'inexpr-class 0))))
+
+;; perl
+(defalias 'perl-mode 'cperl-mode)
+(add-to-list 'auto-mode-alist '("\\.t?\\'" . cperl-mode))
+
+;; c
+(setq c-default-style "linux"
+      c-basic-offset 4)
+;; open .h in c++ mode
+;;(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+(c-add-style "my-style"
+             '(
+               (indent-tabs-mode . nil)
+               (c-basic-offset . 4)))
+;;(defun my-c++-mode-hook ()
+;;  (c-set-style "my-style")
+;;  (auto-fill-mode)
+;;  (c-toggle-auto-hungry-state 0))
+;;(add-hook 'c++-mode-hook 'my-c++-mode-hook)
+
+;; macros
+;(fset 'comment-c [?\C-a ?\C-x ?\C-x ?\C-a ?\C-x ?r ?t ?/ ?/ return])
+;(put 'comment-c 'kmacro t)
+
+
+;;auto-complete
+;;(require 'auto-complete)
+;;(global-auto-complete-mode t)
+
+;; dired
+(setq dired-listing-switches "-alh")
+(setq dired-dwimq-target t)
+
+
 ;;
 ;; key bindings
 ;;
@@ -159,26 +188,43 @@
 ;;(setq org-export-with-sub-superscripts nil)
 ;;(setq org-default-notes-file "/Users/dzhu/Documents/notes/notes.org")
 
-;; open .h in c++ mode
-;;(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+;; mysql
+;; (setq sql-mysql-program "/usr/local/bin/mysql")
+;; (setq sql-mysql-login-params
+;;       '((server :default "localhost")
+;;         (port :default 3306)
+;;         (database :default "test")
+;;         (user :default "root")
+;;         (password)))
+;; (add-hook 'sql-interactive-mode-hook
+;; 		  (lambda ()
+;; 			(toggle-truncate-lines t)))
+;; ;;(setq sql-user "fc")
+;; ;;(setq sql-password "Fc654321")
+;; ;;(setq sql-server "192.168.8.8")
+;; ;;(setq sql-mysql-options "optional command line options")
+;; (setq sql-connection-alist
+;;       '((local (sql-product 'mysql)
+;;                (sql-server "localhost")
+;;                (sql-port 3306)
+;;                (sql-database "fcgyldb_dot3")
+;;                (sql-user "root")
+;;                (sql-password "mysql"))
+;;         (dev (sql-product 'mysql)
+;;               (sql-server "192.168.8.6")
+;;               (sql-port 3306)
+;;               (sql-database "fcgyldb_docker4")
+;;               (sql-user "fc")
+;;               (sql-password "Fc654321"))
+;; 		(prod (sql-product 'mysql)
+;;               (sql-server "192.168.8.4")
+;;               (sql-port 3309)
+;;               (sql-database "zunpindb")
+;;               (sql-user "readonly_user")
+;;               (sql-password "Fengchao4006221999"))
+;; 		))
 
-(c-add-style "my-style"
-             '(
-               (indent-tabs-mode . nil)
-               (c-basic-offset . 4)))
-;;(defun my-c++-mode-hook ()
-;;  (c-set-style "my-style")
-;;  (auto-fill-mode)
-;;  (c-toggle-auto-hungry-state 0))
-;;(add-hook 'c++-mode-hook 'my-c++-mode-hook)
-
-;; macros
-(fset 'comment-c
-   [?\C-a ?\C-x ?\C-x ?\C-a ?\C-x ?r ?t ?/ ?/ return])
-
-(put 'comment-c 'kmacro t)
-
-(load-file "~/.emacs.d/mylisp/util.el")
+(load-file "~/.emacs.d/mylisp/z-util.el")
 
 (global-set-key (kbd "C-. i") 'imenu)
 (global-set-key (kbd "C-. p") 'z-goto-match-paren)
@@ -190,12 +236,6 @@
 (global-set-key (kbd "C-. C-. y") 'z-dup-line)
 (global-set-key (kbd "C-. d d") 'z-word-definition)
 (global-set-key (kbd "C-. d r") 'z-word-definition-region)
-(global-set-key (kbd "C-. h")
-				(lambda ()
-				  (interactive)
-				  (find-file "/Users/dzhu/Documents/notes/desktop.org")
-				  (read-only-mode 1)
-				  ))
 (global-set-key (kbd "C-. o c") 'org-capture)
 
 ;; reminder
@@ -242,16 +282,3 @@
 ;;(require 'yasnippet)
 ;;(yas-global-mode 1)
 ;;(global-set-key (kbd "C-. TAB") 'yas-expand)
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (csharp-mode web-mode))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
