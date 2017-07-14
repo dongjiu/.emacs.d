@@ -4,7 +4,7 @@
 
 ;; environment variables
 ;; (setenv "PATH" (concat "/Users/dzhu/bin:" (getenv "PATH")))
-(if (equal system-type "windows-nt")
+(if (eq system-type 'windows-nt)
 	(progn
 	  (setenv "PATH" (concat "C:\\Program Files\\Git\\mingw32\\bin;" (getenv "PATH")))
 	  (setenv "PATH" (concat "C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319;" (getenv "PATH")))
