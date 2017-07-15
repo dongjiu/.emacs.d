@@ -1,5 +1,5 @@
 (defun z-string-upcase-first-char (string)
-  "Convert STRING to Pascal case."
+  "Capitalize first character of STRING."
   (if (or (null string)
 		  (= (length string) 0))
 	  string
