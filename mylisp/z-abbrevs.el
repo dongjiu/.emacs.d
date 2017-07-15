@@ -1,7 +1,27 @@
 ;; shell
+(define-skeleton z-shell-find
+  "Run Linux find command."
+  nil
+  "find $PWD -iname '" _ "'")
+
+(define-skeleton z-shell-git-commit
+  "git commit."
+  nil
+  "git commit -m'" _ "'")
+
+(define-skeleton z-shell-git-merge
+  "git merge."
+  nil
+  "git merge " _ " -m'merge '")
+
+(define-skeleton z-shell-perl-one-liner
+  "perl one liner."
+  nil
+  "perl -E 'say " _ "'")
+
 (define-abbrev-table 'z-shell-mode-abbrev-table
   '(
-	("fn" "find $PWD -iname ''" (lambda () (backward-char)))
+	("fn" "" z-shell-find)
 	("ft" "find_text .")
 
 	("gs" "git status")
@@ -14,12 +34,11 @@
 	("gp" "git pull")
 	("gst" "git stash")
 	("gsp" "git stash pop")
-	("gc" "git commit -m'#'" (lambda () (backward-char)))
+	("gc" "" z-shell-git-commit)
 	("gls" "git ls-files")
-	("gco" "git checkout origin/ -b" (lambda () (backward-char 3)))
-	("gm" "git merge -m 'merge'" (lambda () (backward-char 11)))
+	("gm" "" z-shell-git-merge)
 
-	("plp" "perl -E \"say\"" (lambda () (backward-char)))
+	("plp" "" z-shell-perl-one-liner)
 	("plpath" "perl -e 'print \"$_\\n\" for split /:/, $ENV{PATH}'")
 
 	("devlog" "sudo docker logs --tail=100 -f dockerscripts_dev_1")
@@ -129,6 +148,15 @@
   (insert "}")
   (c-indent-line-or-region))
 
+(defun z-code-block-interactive ()
+  "Insert empty code block with curly braces"
+  (interactive)
+  (z-code-block)
+  (previous-line)
+  (end-of-line)
+  t)
+(put 'z-code-block-interactive 'no-self-insert t)
+
 (define-skeleton z-code-if-block
   "Insert if block"
   nil
@@ -155,6 +183,7 @@
 (define-skeleton z-code-else-long
   "Insert else block with curly braces on separate lines"
   nil
+  '(c-indent-line-or-region)
   "else\n{"
   '(c-indent-line-or-region)
   "\n\n"
@@ -205,6 +234,7 @@
 
 (define-abbrev-table 'z-code-mode-abbrev-table
   '(
+	("zb" "" z-code-block-interactive)
 	("ifb" "" z-code-if-block)
 	("zif" "" z-code-if-block-long)
 	("if" "" z-code-if)
@@ -591,13 +621,47 @@
   '(previous-line)
   '(end-of-line))
 
+(define-skeleton z-csharp-write-line
+  "Insert Console.WriteLine()."
+  nil
+  "Console.WriteLine(" _ ");")
+
+(defun z-csharp-property (&optional readonly)
+  "Insert property."
+  (let ((type) (back-field-name))
+	(setq type (read-string "Back field type? "))
+	(setq back-field-name (read-string "Back field name? "))
+	(c-indent-line-or-region)
+	(insert (format "public %s %s\n"
+					type
+					(z-string-upcase-first-char back-field-name)))
+	(c-indent-line-or-region)
+	(insert "{\n")
+	(c-indent-line-or-region)
+	(insert (format "get { return %s; }\n" back-field-name))
+	(unless readonly
+	  (c-indent-line-or-region)
+	  (insert (format "set { this.%s = value; }\n" back-field-name)))
+	(insert "}")
+	(c-indent-line-or-region)
+	(insert "\n")
+	)
+  t)
+(put 'z-csharp-property 'no-self-insert t)
+
+(defun z-csharp-readonly-property ()
+  "Insert readonly property."
+  (z-csharp-property t)
+  t)
+(put 'z-csharp-readonly-property 'no-self-insert t)
+
 (define-abbrev-table 'csharp-mode-abbrev-table
   '(
 	("zfe" "" z-csharp-foreach)
 	("zlist" "" z-csharp-newlist)
 	("zset" "" z-csharp-newset)
 	("zdict" "" z-csharp-newdict)
-	("zwl" "Console.WriteLine();" (lambda () (backward-char 2)))
+	("zwl" "" z-csharp-write-line)
 
 	("zusys" "using System;")
 	("zuio" "using System.IO;")
@@ -606,6 +670,8 @@
 	("zns" "" z-csharp-namespace)
 	("zcl" "" z-csharp-class)
 	("zmain" "" z-csharp-main)
+	("zp" "" z-csharp-readonly-property)
+	("zpr" "" z-csharp-property)
 	))
 
 ;; msbuild

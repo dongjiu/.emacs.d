@@ -224,6 +224,7 @@
 ;;               (sql-password "Fengchao4006221999"))
 ;; 		))
 
+(load-file "~/.emacs.d/mylisp/z-string.el")
 (load-file "~/.emacs.d/mylisp/z-util.el")
 
 (global-set-key (kbd "C-. i") 'imenu)
