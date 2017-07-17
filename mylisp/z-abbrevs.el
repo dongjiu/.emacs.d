@@ -722,7 +722,21 @@
   "Insert an msbuild element."
   (let ((name))
 	(setq name (read-string "Element name: "))
-	(z-xml-elem name)))
+	(z-xml-elem name))
+  t)
+(put 'z-msbuild-elem 'no-self-insert t)
+
+(defun z-msbuild-property-group ()
+  "Insert PropertyGroup element."
+  (z-xml-elem-long "PropertyGroup")
+  t)
+(put 'z-msbuild-property-group 'no-self-insert t)
+
+(defun z-msbuild-item-group ()
+  "Insert ItemGroup element."
+  (z-xml-elem-long "ItemGroup")
+  t)
+(put 'z-msbuild-item-group 'no-self-insert t)
 
 (define-skeleton z-msbuild-csc
   "Insert Csc element."
@@ -734,17 +748,41 @@
   nil
   "<Exec Command=\"" _ "\"></Exec>")
 
+(define-skeleton z-msbuild-reference
+  "Insert Reference element."
+  nil
+  "<Reference Include=\"" _ "\"></Reference>")
+
+(define-skeleton z-msbuild-removedir
+  "Insert RemoveDir element."
+  nil
+  "<RemoveDir Directories=\"" _ "\"></RemoveDir>")
+
+(define-skeleton z-msbuild-mkdir
+  "Insert MakeDir element."
+  nil
+  "<MakeDir Directories=\"" _ "\"></MakeDir>")
+
+(define-skeleton z-msbuild-copy
+  "Insert Copy element."
+  nil
+  "<Copy SourceFiles=\"@(" _ ")\" DestinationFolder=\"\"></Copy>")
+
 (define-abbrev-table 'z-msbuild-mode-abbrev-table
   '(
 	("zp" "" z-msbuild-proj)
 	("zt" "" z-msbuild-target)
-	("ztdep" "DependsOnTargets=\"\"" (lambda () (backward-char 1)))
+	("ztdep" "DependsOnTargets")
 	("zm" "" z-msbuild-msg)
 	("ze" "" z-msbuild-elem)
-	("zpg" "" (lambda () (z-xml-elem-long "PropertyGroup")))
-	("zig" "" (lambda () (z-xml-elem-long "ItemGroup")))
+	("zpg" "" z-msbuild-property-group)
+	("zig" "" z-msbuild-item-group)
 	("zcsc" "" z-msbuild-csc)
 	("zexec" "" z-msbuild-exec)
+	("zref" "" z-msbuild-reference)
+	("zrmd" "" z-msbuild-removedir)
+	("zmkd" "" z-msbuild-mkdir)
+	("zcp" "" z-msbuild-copy)
 	))
 
 (push (cons 'z-msbuild-mode z-msbuild-mode-abbrev-table)

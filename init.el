@@ -227,6 +227,8 @@
 (load-file "~/.emacs.d/mylisp/z-string.el")
 (load-file "~/.emacs.d/mylisp/z-util.el")
 
+(global-set-key (kbd "C-,") 'set-mark-command)
+
 (global-set-key (kbd "C-. i") 'imenu)
 (global-set-key (kbd "C-. p") 'z-goto-match-paren)
 (global-set-key (kbd "C-. c") 'goto-class)
