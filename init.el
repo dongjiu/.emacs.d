@@ -237,6 +237,7 @@
 (ffap-bindings)
 (global-set-key (kbd "C-. w") 'ffap-copy-string-as-kill)
 (global-set-key (kbd "C-. C-. y") 'z-dup-line)
+(global-set-key (kbd "C-. C-. i") 'z-inc-num)
 (global-set-key (kbd "C-. d d") 'z-word-definition)
 (global-set-key (kbd "C-. d r") 'z-word-definition-region)
 (global-set-key (kbd "C-. o c") 'org-capture)

@@ -94,6 +94,17 @@ Otherwise, do nothing."
 		(insert-buffer-substring (buffer-name) start end)
 		(setq i (1+ i))))))
 
+(defun z-inc-num (&optional n)
+  "Increment the number at point. If N is not nil, increment the number at point by n."
+  (interactive "p")
+  (let* ((num (+ (thing-at-point 'number) (if n n 1)))
+		 (bounds (bounds-of-thing-at-point 'symbol))
+		 (beg (car bounds))
+		 (end (cdr bounds)))
+	(save-excursion
+	  (delete-region beg end)
+	  (insert (format "%g" num)))))
+
 (defun z-java-declaration-p (p)
   ""
   (let ((is-decl))
