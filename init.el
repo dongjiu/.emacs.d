@@ -114,6 +114,8 @@
 			(if (assoc 'inexpr-class c-offsets-alist)
 				(c-set-offset 'inexpr-class 0))))
 
+(add-hook 'csharp-mode-hook 'hs-minor-mode)
+
 (add-hook 'csharp-mode-hook
 		  (lambda ()
 			(setq indent-tabs-mode nil)
@@ -121,7 +123,10 @@
 			(c-set-offset 'inline-open 0)
 			(c-set-offset 'case-label '+)
 			(if (assoc 'inexpr-class c-offsets-alist)
-				(c-set-offset 'inexpr-class 0))))
+				(c-set-offset 'inexpr-class 0))
+			(hs-minor-mode)
+			(local-set-key (kbd "C-. C-. C-h") 'z-csharp-hide-methods)
+			))
 
 ;; perl
 (defalias 'perl-mode 'cperl-mode)
@@ -226,12 +231,13 @@
 
 (load-file "~/.emacs.d/mylisp/z-string.el")
 (load-file "~/.emacs.d/mylisp/z-util.el")
+(load-file "~/.emacs.d/mylisp/z-csharp.el")
 
 (global-set-key (kbd "C-,") 'set-mark-command)
 
 (global-set-key (kbd "C-. i") 'imenu)
 (global-set-key (kbd "C-. p") 'z-goto-match-paren)
-(global-set-key (kbd "C-. c") 'goto-class)
+;(global-set-key (kbd "C-. c") 'goto-class)
 (global-set-key (kbd "C-. g") 'rgrep)
 (global-set-key (kbd "C-. f") 'find-dired)
 (ffap-bindings)

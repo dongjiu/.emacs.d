@@ -69,10 +69,12 @@
     (cond ((char-equal char ?\() (z-goto-close-paren ?\( ?\)))
           ((char-equal char ?\[) (z-goto-close-paren ?\[ ?\]))
           ((char-equal char ?\{) (z-goto-close-paren ?\{ ?\}))
+          ((char-equal char ?\<) (z-goto-close-paren ?\< ?\>))
 
           ((char-equal char ?\)) (z-goto-open-paren ?\) ?\())
           ((char-equal char ?\]) (z-goto-open-paren ?\] ?\[))
           ((char-equal char ?\}) (z-goto-open-paren ?\} ?\{))
+          ((char-equal char ?\>) (z-goto-open-paren ?\> ?\<))
 
           (t (if (string-match "\\.java\\'" (buffer-name))
                  (z-goto-open-paren ?\} ?\{)
