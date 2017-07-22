@@ -29,7 +29,15 @@
 	(list 'name type
 		  'start-point start-point
 		  'end-point end-point)))
-	  
+
+(defun z-csharp-skip-attribute ()
+  "Skip c# attribute."
+  (skip-chars-forward " \t\n")
+  (when (looking-at "\\[")
+	(z-goto-match-paren)
+	(forward-char)
+	(skip-chars-forward " \t\n")
+	))
 
 (defun z-csharp-parse-field ()
   "Return t if text after point is a field declaration."
@@ -149,6 +157,7 @@
 	  (goto-char beg)
 	  (unless (looking-at "\\s-*)")
 		(while (not stop)
+		  (z-csharp-skip-attribute)
 		  (skip-chars-forward " \t\n")
 		  (setq type-beg (point))
 		  (forward-word)
@@ -257,6 +266,7 @@
 		(skip-chars-forward " \t\n")
 
 		(while (not stop)
+		  (z-csharp-skip-attribute)
 		  (cond
 		   ((setq parse-res (z-csharp-parse-field))
 			(setq fields (cons parse-res fields))
