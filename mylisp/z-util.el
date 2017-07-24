@@ -308,3 +308,11 @@ Otherwise, do nothing."
 	  (beginning-of-line)
 	  (setq n (+ 1 n))
 	  (next-line))))
+
+(defun z-open (file)
+  "Open file/dir."
+  (let ((cmd))
+	(setq cmd (cond ((eq system-type 'windows-nt)
+					 (concat "start " file))))
+	(when cmd
+	  (shell-command cmd))))
