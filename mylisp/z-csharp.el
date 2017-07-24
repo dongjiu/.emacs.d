@@ -173,9 +173,9 @@
 		  (forward-word)
 		  (setq name (buffer-substring-no-properties name-beg (point)))
 
-		  (setq params (cons (list 'type type
-								   'name name)
-							 params))
+		  (push (list 'type type
+					  'name name)
+				params)
 		  (skip-chars-forward " \t\n")
 		  (cond
 		   ((>= (point) end)
@@ -269,19 +269,19 @@
 		  (z-csharp-skip-attribute)
 		  (cond
 		   ((setq parse-res (z-csharp-parse-field))
-			(setq fields (cons parse-res fields))
+			(push parse-res fields)
 			(goto-char (1+ (plist-get parse-res 'end-point))))
 
 		   ((setq parse-res (z-csharp-parse-property))
-			(setq props (cons parse-res props))
+			(push parse-res props)
 			(goto-char (1+ (plist-get parse-res 'end-point))))
 
 		   ((setq parse-res (z-csharp-parse-method))
-			(setq methods (cons parse-res methods))
+			(push parse-res methods)
 			(goto-char (1+ (plist-get parse-res 'end-point))))
 
 		   ((setq parse-res (z-csharp-parse-ctor class-name))
-			(setq ctors (cons parse-res ctors))
+			(push parse-res ctors)
 			(goto-char (1+ (plist-get parse-res 'end-point))))
 
 		   ((setq parse-res (z-csharp-parse-comments))
@@ -305,7 +305,7 @@
 	(save-excursion
 	  (goto-char (point-min))
 	  (while (setq class (z-csharp-parse-next-class))
-		(setq classes (cons class classes))
+		(push class classes)
 		(goto-char (1+ (plist-get class 'close-brace)))))
 	classes))
 
@@ -319,3 +319,76 @@
   (interactive)
   (insert (format "%s" (z-csharp-parse-comments))))
 
+(defun z-csharp--current-class ()
+  "Return the current class."
+  (let ((class) (classes (z-csharp-parse-file)))
+	(dolist (c classes)
+	  (when (and (<= (plist-get c 'class-start) (point))
+				 (>= (plist-get c 'close-brace) (point)))
+		(setq class c)))
+	class))
+
+(defun z-csharp--current-member (members)
+  "Return current member."
+  (let ((member))
+	(dolist (m members)
+	  (when (and (<= (plist-get m 'start-point) (point))
+				 (>= (plist-get m 'end-point) (point)))
+		(setq member m)))
+	member))
+
+(defun z-csharp--next-member (members)
+  "Return next member."
+  (let ((member) (start) (dis) (distance (point-max)))
+	(dolist (m members)
+	  (setq start (plist-get m 'start-point))
+	  (when (> start (point))
+		(setq dis (- start (point)))
+		(when (< dis distance)
+		  (setq distance dis)
+		  (setq member m))))
+	member))
+
+(defun z-csharp--prev-member (members)
+  "Return previous member."
+  (let ((member) (end) (dis) (distance (point-max)))
+	(dolist (m members)
+	  (setq end (plist-get m 'end-point))
+	  (when (< end (point))
+		(setq dis (- (point) end))
+		(when (< dis distance)
+		  (setq distance dis)
+		  (setq member m))))
+	member))
+
+(defun z-csharp-goto-next-member (&optional n)
+  "Go to next member."
+  (interactive "p")
+  (let ((class) (members)
+		(current-member) (prev-member) (next-member)
+		(member) (end) (distance (point-max)))
+	(setq class (z-csharp--current-class))
+
+	(dolist (m (plist-get class 'methods))
+	  (push m members))
+			
+	(dolist (f (plist-get class 'fields))
+	  (push f members))
+
+	(dolist (p (plist-get class 'props))
+	  (push p members))
+
+	(sort members (lambda (lhs rhs) (< (plist-get lhs 'start-point)
+									   (plist-get rhs 'start-point))))
+
+	(setq current-member (z-csharp--current-member members))
+	(if current-member
+		(setq member (nth (+ (cl-position current-member members) n) members))
+	  (if (> n 0)
+		  (when (setq next-member (z-csharp--next-member members))
+			(setq member (nth (+ (cl-position next-member members) (1- n)) members)))
+		(when (setq prev-member (z-csharp--prev-member members))
+		  (setq member (nth (+ (cl-position prev-member members) (1+ n)) members)))))
+	
+	(when member
+	  (goto-char (plist-get member 'start-point)))))
