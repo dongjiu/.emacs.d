@@ -313,6 +313,8 @@ Otherwise, do nothing."
   "Open file/dir."
   (let ((cmd))
 	(setq cmd (cond ((eq system-type 'windows-nt)
-					 (concat "start " file))))
+					 (concat "start " file))
+					((eq system-type 'darwin)
+					 (concat "open " file))))
 	(when cmd
 	  (shell-command cmd))))
