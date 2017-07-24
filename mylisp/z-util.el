@@ -318,3 +318,11 @@ Otherwise, do nothing."
 					 (concat "open " file))))
 	(when cmd
 	  (shell-command cmd))))
+
+(defun z-reload-file ()
+  "Reload current file."
+  (interactive)
+  (let ((line-number (count-lines (point-min) (point))))
+	(when (buffer-file-name)
+	  (find-alternate-file (buffer-file-name))
+	  (goto-line line-number))))
