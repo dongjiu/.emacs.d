@@ -364,11 +364,9 @@
 (defun z-csharp-goto-next-member (&optional n)
   "Go to next member."
   (interactive "p")
-  (let ((class) (members)
-		(current-member) (prev-member) (next-member)
+  (let ((class (z-csharp--current-class))
+		(members) (current-member) (prev-member) (next-member)
 		(member) (end) (distance (point-max)))
-	(setq class (z-csharp--current-class))
-
 	(dolist (m (plist-get class 'methods))
 	  (push m members))
 			
@@ -392,3 +390,22 @@
 	
 	(when member
 	  (goto-char (plist-get member 'start-point)))))
+
+(defun z-csharp-goto-member ()
+  "Go to a member of current class."
+  (interactive)
+  (let ((class (z-csharp--current-class)) (members) (name) (pt))
+	(dolist (m (plist-get class 'methods))
+	  (push m members))
+	(dolist (f (plist-get class 'fields))
+	  (push f members))
+	(dolist (p (plist-get class 'props))
+	  (push p members))
+
+	(setq name (completing-read "Choose a member: " (mapcar (lambda (m) (plist-get m 'name)) members)))
+
+	(dolist (m members)
+	  (when (string= (plist-get m 'name) name)
+		(setq pt (plist-get m 'start-point))))
+	(goto-char pt)))
+
