@@ -292,3 +292,7 @@
 ;;(require 'yasnippet)
 ;;(yas-global-mode 1)
 ;;(global-set-key (kbd "C-. TAB") 'yas-expand)
+
+(setq initial-buffer-choice (lambda ()
+							  (setq default-directory "C:\\Users\\dzhu")
+							  (eshell)))
