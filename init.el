@@ -6,11 +6,13 @@
 ;; (setenv "PATH" (concat "/Users/dzhu/bin:" (getenv "PATH")))
 (if (eq system-type 'windows-nt)
 	(progn
-	  (setenv "PATH" (concat "C:\\Program Files\\Git\\mingw32\\bin;" (getenv "PATH")))
-	  (setenv "PATH" (concat "C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319;" (getenv "PATH")))
+	  (setenv "PATH" (concat "C:\\Users\\donzhu\\bin;" (getenv "PATH")))
+	  (setenv "PATH" (concat "C:\\Program Files\\Git\\bin;" (getenv "PATH")))
+;	  (setenv "PATH" (concat "C:\\Program Files\\Git\\mingw64\\bin;" (getenv "PATH")))
+	  (setenv "PATH" (concat "C:\\Program Files (x86)\\MSBuild\\14.0\\Bin;" (getenv "PATH")))
 
 	  ;; exec-path
-	  (setq exec-path (append exec-path '("C:\\Program Files\\Git\\mingw32\\bin")))
+	  (setq exec-path (append exec-path '("C:\\Program Files\\Git\\mingw64\\bin")))
 	  (set-frame-font "Consolas 10")
 	  )
   (setenv "PATH" (concat "/Users/dzhu/bin:/usr/local/bin:/Library/TeX/texbin:/sw/bin:"
@@ -24,7 +26,9 @@
 	  (set-fontset-font (frame-parameter nil 'font)
 						charset
 						"-*-PingFang SC-normal-normal-normal-*-*-*-*-*-p-0-iso10646-1")))
-  (global-set-key (kbd "C-. h")
+
+
+  (global-set-key (kbd "C-; h")
 				  (lambda ()
 					(interactive)
 					(find-file "/Users/dzhu/Documents/notes/desktop.org")
@@ -125,7 +129,7 @@
 			(if (assoc 'inexpr-class c-offsets-alist)
 				(c-set-offset 'inexpr-class 0))
 			(hs-minor-mode)
-			(local-set-key (kbd "C-. C-. C-h") 'z-csharp-hide-methods)
+			(local-set-key (kbd "C-; C-; C-h") 'z-csharp-hide-methods)
 			))
 
 ;; perl
@@ -235,25 +239,24 @@
 
 (global-set-key (kbd "C-,") 'set-mark-command)
 
-(global-set-key (kbd "C-. i") 'imenu)
-(global-set-key (kbd "C-. p") 'z-goto-match-paren)
-;(global-set-key (kbd "C-. c") 'goto-class)
-(global-set-key (kbd "C-. g") 'rgrep)
-(global-set-key (kbd "C-. f") 'find-dired)
+(global-set-key (kbd "C-; i") 'imenu)
+(global-set-key (kbd "C-; p") 'z-goto-match-paren)
+(global-set-key (kbd "C-; g") 'rgrep)
+(global-set-key (kbd "C-; f") 'find-dired)
 (ffap-bindings)
-(global-set-key (kbd "C-. w") 'ffap-copy-string-as-kill)
-(global-set-key (kbd "C-. C-. y") 'z-dup-line)
-(global-set-key (kbd "C-. C-. i") 'z-inc-num)
-(global-set-key (kbd "C-. d d") 'z-word-definition)
-(global-set-key (kbd "C-. d r") 'z-word-definition-region)
-(global-set-key (kbd "C-. o c") 'org-capture)
+(global-set-key (kbd "C-; w") 'ffap-copy-string-as-kill)
+(global-set-key (kbd "C-; C-; y") 'z-dup-line)
+(global-set-key (kbd "C-; C-; i") 'z-inc-num)
+(global-set-key (kbd "C-; d d") 'z-word-definition)
+(global-set-key (kbd "C-; d r") 'z-word-definition-region)
+(global-set-key (kbd "C-; o c") 'org-capture)
 
 ;; reminder
 (load-file "~/.emacs.d/mylisp/z-reminder.el")
 (z-reminder-start t)
-(global-set-key (kbd "C-. r s") 'z-reminder-start)
-(global-set-key (kbd "C-. r e") 'z-reminder-stop)
-(global-set-key (kbd "C-. r r") 'z-reminder-report)
+(global-set-key (kbd "C-; r s") 'z-reminder-start)
+(global-set-key (kbd "C-; r e") 'z-reminder-stop)
+(global-set-key (kbd "C-; r r") 'z-reminder-report)
 
 ;; git
 (load-file "~/.emacs.d/mylisp/z-git.el")
@@ -272,6 +275,7 @@
 (add-hook 'c++-mode-hook 'z-code-mode)
 (add-hook 'java-mode-hook 'z-code-mode)
 (add-hook 'csharp-mode-hook 'z-code-mode)
+(add-hook 'typescript-mode-hook 'z-code-mode)
 
 (define-minor-mode z-web-mode
   "Accelerate web programming"
@@ -291,8 +295,12 @@
 ;;(add-to-list 'load-path "~/.emacs.d/snippets")
 ;;(require 'yasnippet)
 ;;(yas-global-mode 1)
-;;(global-set-key (kbd "C-. TAB") 'yas-expand)
+;;(global-set-key (kbd "C-; TAB") 'yas-expand)
 
 (setq initial-buffer-choice (lambda ()
-							  (setq default-directory "C:\\Users\\dzhu")
+							  (setq default-directory "C:/Users/donzhu")
 							  (eshell)))
+
+;; AutoHotKey
+(load-file "~/.emacs.d/mylisp/z-ahk.el")
+(global-set-key (kbd "C-; C-o C-v") 'z-open-file-at-point-in-vs)

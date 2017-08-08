@@ -309,13 +309,22 @@ Otherwise, do nothing."
 	  (setq n (+ 1 n))
 	  (next-line))))
 
-(defun z-open (file)
+(defun z-open (&optional file)
   "Open file/dir."
+  (interactive)
   (let ((cmd))
+	(unless file
+	  (if (string= major-mode "dired-mode")
+		  (progn (setq file (dired-copy-filename-as-kill 0))
+				 (setq file (replace-regexp-in-string "/" "\\\\" file)))
+		(setq file (thing-at-point 'filename)))
+	  (unless file
+		(setq file ".")))
 	(setq cmd (cond ((eq system-type 'windows-nt)
-					 (concat "start " file))
+					 (concat "start /b \"\" \"" file "\""))
 					((eq system-type 'darwin)
 					 (concat "open " file))))
+	(message cmd)
 	(when cmd
 	  (shell-command cmd))))
 

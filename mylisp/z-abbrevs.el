@@ -2,7 +2,17 @@
 (define-skeleton z-shell-find
   "Run Linux find command."
   nil
-  "find $PWD -iname '" _ "'")
+  (if (eq system-type 'windows-nt)
+	  "C:\\Users\\donzhu\\gnuwin32\\bin\\find.exe ."
+	"find $PWD")
+  " -iname '" _ "'")
+
+(define-skeleton z-shell-find-text
+  "Run perl find_text."
+  nil
+  (if (eq system-type 'windows-nt)
+	 "perl C:\\Users\\donzhu\\bin\\find_text . "
+	"find_text . "))
 
 (define-skeleton z-shell-git-commit
   "git commit."
@@ -19,10 +29,18 @@
   nil
   "perl -E 'say " _ "'")
 
+(define-skeleton z-shell-perl-path
+  "perl one liner to print path."
+  nil
+  "perl -e 'print \"$_\\n\" for split /"
+  '(insert (if (eq system-type 'windows-nt) ";" ":"))
+  "/, $ENV{PATH}'")
+
 (define-abbrev-table 'z-shell-mode-abbrev-table
   '(
 	("fn" "" z-shell-find)
-	("ft" "find_text .")
+	("ft" "" z-shell-find-text)
+	("zs" "z-run-everything-search-in-current-dir")
 
 	("gs" "git status")
 	("gb" "git branch")
@@ -39,8 +57,7 @@
 	("gm" "" z-shell-git-merge)
 
 	("plp" "" z-shell-perl-one-liner)
-	("plpath" "perl -e 'print \"$_\\n\" for split /:/, $ENV{PATH}'")
-
+	("plpath" "" z-shell-perl-path)
 	("devlog" "sudo docker logs --tail=100 -f dockerscripts_dev_1")
 	))
 
@@ -50,7 +67,7 @@
 (define-abbrev-table 'eshell-mode-abbrev-table
   '(
 	("cl" "z-eshell-clear-buffer")
-	("s" "cd /ssh:tomcat@192.168.8.6:/" (lambda () (backward-char 2)))
+;	("s" "cd /ssh:tomcat@192.168.8.6:/" (lambda () (backward-char 2)))
 	))
 
 ;; sql
@@ -787,3 +804,34 @@
 
 (push (cons 'z-msbuild-mode z-msbuild-mode-abbrev-table)
 	  abbrev-minor-mode-table-alist)
+
+(define-skeleton z-javascript-log
+  "Add console.log."
+  nil
+  "console.log(" _ ");")
+
+(define-skeleton z-typescript-interface
+  "Add interface."
+  nil
+  "interface " _ " "
+  '(z-code-block))
+
+(define-skeleton z-typescript-class
+  "Add class."
+  nil
+  "class " _ " "
+  '(z-code-block))
+
+(define-skeleton z-typescript-constructor
+  "Add constructor."
+  nil
+  "constructor(" _ ") "
+  '(z-code-block))
+
+(define-abbrev-table 'typescript-mode-abbrev-table
+  '(
+	("zin" "" z-typescript-interface)
+	("zcl" "" z-typescript-class)
+	("zct" "" z-typescript-constructor)
+	("zlg" "" z-javascript-log)
+	))
