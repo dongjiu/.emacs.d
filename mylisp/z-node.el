@@ -1,0 +1,15 @@
+(defun z-node-beautify-json ()
+  "Beautify JSON on region."
+  (interactive)
+  (let ((file) (json (buffer-substring-no-properties (region-beginning) (region-end))))
+	(with-temp-buffer
+	  (find-file "~/.emacs.d/tmp.json")
+	  (erase-buffer)
+	  (insert json)
+	  (save-buffer)
+	  (setq file (buffer-file-name))
+	  (kill-buffer))
+	(setq file (replace-regexp-in-string "/" "\\\\" file))
+	(setq json (shell-command-to-string (concat "D:\\CorextCache\\Node.js.with.uv.pipe.name.fixed.6.9.1\\node.exe c:\\Users\\donzhu\\programming\\javascript\\nodejs\\beautify_json.js " file)))
+	(delete-region (region-beginning) (region-end))
+	(insert json)))

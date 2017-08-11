@@ -2,17 +2,16 @@
 (define-skeleton z-shell-find
   "Run Linux find command."
   nil
+  '(setq v1 default-directory)
   (if (eq system-type 'windows-nt)
-	  "C:\\Users\\donzhu\\gnuwin32\\bin\\find.exe ."
-	"find $PWD")
-  " -iname '" _ "'")
+	  (concat "es " v1 " ")
+	"find $PWD -iname '" _ "'"))
 
 (define-skeleton z-shell-find-text
   "Run perl find_text."
   nil
-  (if (eq system-type 'windows-nt)
-	 "perl C:\\Users\\donzhu\\bin\\find_text . "
-	"find_text . "))
+  '(setq v1 default-directory)
+  "es " v1 " " _ " | perl c:/Users/donzhu/bin/filter_files.pl ")
 
 (define-skeleton z-shell-git-commit
   "git commit."
@@ -33,13 +32,20 @@
   "perl one liner to print path."
   nil
   "perl -e 'print \"$_\\n\" for split /"
-  '(insert (if (eq system-type 'windows-nt) ";" ":"))
+  path-separator
   "/, $ENV{PATH}'")
+
+(define-skeleton z-shell-perl-line-count
+  "count lines using perl."
+  nil
+  "perl -E '++$cnt while <>;say $cnt;'")
 
 (define-abbrev-table 'z-shell-mode-abbrev-table
   '(
 	("fn" "" z-shell-find)
 	("ft" "" z-shell-find-text)
+	("lc" "" z-shell-perl-line-count)
+	("zpf" "perl c:/Users/donzhu/bin/filter_files.pl")
 	("zs" "z-run-everything-search-in-current-dir")
 
 	("gs" "git status")
@@ -80,12 +86,25 @@
   "END$$\n"
   "DELIMITER ;\n")
 
+(define-skeleton z-sql-exists
+  "Insert exists block."
+  nil
+  "exists (" _ ")")
+
+(define-skeleton z-sql-in
+  "Insert in block."
+  nil
+  "in (" _ ")")
+
 (define-abbrev-table 'sql-mode-abbrev-table
   '(
 	("cm" "/* */" (lambda () (backward-char 3)))
 	("lm" "limit 20")
-	("ss" "select * from")
-	("sc" "select count(*) from")
+	("zs" "select * from")
+	("zsc" "select count(*) from")
+	("zw" "where")
+	("zex" "" z-sql-exists)
+	("zin" "" z-sql-in)
 	))
 
 ;; perl

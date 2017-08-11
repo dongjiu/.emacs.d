@@ -1,33 +1,45 @@
+(unless (cl-remove-if-not 'identity
+						  (mapcar (lambda (pid)
+									(string-match "AutoHotKey" (cdr (assoc 'comm (process-attributes pid)))))
+								  (list-system-processes)))
+  (w32-shell-execute "runas" "C:\\Users\\donzhu\\softwares\\AutoHotkey_1.1.26.01\\AutoHotkeyU64.exe "
+					 "C:\\Users\\donzhu\\Documents\\scripts\\myhotkeys.ahk"))
+
 (defvar z-ahk-tmp-file nil "tmp ahk file name.")
 (with-temp-buffer
   (find-file "~/.emacs.d/tmp.ahk")
   (setq z-ahk-tmp-file (buffer-file-name))
   (kill-buffer))
-  
-(defun z--write-to-tmp-ahk-file (ahk-script)
-  "Write AHK-SCRIPT to tmp ahk file."
+
+(defvar z-ahk-tmp-sql-file nil "tmp sql file.")
+(with-temp-buffer
+  (find-file "~/.emacs.d/tmp.sql")
+  (setq z-ahk-tmp-sql-file (buffer-file-name))
+  (kill-buffer))
+
+(defun z--write-to-file (file content)
+  "Write CONTENT to file."
   (with-temp-buffer
-	(find-file z-ahk-tmp-file)
+	(find-file file)
 	(erase-buffer)
-	(insert ahk-script)
+	(insert content)
 	(save-buffer)
 	(kill-buffer)))
 
 (defun z--run-tmp-ahk-file ()
   "Run tmp ahk script."
-  (call-process-shell-command
-   (concat "C:\\Users\\donzhu\\softwares\\AutoHotkey_1.1.26.01\\AutoHotkeyU64.exe "
-		   (replace-regexp-in-string "/" "\\\\" z-ahk-tmp-file))))
+  (w32-shell-execute "runas" "C:\\Users\\donzhu\\softwares\\AutoHotkey_1.1.26.01\\AutoHotkeyU64.exe"
+					 (replace-regexp-in-string "/" "\\\\" z-ahk-tmp-file)))
 
 (defun z-run-everything-search (text)
   "Search TEXT using everything."
-;	(shell-command (concat "echo " text "| clip"))
+										;	(shell-command (concat "echo " text "| clip"))
   (kill-new text)
-  (z--write-to-tmp-ahk-file
-   (concat "Send ^+!{e}\n"
-		   "Sleep 100\n"
-		   "Send {F3}\n"
-		   "Send ^{v}\n"))
+  (z--write-to-file z-ahk-tmp-file
+					(concat "Send ^+!{e}\n"
+							"Sleep 100\n"
+							"Send {F3}\n"
+							"Send ^{v}\n"))
   (z--run-tmp-ahk-file))
 
 (defun z-run-everything-search-in-current-dir (text)
@@ -38,17 +50,17 @@
   "Open file in Visual Studio. If LINE-NUMBER is not nil, go to the specific line."
   (setq file (replace-regexp-in-string "/" "\\\\" file))
   (kill-new file)
-  (z--write-to-tmp-ahk-file
-   (concat "WinActivate, ahk_exe devenv.exe\n"
-		   "WinWaitActive, ahk_exe devenv.exe\n"
-		   "Send ^{o}\n"
-		   "WinWaitActive, Open File\n"
-		   "Send ^{v}\n"
-		   "Send {Enter}\n"
-		   (when line-number
-			 (concat "Send ^{g}\n"
-					 "SendRaw " (format "%d" line-number) "\n"
-					 "Send {Enter}\n"))))
+  (z--write-to-file z-ahk-tmp-file
+					(concat "WinActivate, ahk_exe devenv.exe\n"
+							"WinWaitActive, ahk_exe devenv.exe\n"
+							"Send ^{o}\n"
+							"WinWaitActive, Open File\n"
+							"Send ^{v}\n"
+							"Send {Enter}\n"
+							(when (and line-number (> line-number 0))
+							  (concat "Send ^{g}\n"
+									  "SendRaw " (format "%d" line-number) "\n"
+									  "Send {Enter}\n"))))
   (z--run-tmp-ahk-file))
 
 (defun z-open-file-at-point-in-vs ()
@@ -66,12 +78,19 @@
 (defun z-ssms-run-sql (sql)
   "Run SQL in SSMS."
   (when (and sql (> (length sql) 5))
-	(kill-new sql)
+	(z--write-to-file z-ahk-tmp-sql-file sql)
+	(kill-new (replace-regexp-in-string "/" "\\\\" z-ahk-tmp-sql-file))
 	(z--write-to-tmp-ahk-file
 	 (concat "WinActivate, ahk_exe Ssms.exe\n"
 			 "WinWaitActive, ahk_exe Ssms.exe\n"
-			 "Send ^{n}\n"
+			 "IfWinNotActive, " (file-name-base z-ahk-tmp-sql-file) ".sql\n"
+			 "{\n"
+			 "Send ^{o}\n"
+			 "WinWaitActive, Open File\n"
 			 "Send ^{v}\n"
+			 "Send {Enter}\n"
+			 "}\n"
+			 "Sleep 200\n"
 			 "Send {F5}\n"
 			 ))
 	(z--run-tmp-ahk-file)))

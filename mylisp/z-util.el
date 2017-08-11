@@ -320,13 +320,10 @@ Otherwise, do nothing."
 		(setq file (thing-at-point 'filename)))
 	  (unless file
 		(setq file ".")))
-	(setq cmd (cond ((eq system-type 'windows-nt)
-					 (concat "start /b \"\" \"" file "\""))
-					((eq system-type 'darwin)
-					 (concat "open " file))))
-	(message cmd)
-	(when cmd
-	  (shell-command cmd))))
+	(cond ((eq system-type 'windows-nt)
+		   (w32-shell-execute "open" file))
+		  ((eq system-type 'darwin)
+		   (shell-command "open " file)))))
 
 (defun z-reload-file ()
   "Reload current file."
@@ -335,3 +332,18 @@ Otherwise, do nothing."
 	(when (buffer-file-name)
 	  (find-alternate-file (buffer-file-name))
 	  (goto-line line-number))))
+
+(defun z-copy-buffer-file-name ()
+  "Copy buffer file name."
+  (interactive)
+  (let ((file (buffer-file-name)))
+	(when (eq system-type 'windows-nt)
+	  (setq file (z-string-upcase-first-char (replace-regexp-in-string "/" "\\\\" file))))
+	(kill-new file)))
+
+(defun z-cmd-here ()
+  "Run Windows cmd in default directory."
+  (interactive)
+  (let ((dir default-directory))
+	(setq dir (replace-regexp-in-string "/" "\\\\" dir))
+	(w32-shell-execute "runas" "cmd" (concat " /K cd " dir))))

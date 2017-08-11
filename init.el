@@ -7,6 +7,7 @@
 (if (eq system-type 'windows-nt)
 	(progn
 	  (setenv "PATH" (concat "C:\\Users\\donzhu\\bin;" (getenv "PATH")))
+	  (setenv "PATH" (concat "C:\\Users\\donzhu\\softwares\\ES-1.1.0.8;" (getenv "PATH")))
 	  (setenv "PATH" (concat "C:\\Program Files\\Git\\bin;" (getenv "PATH")))
 ;	  (setenv "PATH" (concat "C:\\Program Files\\Git\\mingw64\\bin;" (getenv "PATH")))
 	  (setenv "PATH" (concat "C:\\Program Files (x86)\\MSBuild\\14.0\\Bin;" (getenv "PATH")))
@@ -106,6 +107,9 @@
 ;; enable disabled functions
 (put 'erase-buffer 'disabled nil)
 (put 'upcase-region 'disabled nil)
+
+;; no beep
+(setq visible-bell 1)
 
 ;; tab
 ;;(setq-default indent-tabs-mode nil)
@@ -304,3 +308,11 @@
 ;; AutoHotKey
 (load-file "~/.emacs.d/mylisp/z-ahk.el")
 (global-set-key (kbd "C-; C-o C-v") 'z-open-file-at-point-in-vs)
+
+(add-hook 'sql-mode-hook
+		  (lambda ()
+			(local-set-key (kbd "C-c s s") 'z-ssms-run-sql-in-region)
+			))
+
+;; node
+(load-file "~/.emacs.d/mylisp/z-node.el")
