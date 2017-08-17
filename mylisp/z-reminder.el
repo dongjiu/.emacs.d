@@ -12,8 +12,9 @@
   "Show the message in other window.
 MSG is the message to be shown.
 The message window will disappera after INTERVAL seconds.  INTERVAL is optional with default value 5."
-  (let ((obuffer (current-buffer))
+  (let ((win (get-buffer-window "*z-reminder*"))
 		(popup-buffer (get-buffer-create "*z-reminder*")))
+
 	(set-buffer popup-buffer)
 	(message-mode)
 	(setq buffer-read-only nil)
@@ -23,14 +24,15 @@ The message window will disappera after INTERVAL seconds.  INTERVAL is optional 
 	(insert (propertize msg 'font-lock-face '(:foreground "red")))
 	(set-buffer-modified-p nil)
 	(setq buffer-read-only t)
-	(set-buffer obuffer)
-	(window-configuration-to-register ?r)
-	(display-buffer popup-buffer)
-	(unless interval (setq interval 5))
-	(setq z-reminder-timer
+
+	(unless win
+	  (window-configuration-to-register ?r)
+	  (display-buffer popup-buffer)
+	  (unless interval (setq interval 5))
+	  (setq z-reminder-timer
 ;		  (run-with-timer interval nil (lambda (buf) (delete-windows-on buf)) popup-buffer))
-		  (run-with-timer interval nil (lambda () (jump-to-register ?r))))
-	))
+			(run-with-timer interval nil (lambda () (jump-to-register ?r))))
+	  )))
 
 (defun z-reminder--handler (first-alert-secs subseq-alert-secs)
   "Timer handler.
