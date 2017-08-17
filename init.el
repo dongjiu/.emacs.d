@@ -6,16 +6,18 @@
 ;; (setenv "PATH" (concat "/Users/dzhu/bin:" (getenv "PATH")))
 (if (eq system-type 'windows-nt)
 	(progn
-	  (setenv "PATH" (concat "C:\\Users\\donzhu\\bin;" (getenv "PATH")))
-	  (setenv "PATH" (concat "C:\\Users\\donzhu\\softwares\\ES-1.1.0.8;" (getenv "PATH")))
-	  (setenv "PATH" (concat "C:\\Program Files\\Git\\bin;" (getenv "PATH")))
-;	  (setenv "PATH" (concat "C:\\Program Files\\Git\\mingw64\\bin;" (getenv "PATH")))
-	  (setenv "PATH" (concat "C:\\Program Files (x86)\\MSBuild\\14.0\\Bin;" (getenv "PATH")))
+	  (setenv "PATH" (concat "C:\\Users\\donzhu\\bin;"
+							 "C:\\Users\\donzhu\\softwares\\ES-1.1.0.8;"
+							 "C:\\Program Files\\Git\\bin;"
+							 "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\bin;"
+							 "C:\\Program Files (x86)\\MSBuild\\14.0\\Bin;"
+							 (getenv "PATH")))
 
 	  ;; exec-path
-	  (setq exec-path (append exec-path '("C:\\Program Files\\Git\\mingw64\\bin")))
-	  (set-frame-font "Consolas 10")
-	  )
+	  (setq exec-path (append exec-path '("C:\\Program Files\\Git\\usr\\bin" ; diff
+										  "C:\\Program Files\\Git\\mingw64\\bin")))
+	  (set-frame-font "Consolas 10"))
+
   (setenv "PATH" (concat "/Users/dzhu/bin:/usr/local/bin:/Library/TeX/texbin:/sw/bin:"
 						 "/Users/dzhu/tools/apache-maven-3.3.9/bin:"
 						 "/usr/local/share/dotnet:"
@@ -94,6 +96,9 @@
 ;; (require 'rainbow-mode)
 
 (package-initialize)
+
+;; bookmark auto save behavior
+(setq bookmark-save-flag 1)
 
 ;; ediff
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
@@ -304,6 +309,10 @@
 (setq initial-buffer-choice (lambda ()
 							  (setq default-directory "C:/Users/donzhu")
 							  (eshell)))
+
+;; windows utils
+(when (eq system-type 'windows-nt)
+  (load-file "~/.emacs.d/mylisp/z-win.el"))
 
 ;; AutoHotKey
 (load-file "~/.emacs.d/mylisp/z-ahk.el")

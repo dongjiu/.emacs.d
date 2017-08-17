@@ -67,7 +67,9 @@
   "Open file at point in Visual Studio. If there is no file at point, open the buffer file in visual studio."
   (interactive)
   (let ((file))
-	(setq file (ffap-file-at-point))
+	(setq file (if (string= major-mode "dired-mode")
+				   (dired-copy-filename-as-kill 0)
+				 (ffap-file-at-point)))
 	(if (and file (file-exists-p file))
 		(z-open-in-vs file)
 	  (if (file-exists-p (buffer-file-name))
@@ -99,3 +101,35 @@
   "Run SQL in region."
   (interactive)
   (z-ssms-run-sql (buffer-substring-no-properties (region-beginning) (region-end))))
+
+(defun z-corex-run (cmd)
+  "Run CMD from Corex."
+  (if (z-windows-title-contains "Corext-Based Enlistment")
+	  (progn (kill-new cmd)
+			 (z--write-to-file z-ahk-tmp-file
+							   (concat "SetTitleMatchMode, 2\n"
+									   "IfWinExist, Corex\n"
+									   "{\n"
+									   "WinActivate, Corex\n"
+									   "WinWaitActive, Corex\n"
+									   "Send ^{v}\n"
+									   "Send {Enter}\n"
+									   "}\n"))
+			 (z--run-tmp-ahk-file))
+	(message "Corex console is not started.")))
+
+(defun z-ucmweb ()
+  "Run UCMWeb from Corex."
+  (interactive)
+  (let ((title "UCMWeb - Microsoft Visual Studio"))
+	(if (z-windows-title-contains title)
+	  (call-process "C:\\Users\\donzhu\\github\\tools4win\\activate_win.exe" nil 0 nil title)
+	  (z-corex-run "D:\\work\\UCM\\private\\UI\\UCMWeb\\UCMWeb.sln"))))
+
+(defun z-ucmapi ()
+  "Run UcmApi from Corex."
+  (interactive)
+  (let ((title "UcmApi - Microsoft Visual Studio"))
+	(if (z-windows-title-contains title)
+	  (call-process "C:\\Users\\donzhu\\github\\tools4win\\activate_win.exe" nil 0 nil title)
+	  (z-corex-run "D:\\work\\UCM\\private\\Service\\UcmApi\\UcmApi.sln"))))

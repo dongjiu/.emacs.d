@@ -24,10 +24,12 @@ The message window will disappera after INTERVAL seconds.  INTERVAL is optional 
 	(set-buffer-modified-p nil)
 	(setq buffer-read-only t)
 	(set-buffer obuffer)
+	(window-configuration-to-register ?r)
 	(display-buffer popup-buffer)
 	(unless interval (setq interval 5))
 	(setq z-reminder-timer
-		  (run-with-timer interval nil (lambda (buf) (delete-windows-on buf)) popup-buffer))
+;		  (run-with-timer interval nil (lambda (buf) (delete-windows-on buf)) popup-buffer))
+		  (run-with-timer interval nil (lambda () (jump-to-register ?r))))
 	))
 
 (defun z-reminder--handler (first-alert-secs subseq-alert-secs)

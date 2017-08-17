@@ -1,17 +1,20 @@
 ;; shell
-(define-skeleton z-shell-find
-  "Run Linux find command."
-  nil
-  '(setq v1 default-directory)
-  (if (eq system-type 'windows-nt)
-	  (concat "es " v1 " ")
+(if (eq system-type 'windows-nt)
+	(define-skeleton z-shell-find
+	  "Run Linux find command."
+	  nil
+	  '(setq v1 default-directory)
+	  "async-shell-command 'es " v1 " " _ "'")
+  (define-skeleton z-shell-find
+	"Run Linux find command."
+	nil
 	"find $PWD -iname '" _ "'"))
 
 (define-skeleton z-shell-find-text
   "Run perl find_text."
   nil
   '(setq v1 default-directory)
-  "es " v1 " " _ " | perl c:/Users/donzhu/bin/filter_files.pl ")
+  "async-shell-command 'es " v1 " " _ " | perl c:/Users/donzhu/bin/filter_files.pl '")
 
 (define-skeleton z-shell-git-commit
   "git commit."
@@ -72,8 +75,7 @@
 
 (define-abbrev-table 'eshell-mode-abbrev-table
   '(
-	("cl" "z-eshell-clear-buffer")
-;	("s" "cd /ssh:tomcat@192.168.8.6:/" (lambda () (backward-char 2)))
+	("zcl" "z-eshell-clear-buffer")
 	))
 
 ;; sql

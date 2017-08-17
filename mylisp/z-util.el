@@ -10,6 +10,12 @@
   (browse-url (concat "http://cn.bing.com/dict/search?q="
 					  (buffer-substring-no-properties (region-beginning) (region-end)))))
 
+(defun z-search-region ()
+  "Search text (in region) in search engine."
+  (interactive)
+  (browse-url (concat "https://www.bing.com/search?q="
+					  (buffer-substring-no-properties (region-beginning) (region-end)))))
+
 (defun z-goto-close-paren (open-paren close-paren)
   (let ((parens-to-match 1)
         (stop nil)
@@ -341,9 +347,56 @@ Otherwise, do nothing."
 	  (setq file (z-string-upcase-first-char (replace-regexp-in-string "/" "\\\\" file))))
 	(kill-new file)))
 
+(defun z-path-dirs ()
+  "Return a list of directories in environment variable PATH."
+  (split-string (getenv "PATH") path-separator))
+
+(defun z-show-path ()
+  "Show directories in PATH."
+  (interactive)
+  (pop-to-buffer "*PATH*")
+  (erase-buffer)
+  (dolist (p (z-path-dirs))
+	(insert (concat p "\n"))))
+
 (defun z-cmd-here ()
   "Run Windows cmd in default directory."
   (interactive)
   (let ((dir default-directory))
 	(setq dir (replace-regexp-in-string "/" "\\\\" dir))
-	(w32-shell-execute "runas" "cmd" (concat " /K cd " dir))))
+	(w32-shell-execute "runas" "cmd" (concat " /K cd /d " dir))))
+
+(defun z-file-contains (es-input &optional regex)
+  "Run Everything Search to find files using ES-INPUT, and filter the files by REGEX."
+  (let ((buf "*Files*") (file))
+	(pop-to-buffer buf)
+	(with-temp-buffer
+	  (shell-command (concat "es " es-input) 1)
+	  (goto-char (point-min))
+	  (while (< (point) (point-max))
+		(setq file (buffer-substring-no-properties (line-beginning-position) (line-end-position)))
+		(when (z--file-contains file regex)
+		  (save-excursion
+			(set-buffer buf)
+			(insert file)
+			(newline)))
+		(forward-line)))
+	(goto-char (point-min))))
+
+(defun z--file-contains (file regex)
+  "Returns non-nil if FILE contains REGEX."
+  (with-temp-buffer
+	(if (ignore-errors
+		  (insert-file-contents file))
+		(re-search-forward regex nil t)
+	  nil)))
+  
+
+(defun z-chrome (&optional url)
+  "Open URL in chrome."
+  (interactive)
+  (unless url
+	(setq url (ffap-url-at-point)))
+  (when url
+	(w32-shell-execute "open" "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe" url)))
+
