@@ -856,3 +856,16 @@
 	("zct" "" z-typescript-constructor)
 	("zlg" "" z-javascript-log)
 	))
+
+
+(define-skeleton z-org-insert-el-code
+  "Insert emacs lisp code."
+  nil
+  "#+BEGIN_SRC emacs-lisp\n"
+  _
+  "\n#+END_SRC\n")
+
+(define-abbrev-table 'org-mode-abbrev-table
+  '(
+	("zel" "" z-org-insert-el-code)
+	))
