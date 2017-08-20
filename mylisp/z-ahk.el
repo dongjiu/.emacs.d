@@ -1,5 +1,5 @@
-(setq z-ahk-exe "C:\\Users\\donzhu\\softwares\\AutoHotkey_1.1.26.01\\AutoHotkeyU64.exe ")
-(setq z-ahk-script "C:\\Users\\donzhu\\Documents\\scripts\\myhotkeys.ahk")
+(setq z-ahk-exe (concat z-win-user-dir "\\softwares\\AutoHotkey_1.1.26.01\\AutoHotkeyU64.exe "))
+(setq z-ahk-script (concat z-win-user-dir "\\Documents\\scripts\\myhotkeys.ahk"))
 (unless (cl-remove-if-not 'identity
 						  (mapcar (lambda (pid)
 									(string-match "AutoHotKey" (cdr (assoc 'comm (process-attributes pid)))))
@@ -31,7 +31,7 @@
 
 (defun z--run-tmp-ahk-file ()
   "Run tmp ahk script."
-  (w32-shell-execute "runas" "C:\\Users\\donzhu\\softwares\\AutoHotkey_1.1.26.01\\AutoHotkeyU64.exe"
+  (w32-shell-execute "runas" z-ahk-exe
 					 (replace-regexp-in-string "/" "\\\\" z-ahk-tmp-file)))
 
 (defun z-run-everything-search (text)

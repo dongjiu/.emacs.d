@@ -14,7 +14,7 @@ variable point to the user directory.
 
 #+BEGIN_SRC emacs-lisp
   (when (eq system-type 'windows-nt)
-    (setq z-win-user-dir "C:\\Users\\Administrators"))
+    (setq z-win-user-dir (getenv "USERPROFILE")))
 #+END_SRC
 
 * set environment variables
