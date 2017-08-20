@@ -8,12 +8,20 @@
 
 #+END_SRC
 
+* Windows user directory
+On different windows systems, the user directory may vary. This
+variable point to the user directory.
+
+#+BEGIN_SRC emacs-lisp
+  (when (eq system-type 'windows-nt)
+    (setq z-win-user-dir "C:\\Users\\Administrators"))
+#+END_SRC
+
 * set environment variables
 #+BEGIN_SRC emacs-lisp
   (if (eq system-type 'windows-nt)
       (progn
-        (setenv "PATH" (concat "C:\\Users\\donzhu\\bin;"
-                               "C:\\Users\\donzhu\\softwares\\ES-1.1.0.8;"
+        (setenv "PATH" (concat z-win-user-dir "\\softwares\\ES-1.1.0.8;"
                                "C:\\Program Files\\Git\\bin;"
                                "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\bin;"
                                "C:\\Program Files (x86)\\MSBuild\\14.0\\Bin;"
@@ -337,9 +345,10 @@
 
 * init buffer
 #+BEGIN_SRC emacs-lisp
-(setq initial-buffer-choice (lambda ()
-							  (setq default-directory "C:/Users/donzhu")
-							  (eshell)))
+  (setq initial-buffer-choice
+        (lambda ()
+          (setq default-directory (expand-file-name z-win-user-dir))
+          (eshell)))
 #+END_SRC
 
 * work on windows
