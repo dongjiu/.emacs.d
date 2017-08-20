@@ -84,6 +84,14 @@ variable point to the user directory.
 
 #+END_SRC
 
+* go to web bookmarks file
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-; b")
+                  (lambda ()
+                    (interactive)
+                    (find-file "~/.emacs.d/web_bookmarks.org")))
+#+END_SRC
+
 * go to work.org
   (global-set-key (kbd "C-; h")
 				  (lambda ()
@@ -236,8 +244,19 @@ variable point to the user directory.
 #+END_SRC
 
 * org-mode
-;;(setq org-export-with-sub-superscripts nil)
-;;(setq org-default-notes-file "/Users/dzhu/Documents/notes/notes.org")
+;;(setq org-export-with-sub-superscripts nil) (setq
+;;org-default-notes-file "/Users/dzhu/Documents/notes/notes.org")
+
+By default, (org-cycle-agenda-files) is bound to C-', C-,. I use C-,
+for set-mark-command, and use the following code to override the
+default org key binding.
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (local-set-key (kbd "C-,") 'set-mark-command)))
+
+#+END_SRC
 
 * mysql
 ;; (setq sql-mysql-program "/usr/local/bin/mysql")
