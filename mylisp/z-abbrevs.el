@@ -75,7 +75,7 @@
 
 (define-abbrev-table 'eshell-mode-abbrev-table
   '(
-	("zcl" "z-eshell-clear-buffer")
+	("cls" "z-eshell-clear-buffer")
 	))
 
 ;; sql
