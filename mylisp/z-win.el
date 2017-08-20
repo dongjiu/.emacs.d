@@ -45,3 +45,8 @@
   (let ((cl-path "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\bin"))
 	(unless (member cl-path (z-path-dirs))
 	  (setenv "PATH" (concat cl-path ";" (getenv "PATH"))))))
+
+(defun z-set-cl-env-2 ()
+  "Set environment variables for cl.exe."
+  (setenv "LIB" "C:\\Program Files\\Microsoft Visual Studio 14.0\\VC\\lib")
+  (setenv "INCLUDE" "C:\\Program Files\\Microsoft Visual Studio 14.0\\VC\\include;C:\\Program Files\\Windows Kits\\10\\Include\\10.0.15063.0\\ucrt;C:\\Program Files\\Windows Kits\\10\\Include\\10.0.15063.0\\um"))

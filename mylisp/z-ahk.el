@@ -1,5 +1,5 @@
-(setq z-ahk-exe (concat z-win-user-dir "\\softwares\\AutoHotkey_1.1.26.01\\AutoHotkeyU64.exe "))
-(setq z-ahk-script (concat z-win-user-dir "\\Documents\\scripts\\myhotkeys.ahk"))
+(setq z-ahk-exe (concat z-win-user-dir "\\softwares\\AutoHotkey_1.1.26.01\\AutoHotkeyU" (format "%s" z-os-bit) ".exe"))
+(setq z-ahk-script (expand-file-name "~/.emacs.d/ahk/init.ahk"))
 (unless (cl-remove-if-not 'identity
 						  (mapcar (lambda (pid)
 									(string-match "AutoHotKey" (cdr (assoc 'comm (process-attributes pid)))))
@@ -10,7 +10,7 @@
 
 (defvar z-ahk-tmp-file nil "tmp ahk file name.")
 (with-temp-buffer
-  (find-file "~/.emacs.d/tmp.ahk")
+  (find-file "~/.emacs.d/ahk/tmp.ahk")
   (setq z-ahk-tmp-file (buffer-file-name))
   (kill-buffer))
 

@@ -17,6 +17,11 @@ variable point to the user directory.
     (setq z-win-user-dir (getenv "USERPROFILE")))
 #+END_SRC
 
+* 32-bit, 64-bit
+#+BEGIN_SRC emacs-lisp
+  (setq z-os-bit (if (= gc-cons-threshold 400000) 32 64))
+#+END_SRC
+
 * set environment variables
 #+BEGIN_SRC emacs-lisp
   (if (eq system-type 'windows-nt)
