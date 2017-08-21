@@ -19,17 +19,33 @@ Send ^{x}{1} ; use single window
 return
 
 ^!b::
-IfWinActive, ahk_exe firefox.exe
+If WinActive("ahk_exe iexplore.exe")
 {
 Send, ^{l}
-Sleep, 100
+Sleep, 500
+Send, +{F10}
+Sleep, 500
+Send, {c}
+AddBookmarkInEmacs()
+}
+else If WinActive("ahk_exe firefox.exe")
+{
+Send, ^{l}
+Sleep, 200
 Send, !{w}
 AddBookmarkInEmacs()
 }
-If WinActive("ahk_exe iexplore.exe") or WinActive("ahk_exe chrome.exe")
+else If WinActive("ahk_exe chrome.exe")
 {
 Send, ^{l}
-Sleep, 100
+Sleep, 200
+Send, ^{c}
+AddBookmarkInEmacs()
+}
+else If WinActive("ahk_exe explorer.exe")
+{
+Send, !{d}
+Sleep, 200
 Send, ^{c}
 AddBookmarkInEmacs()
 }
