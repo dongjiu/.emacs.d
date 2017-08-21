@@ -18,8 +18,13 @@ variable point to the user directory.
 #+END_SRC
 
 * 32-bit, 64-bit
+On windows, use the PROCESSOR_ARCHITECTURE environment variable to
+determine whether the system is 32bit or 64bit.
+
 #+BEGIN_SRC emacs-lisp
-  (setq z-os-bit (if (= gc-cons-threshold 400000) 32 64))
+  (if (eq system-type 'windows-nt)
+      (setq z-os-bit
+            (if (string-match-p "64-bit" (shell-command-to-string "wmic os get osarchitecture")) 64 32)))
 #+END_SRC
 
 * set environment variables
@@ -376,23 +381,37 @@ default org key binding.
 #+END_SRC
 
 * work on windows
+The following code loads Windows specific helper functions.
 #+BEGIN_SRC emacs-lisp
-(when (eq system-type 'windows-nt)
-  (load-file "~/.emacs.d/mylisp/z-win.el"))
-
-;; AutoHotKey
-(load-file "~/.emacs.d/mylisp/z-ahk.el")
-(global-set-key (kbd "C-; C-o C-v") 'z-open-file-at-point-in-vs)
-
-(add-hook 'sql-mode-hook
-		  (lambda ()
-			(local-set-key (kbd "C-c s s") 'z-ssms-run-sql-in-region)
-			))
-
-;; node
-(load-file "~/.emacs.d/mylisp/z-node.el")
-
+  (when (eq system-type 'windows-nt)
+    (load-file "~/.emacs.d/mylisp/z-win.el"))
 #+END_SRC
+
+AutoHotKey related functions:
+#+BEGIN_SRC emacs-lisp
+  (when (eq system-type 'windows-nt)
+    (load-file "~/.emacs.d/mylisp/z-ahk.el"))
+#+END_SRC
+
+Open file in visual studio:
+#+BEGIN_SRC emacs-lisp
+  (when (eq system-type 'windows-nt)
+    (global-set-key (kbd "C-; C-o C-v") 'z-open-file-at-point-in-vs))
+#+END_SRC
+
+Run SQL in SSMS:
+#+BEGIN_SRC emacs-lisp
+  (when (eq system-type 'windows-nt)
+    (add-hook 'sql-mode-hook
+              (lambda ()
+                (local-set-key (kbd "C-c s s") 'z-ssms-run-sql-in-region))))
+#+END_SRC
+
+NodeJS functions wrappers for working on JSON.
+#+BEGIN_SRC emacs-lisp
+  (load-file "~/.emacs.d/mylisp/z-node.el")
+#+END_SRC
+
 * not used anymore
 ;; run as server
 ;; (require 'server)

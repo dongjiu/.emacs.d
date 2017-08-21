@@ -9,6 +9,7 @@ https://stackoverflow.com/questions/21754255/cmd-command-user-name
 
 ** win 10
 https://developer.microsoft.com/en-US/windows/downloads/windows-10-sdk
+https://superuser.com/questions/321988/how-do-i-determine-if-my-windows-is-32-bit-or-64-bit-using-a-command
 
 http://landinghub.visualstudio.com/visual-cpp-build-tools
 

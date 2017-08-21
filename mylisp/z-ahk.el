@@ -85,7 +85,8 @@
   (when (and sql (> (length sql) 5))
 	(z--write-to-file z-ahk-tmp-sql-file sql)
 	(kill-new (replace-regexp-in-string "/" "\\\\" z-ahk-tmp-sql-file))
-	(z--write-to-tmp-ahk-file
+	(z--write-to-file
+	 z-ahk-tmp-file
 	 (concat "WinActivate, ahk_exe Ssms.exe\n"
 			 "WinWaitActive, ahk_exe Ssms.exe\n"
 			 "IfWinNotActive, " (file-name-base z-ahk-tmp-sql-file) ".sql\n"
