@@ -10,7 +10,7 @@
 
 * Windows user directory
 On different windows systems, the user directory may vary. This
-variable point to the user directory.
+variable points to the user directory.
 
 #+BEGIN_SRC emacs-lisp
   (when (eq system-type 'windows-nt)
@@ -18,8 +18,8 @@ variable point to the user directory.
 #+END_SRC
 
 * 32-bit, 64-bit
-On windows, use the PROCESSOR_ARCHITECTURE environment variable to
-determine whether the system is 32bit or 64bit.
+On windows, use the "wmic os get osarchitecture" command to determine
+whether the system is 32bit or 64bit.
 
 #+BEGIN_SRC emacs-lisp
   (if (eq system-type 'windows-nt)
@@ -407,12 +407,12 @@ Run SQL in SSMS:
                 (local-set-key (kbd "C-c s s") 'z-ssms-run-sql-in-region))))
 #+END_SRC
 
-NodeJS functions wrappers for working on JSON.
+NodeJS functions wrappers for working with JSON.
 #+BEGIN_SRC emacs-lisp
   (load-file "~/.emacs.d/mylisp/z-node.el")
 #+END_SRC
 
-* not used anymore
+* The following config are not used
 ;; run as server
 ;; (require 'server)
 ;; (unless (server-running-p) (server-start))
