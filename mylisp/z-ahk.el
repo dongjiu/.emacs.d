@@ -32,7 +32,7 @@
 (defun z--run-tmp-ahk-file ()
   "Run tmp ahk script."
   (w32-shell-execute "runas" z-ahk-exe
-					 (replace-regexp-in-string "/" "\\\\" z-ahk-tmp-file)))
+					 (z-string-win-style-path z-ahk-tmp-file)))
 
 (defun z-run-everything-search (text)
   "Search TEXT using everything."
@@ -47,11 +47,11 @@
 
 (defun z-run-everything-search-in-current-dir (text)
   "Search TEXT using everything."
-  (z-run-everything-search (concat (replace-regexp-in-string "/" "\\\\" default-directory) " " text)))
+  (z-run-everything-search (concat (z-string-win-style-path default-directory) " " text)))
 
 (defun z-open-in-vs (file &optional line-number)
   "Open file in Visual Studio. If LINE-NUMBER is not nil, go to the specific line."
-  (setq file (replace-regexp-in-string "/" "\\\\" file))
+  (setq file (z-string-win-style-path file))
   (kill-new file)
   (z--write-to-file z-ahk-tmp-file
 					(concat "WinActivate, ahk_exe devenv.exe\n"
@@ -84,7 +84,7 @@
   "Run SQL in SSMS."
   (when (and sql (> (length sql) 5))
 	(z--write-to-file z-ahk-tmp-sql-file sql)
-	(kill-new (replace-regexp-in-string "/" "\\\\" z-ahk-tmp-sql-file))
+	(kill-new (z-string-win-style-path z-ahk-tmp-sql-file))
 	(z--write-to-file
 	 z-ahk-tmp-file
 	 (concat "WinActivate, ahk_exe Ssms.exe\n"

@@ -322,7 +322,8 @@ Otherwise, do nothing."
 	(unless file
 	  (if (string= major-mode "dired-mode")
 		  (progn (setq file (dired-copy-filename-as-kill 0))
-				 (setq file (replace-regexp-in-string "/" "\\\\" file)))
+				 (when (eq system-type 'windows-nt)
+				   (setq file (z-string-win-style-path file))))
 		(setq file (thing-at-point 'filename)))
 	  (unless file
 		(setq file ".")))
@@ -344,7 +345,7 @@ Otherwise, do nothing."
   (interactive)
   (let ((file (buffer-file-name)))
 	(when (eq system-type 'windows-nt)
-	  (setq file (z-string-upcase-first-char (replace-regexp-in-string "/" "\\\\" file))))
+	  (setq file (z-string-win-style-path file)))
 	(kill-new file)))
 
 (defun z-path-dirs ()
@@ -363,7 +364,7 @@ Otherwise, do nothing."
   "Run Windows cmd in default directory."
   (interactive)
   (let ((dir default-directory))
-	(setq dir (replace-regexp-in-string "/" "\\\\" dir))
+	(setq dir (z-string-win-style-path dir))
 	(w32-shell-execute "runas" "cmd" (concat " /K cd /d " dir))))
 
 (defun z-file-contains (es-input &optional regex)
