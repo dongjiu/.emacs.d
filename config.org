@@ -17,7 +17,7 @@ variable points to the user directory.
     (setq z-win-user-dir (getenv "USERPROFILE")))
 #+END_SRC
 
-* 32-bit, 64-bit
+* Determine 32-bit, 64-bit systems
 On windows, use the "wmic os get osarchitecture" command to determine
 whether the system is 32bit or 64bit.
 
@@ -102,8 +102,8 @@ whether the system is 32bit or 64bit.
                     (find-file "~/.emacs.d/web_bookmarks.org")))
 #+END_SRC
 
-* bookmark
-;; bookmark auto save behavior
+* emacs bookmark
+Save bookmark to bookmark file when the bookmark is changed.
 #+BEGIN_SRC emacs-lisp
 (setq bookmark-save-flag 1)
 #+END_SRC

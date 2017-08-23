@@ -15,3 +15,12 @@ http://landinghub.visualstudio.com/visual-cpp-build-tools
 
 * emacs
 https://emacs.stackexchange.com/questions/11052/how-to-determine-operating-system-bits-32-vs-64-bit-in-elisp
+
+** org
+org-add-link-type
+http://endlessparentheses.com/use-org-mode-links-for-absolutely-anything.html
+
+* .NET
+** ASP.NET MVC
+Specify layout file:
+https://stackoverflow.com/questions/5161380/how-do-i-specify-different-layouts-in-the-asp-net-mvc-3-razor-viewstart-file
