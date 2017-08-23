@@ -14,7 +14,7 @@ variable points to the user directory.
 
 #+BEGIN_SRC emacs-lisp
   (when (eq system-type 'windows-nt)
-    (setq z-win-user-dir (getenv "USERPROFILE")))
+    (setq z-home (getenv "USERPROFILE")))
 #+END_SRC
 
 * Determine 32-bit, 64-bit systems
@@ -30,22 +30,22 @@ whether the system is 32bit or 64bit.
 * set environment variables
 #+BEGIN_SRC emacs-lisp
   (if (eq system-type 'windows-nt)
-      (progn
-        (setenv "PATH" (concat z-win-user-dir "\\softwares\\ES-1.1.0.8;"
-                               "C:\\Program Files\\Git\\bin;"
-                               "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\bin;"
-                               "C:\\Program Files (x86)\\MSBuild\\14.0\\Bin;"
-                               (getenv "PATH")))
+	  (progn
+		(setenv "PATH" (concat z-home "\\softwares\\ES-1.1.0.8;"
+							   "C:\\Program Files\\Git\\bin;"
+							   "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\bin;"
+							   "C:\\Program Files (x86)\\MSBuild\\14.0\\Bin;"
+							   (getenv "PATH")))
 
-        ;; exec-path
-        (setq exec-path (append exec-path '("C:\\Program Files\\Git\\usr\\bin" ; diff
-                                            "C:\\Program Files\\Git\\mingw64\\bin"))))
-     
+		;; exec-path
+		(setq exec-path (append exec-path '("C:\\Program Files\\Git\\usr\\bin" ; diff
+											"C:\\Program Files\\Git\\mingw64\\bin"))))
 
-    (setenv "PATH" (concat "/Users/dzhu/bin:/usr/local/bin:/Library/TeX/texbin:/sw/bin:"
-                           "/Users/dzhu/tools/apache-maven-3.3.9/bin:"
-                           "/usr/local/share/dotnet:"
-                           (getenv "PATH"))))
+
+	(setenv "PATH" (concat "/Users/dzhu/bin:/usr/local/bin:/Library/TeX/texbin:/sw/bin:"
+						   "/Users/dzhu/tools/apache-maven-3.3.9/bin:"
+						   "/usr/local/share/dotnet:"
+						   (getenv "PATH"))))
 #+END_SRC
 
 * set themes
@@ -309,7 +309,7 @@ default org key binding.
 #+BEGIN_SRC emacs-lisp
   (setq initial-buffer-choice
         (lambda ()
-          (setq default-directory (expand-file-name z-win-user-dir))
+          (setq default-directory (expand-file-name z-home))
           (eshell)))
 #+END_SRC
 
@@ -340,9 +340,35 @@ Run SQL in SSMS:
                 (local-set-key (kbd "C-c s s") 'z-ssms-run-sql-in-region))))
 #+END_SRC
 
-NodeJS functions wrappers for working with JSON.
+* NodeJS functions wrappers for working with JSON.
+First set the path for the node executable.
 #+BEGIN_SRC emacs-lisp
-  (load-file "~/.emacs.d/mylisp/z-node.el")
+(setq z-node-exe "D:/CorextCache/Node.js.with.uv.pipe.name.fixed.6.9.1/node.exe")
+#+END_SRC
+
+Then define the following function to beautify json in region.
+#+BEGIN_SRC emacs-lisp
+  (defun z-node-beautify-json ()
+	"Beautify JSON in region."
+	(interactive)
+	(if (file-exists-p z-node-exe)
+		(let ((file)
+			  (json (buffer-substring-no-properties (region-beginning) (region-end)))
+			  (cmd))
+		  (with-temp-buffer
+			(find-file "~/.emacs.d/tmp.json")
+			(erase-buffer)
+			(insert json)
+			(save-buffer)
+			(setq file (buffer-file-name))
+			(kill-buffer))
+		  (setq cmd (concat (replace-regexp-in-string "/" "\\\\" z-node-exe) " "
+							(replace-regexp-in-string "/" "\\\\" (expand-file-name "~/.emacs.d/javascript/beautify_json.js ")) " "
+							(replace-regexp-in-string "/" "\\\\" file)))
+		  (setq json (shell-command-to-string cmd))
+		  (delete-region (region-beginning) (region-end))
+		  (insert json))
+	  (message "cannot find node executable file")))
 #+END_SRC
 
 * The following config are not used

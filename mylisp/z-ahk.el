@@ -1,4 +1,4 @@
-(setq z-ahk-exe (concat z-win-user-dir "\\softwares\\AutoHotkey_1.1.26.01\\AutoHotkeyU" (format "%s" z-os-bit) ".exe"))
+(setq z-ahk-exe (concat z-home "\\softwares\\AutoHotkey_1.1.26.01\\AutoHotkeyU" (format "%s" z-os-bit) ".exe"))
 (setq z-ahk-script (expand-file-name "~/.emacs.d/ahk/init.ahk"))
 (unless (cl-remove-if-not 'identity
 						  (mapcar (lambda (pid)
