@@ -27,11 +27,11 @@ https://microsoft.sharepoint.com/teams/BingAds/_layouts/15/WopiFrame.aspx?source
 *** team process overview
 https://microsoft.sharepoint.com/teams/BingAds/_layouts/15/WopiFrame.aspx?sourcedoc={1cafa1d1-25d8-4da7-a2bf-b3a0b6a3fb26}&action=view&wd=target%28%2F%2FDev%20Wiki%2FTeam%20Process.one%7C9f5551f1-259b-454b-90be-e02c81cefd46%2FOverview%7Cba249cf8-cc25-418f-999a-e0f9e3b6111e%2F%29
 
-* github
+* Github
 https://github.com/dongjiu/.emacs.d
 https://github.com/dongjiu/tools4win
 
-* windows os
+* Windows
 https://stackoverflow.com/questions/21754255/cmd-command-user-name
 
 ** win 10

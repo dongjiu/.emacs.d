@@ -317,7 +317,7 @@ Use "C-;" as prefix to avoid conflicts with builtin key bindings.
   (global-set-key (kbd "C-; b")
                   (lambda ()
                     (interactive)
-                    (find-file "~/.emacs.d/web_bookmarks.org")))
+                    (find-file-other-window "~/.emacs.d/web_bookmarks.org")))
 #+END_SRC
 * Abbreviations
 ** Minor modes
