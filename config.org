@@ -9,16 +9,16 @@
 
 * Environment
 ** User directory
-On different windows systems, the user directory may vary. This
-variable points to the user directory.
+On Windows, use environment variable %USERPROFILE% as the user
+directory and save it in the z-home variable.
 #+BEGIN_SRC emacs-lisp
   (when (eq system-type 'windows-nt)
     (setq z-home (getenv "USERPROFILE")))
 #+END_SRC
 
-** Determine 32-bit, 64-bit system
+** System bits
 On windows, use the "wmic os get osarchitecture" command to determine
-whether the system is 32bit or 64bit.
+whether the system is 32-bit or 64-bit.
 #+BEGIN_SRC emacs-lisp
   (if (eq system-type 'windows-nt)
       (setq z-os-bit
@@ -67,7 +67,6 @@ whether the system is 32bit or 64bit.
 
 ** Scroll bar, tool bar and fringe
 #+BEGIN_SRC emacs-lisp
-  ;; appearance
   (when (display-graphic-p)
     (scroll-bar-mode -1)
     (tool-bar-mode -1)
@@ -105,23 +104,23 @@ whether the system is 32bit or 64bit.
 #+END_SRC
 
 ** Bookmark
-Save bookmark to bookmark file when the bookmark is changed.
+Save the bookmark to the bookmark file when a bookmark is changed.
 #+BEGIN_SRC emacs-lisp
 (setq bookmark-save-flag 1)
 #+END_SRC
 
 ** Diff
-Ediff settings:
+Use Ediff in a single frame, and split windows vertically.
 #+BEGIN_SRC emacs-lisp
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 ;(setq ediff-window-setup-function 'ediff-setup-windows-multiframe)
 (setq ediff-split-window-function 'split-window-horizontally) ;; vertical!!
 #+END_SRC
 
-Use vc-ediff instead of vc-diff:
+Use vc-ediff instead of vc-diff in vc-mode.
 #+BEGIN_SRC emacs-lisp
-(eval-after-load "vc-hooks"
-  '(define-key vc-prefix-map "=" 'vc-ediff))
+  (eval-after-load "vc-hooks"
+    '(define-key vc-prefix-map "=" 'vc-ediff))
 #+END_SRC
 
 ** Enable disabled functions
@@ -137,6 +136,7 @@ Use vc-ediff instead of vc-diff:
 #+END_SRC
 
 ** Init buffer
+When emacs is started, open eshell in the user directory.
 #+BEGIN_SRC emacs-lisp
   (setq initial-buffer-choice
         (lambda ()
@@ -152,9 +152,9 @@ By default, tab expands to 4 spaces.
 #+END_SRC
 
 ** Org
-By default, (org-cycle-agenda-files) is bound to C-', C-,. I use C-,
-for set-mark-command, and use the following code to override the
-default org key binding.
+By default, "C-," runs (org-cycle-agenda-files) in org mode. However, I want to use "C-," for set-mark-command.
+
+The following code overrides the default org key binding for "C-,".
 #+BEGIN_SRC emacs-lisp
   (add-hook 'org-mode-hook
             (lambda ()
@@ -297,8 +297,8 @@ Then bind it to "C-x C-h".
   (global-set-key (kbd "C-x C-h") 'z-run-eshell)
 #+END_SRC
 
-** "C-;" prefix key bindings
-Use "C-;" as prefix to avoid conflicts with builtin key bindings.
+** "C-;" prefix
+I use "C-;" as prefix to avoid conflicts with builtin key bindings.
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-; i") 'imenu)
   (global-set-key (kbd "C-; p") 'z-goto-match-paren)
@@ -312,12 +312,13 @@ Use "C-;" as prefix to avoid conflicts with builtin key bindings.
   (global-set-key (kbd "C-; o c") 'org-capture)
 #+END_SRC
 
-** go to web bookmarks file
+** Bookmarks
+I use bookmarks.org to save bookmarks for URL, file/directory paths.
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-; b")
                   (lambda ()
                     (interactive)
-                    (find-file-other-window "~/.emacs.d/web_bookmarks.org")))
+                    (find-file-other-window "~/.emacs.d/bookmarks.org")))
 #+END_SRC
 * Abbreviations
 ** Minor modes
@@ -384,13 +385,13 @@ corresponding modes through the above minor modes.
     (load-file "~/.emacs.d/mylisp/z-ahk.el"))
 #+END_SRC
 
-** Visual studio integration
+** Visual studio
 #+BEGIN_SRC emacs-lisp
   (when (eq system-type 'windows-nt)
     (global-set-key (kbd "C-; C-o C-v") 'z-open-file-at-point-in-vs))
 #+END_SRC
 
-** SSMS integration
+** SSMS
 #+BEGIN_SRC emacs-lisp
   (when (eq system-type 'windows-nt)
     (add-hook 'sql-mode-hook
