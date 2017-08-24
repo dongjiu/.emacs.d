@@ -10,14 +10,14 @@
 * Environment
 ** User directory
 On Windows, use environment variable %USERPROFILE% as the user
-directory and save it in the z-home variable.
+directory and save it in the *z-home* variable.
 #+BEGIN_SRC emacs-lisp
   (when (eq system-type 'windows-nt)
     (setq z-home (getenv "USERPROFILE")))
 #+END_SRC
 
 ** System bits
-On windows, use the "wmic os get osarchitecture" command to determine
+On windows, use the "/wmic os get osarchitecture/" command to determine
 whether the system is 32-bit or 64-bit.
 #+BEGIN_SRC emacs-lisp
   (if (eq system-type 'windows-nt)
@@ -152,7 +152,8 @@ By default, tab expands to 4 spaces.
 #+END_SRC
 
 ** Org
-By default, "C-," runs (org-cycle-agenda-files) in org mode. However, I want to use "C-," for set-mark-command.
+By default, "C-," runs /org-cycle-agenda-files/ in org mode. However,
+I want to use "C-," for /set-mark-command/.
 
 The following code overrides the default org key binding for "C-,".
 #+BEGIN_SRC emacs-lisp
