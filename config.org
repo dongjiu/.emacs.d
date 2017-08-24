@@ -1,311 +1,142 @@
-* packages
+* Packages
 #+BEGIN_SRC emacs-lisp
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/"))
 
 (package-initialize)
-
 #+END_SRC
 
-* Windows user directory
+* Environment
+** User directory
 On different windows systems, the user directory may vary. This
 variable points to the user directory.
-
 #+BEGIN_SRC emacs-lisp
   (when (eq system-type 'windows-nt)
     (setq z-home (getenv "USERPROFILE")))
 #+END_SRC
 
-* Determine 32-bit, 64-bit systems
+** Determine 32-bit, 64-bit system
 On windows, use the "wmic os get osarchitecture" command to determine
 whether the system is 32bit or 64bit.
-
 #+BEGIN_SRC emacs-lisp
   (if (eq system-type 'windows-nt)
       (setq z-os-bit
             (if (string-match-p "64-bit" (shell-command-to-string "wmic os get osarchitecture")) 64 32)))
 #+END_SRC
 
-* set environment variables
+** Environment variables
 #+BEGIN_SRC emacs-lisp
   (if (eq system-type 'windows-nt)
-	  (progn
-		(setenv "PATH" (concat z-home "\\softwares\\ES-1.1.0.8;"
-							   "C:\\Program Files\\Git\\bin;"
-							   "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\bin;"
-							   "C:\\Program Files (x86)\\MSBuild\\14.0\\Bin;"
-							   (getenv "PATH")))
+      (progn
+        (setenv "PATH" (concat z-home "\\softwares\\ES-1.1.0.8;"
+                               "C:\\Program Files\\Git\\bin;"
+                               "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\bin;"
+                               "C:\\Program Files (x86)\\MSBuild\\14.0\\Bin;"
+                               (getenv "PATH")))
 
-		;; exec-path
-		(setq exec-path (append exec-path '("C:\\Program Files\\Git\\usr\\bin" ; diff
-											"C:\\Program Files\\Git\\mingw64\\bin"))))
+        ;; exec-path
+        (setq exec-path (append exec-path '("C:\\Program Files\\Git\\usr\\bin" ; diff
+                                            "C:\\Program Files\\Git\\mingw64\\bin"))))
 
 
-	(setenv "PATH" (concat "/Users/dzhu/bin:/usr/local/bin:/Library/TeX/texbin:/sw/bin:"
-						   "/Users/dzhu/tools/apache-maven-3.3.9/bin:"
-						   "/usr/local/share/dotnet:"
-						   (getenv "PATH"))))
+    (setenv "PATH" (concat "/Users/dzhu/bin:/usr/local/bin:/Library/TeX/texbin:/sw/bin:"
+                           "/Users/dzhu/tools/apache-maven-3.3.9/bin:"
+                           "/usr/local/share/dotnet:"
+                           (getenv "PATH"))))
 #+END_SRC
 
-* set themes
+* Appearance
+** Font
 #+BEGIN_SRC emacs-lisp
   (if (eq system-type 'windows-nt)
-      (set-frame-font "Consolas 10")
-    (set-frame-font "Monaco 10")
+      (set-frame-font "Consolas 10" t t)
+    (set-frame-font "Monaco 10" t t)
     ;;(set-frame-font "-apple-Songti_SC-medium-normal-normal-*-*-*-*-*-p-0-iso10646-1")
     (when (display-graphic-p)
       (dolist (charset '(kana han symbol cjk-misc bopomofo))
         (set-fontset-font (frame-parameter nil 'font)
                           charset
                           "-*-PingFang SC-normal-normal-normal-*-*-*-*-*-p-0-iso10646-1"))))
+#+END_SRC
 
-  ;; transparent frame
-  ;;(set-frame-parameter (selected-frame) 'alpha '(<active> [<inactive>]))
-  ;(set-frame-parameter (selected-frame) 'alpha '(95 95))
-
-  ;(add-to-list 'default-frame-alist '(alpha 95 95))
-  ;(add-to-list 'default-frame-alist '(top . 10))
-  ;(add-to-list 'default-frame-alist '(left . 0))
-  ;(add-to-list 'default-frame-alist '(height . 65))
-  ;(add-to-list 'default-frame-alist '(width . 240))
-
-  ;; theme
-  ;;(load-theme 'wombat t)
-  ;;(load-theme 'deeper-blue t)
+** Theme
+#+BEGIN_SRC emacs-lisp
   (load-theme 'tango-dark t)
-  (set-background-color "gray11")
+#+END_SRC
 
+** Scroll bar, tool bar and fringe
+#+BEGIN_SRC emacs-lisp
   ;; appearance
   (when (display-graphic-p)
     (scroll-bar-mode -1)
     (tool-bar-mode -1)
     (set-fringe-mode 0))
-
-  ;; mode-line
-  (set-face-attribute 'mode-line nil :box nil)
-  (set-face-attribute 'mode-line nil :foreground "gray")
-  (set-face-attribute 'mode-line nil :background "purple")
-  (set-face-attribute 'mode-line-inactive nil :box nil)
-
-  ;; vertical bar
-  ;;(set-face-attribute 'vertical-border nil :foreground "purple")
-  (set-face-attribute 'vertical-border nil :foreground "gray")
-
 #+END_SRC
 
-* go to web bookmarks file
+** Mode line
 #+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "C-; b")
-                  (lambda ()
-                    (interactive)
-                    (find-file "~/.emacs.d/web_bookmarks.org")))
+  (set-face-attribute 'mode-line nil
+                      :box nil
+                      :foreground "gray"
+                      :background "purple"
+                      :box nil)
 #+END_SRC
 
-* emacs bookmark
+** Vertical bar
+#+BEGIN_SRC emacs-lisp
+  (set-face-attribute 'vertical-border nil :foreground "gray")
+#+END_SRC
+
+** Initial frame
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'initial-frame-alist '(background-color . "gray15"))
+#+END_SRC
+
+** Subsequent frames
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'default-frame-alist '(background-color . "gray15"))
+#+END_SRC
+
+* Customization
+** No beep
+#+BEGIN_SRC emacs-lisp
+(setq visible-bell 1)
+#+END_SRC
+
+** Bookmark
 Save bookmark to bookmark file when the bookmark is changed.
 #+BEGIN_SRC emacs-lisp
 (setq bookmark-save-flag 1)
 #+END_SRC
 
-* diff
+** Diff
+Ediff settings:
 #+BEGIN_SRC emacs-lisp
-
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 ;(setq ediff-window-setup-function 'ediff-setup-windows-multiframe)
 (setq ediff-split-window-function 'split-window-horizontally) ;; vertical!!
-
-;; vc-diff
-(eval-after-load "vc-hooks"
-  '(define-key vc-prefix-map "=" 'vc-ediff))
-  
 #+END_SRC
 
-* enable disabled functions
+Use vc-ediff instead of vc-diff:
+#+BEGIN_SRC emacs-lisp
+(eval-after-load "vc-hooks"
+  '(define-key vc-prefix-map "=" 'vc-ediff))
+#+END_SRC
+
+** Enable disabled functions
 #+BEGIN_SRC emacs-lisp
 (put 'erase-buffer 'disabled nil)
 (put 'upcase-region 'disabled nil)
 #+END_SRC
 
-* no beep
+** Dired
 #+BEGIN_SRC emacs-lisp
-(setq visible-bell 1)
-#+END_SRC
-
-* tab
-#+BEGIN_SRC emacs-lisp
-
-;;(setq-default indent-tabs-mode nil)
-(setq-default tab-width 4)
-
-(add-hook 'java-mode-hook
-		  (lambda ()
-			(setq indent-tabs-mode nil)
-			(c-set-offset 'substatement-open 0)
-			(if (assoc 'inexpr-class c-offsets-alist)
-				(c-set-offset 'inexpr-class 0))))
-
-(add-hook 'csharp-mode-hook 'hs-minor-mode)
-
-(add-hook 'csharp-mode-hook
-		  (lambda ()
-			(setq indent-tabs-mode nil)
-			(c-set-offset 'substatement-open 0)
-			(c-set-offset 'inline-open 0)
-			(c-set-offset 'case-label '+)
-			(if (assoc 'inexpr-class c-offsets-alist)
-				(c-set-offset 'inexpr-class 0))
-			(hs-minor-mode)
-			(local-set-key (kbd "C-; C-; C-h") 'z-csharp-hide-methods)
-			))
-
-#+END_SRC
-
-* programming languages
-#+BEGIN_SRC emacs-lisp
-;; perl
-(defalias 'perl-mode 'cperl-mode)
-(add-to-list 'auto-mode-alist '("\\.t?\\'" . cperl-mode))
-
-;; c
-(setq c-default-style "linux"
-      c-basic-offset 4)
-;; open .h in c++ mode
-;;(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-(c-add-style "my-style"
-             '(
-               (indent-tabs-mode . nil)
-               (c-basic-offset . 4)))
-;;(defun my-c++-mode-hook ()
-;;  (c-set-style "my-style")
-;;  (auto-fill-mode)
-;;  (c-toggle-auto-hungry-state 0))
-;;(add-hook 'c++-mode-hook 'my-c++-mode-hook)
-
-#+END_SRC
-
-* dired
-#+BEGIN_SRC emacs-lisp
-
 (setq dired-listing-switches "-alh")
-(setq dired-dwimq-target t)
-
+(setq dired-dwim-target t)
 #+END_SRC
 
-* key bindings
-;; run shell
-#+BEGIN_SRC emacs-lisp
-
-(defun z-run-eshell ()
-  "Run eshell"
-  (interactive)
-  (if (string= major-mode "eshell-mode")
-	  (message "already in eshell mode")
-	(let ((buf-name (concat "esh-" (buffer-name))))
-	  (if (get-buffer buf-name)
-		  (switch-to-buffer buf-name)
-		(progn (eshell "dummy")
-			   (rename-buffer buf-name))))))
-
-(global-set-key (kbd "C-x C-h") 'z-run-eshell)
-
-;; ffap
-(global-set-key (kbd "C-x f") 'find-file-at-point)
-
-;; buffer-menu
-;;(global-set-key (kbd "C-x C-b") 'buffer-menu)
-;; ibuffer
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-
-;; line number
-;;(global-linum-mode t)
-
-#+END_SRC
-
-* org-mode
-;;(setq org-export-with-sub-superscripts nil) (setq
-;;org-default-notes-file "/Users/dzhu/Documents/notes/notes.org")
-
-By default, (org-cycle-agenda-files) is bound to C-', C-,. I use C-,
-for set-mark-command, and use the following code to override the
-default org key binding.
-
-#+BEGIN_SRC emacs-lisp
-  (add-hook 'org-mode-hook
-            (lambda ()
-              (local-set-key (kbd "C-,") 'set-mark-command)))
-
-#+END_SRC
-
-* load utility el files
-#+BEGIN_SRC emacs-lisp
-
-(load-file "~/.emacs.d/mylisp/z-string.el")
-(load-file "~/.emacs.d/mylisp/z-util.el")
-(load-file "~/.emacs.d/mylisp/z-csharp.el")
-
-(global-set-key (kbd "C-,") 'set-mark-command)
-
-(global-set-key (kbd "C-; i") 'imenu)
-(global-set-key (kbd "C-; p") 'z-goto-match-paren)
-(global-set-key (kbd "C-; g") 'rgrep)
-(global-set-key (kbd "C-; f") 'find-dired)
-(ffap-bindings)
-(global-set-key (kbd "C-; w") 'ffap-copy-string-as-kill)
-(global-set-key (kbd "C-; C-; y") 'z-dup-line)
-(global-set-key (kbd "C-; C-; i") 'z-inc-num)
-(global-set-key (kbd "C-; d d") 'z-word-definition)
-(global-set-key (kbd "C-; d r") 'z-word-definition-region)
-(global-set-key (kbd "C-; o c") 'org-capture)
-
-;; reminder
-(load-file "~/.emacs.d/mylisp/z-reminder.el")
-(z-reminder-start t)
-(global-set-key (kbd "C-; r s") 'z-reminder-start)
-(global-set-key (kbd "C-; r e") 'z-reminder-stop)
-(global-set-key (kbd "C-; r r") 'z-reminder-report)
-
-;; git
-(load-file "~/.emacs.d/mylisp/z-git.el")
-#+END_SRC
-
-* minor mode
-#+BEGIN_SRC emacs-lisp
-(define-minor-mode z-shell-mode
-  "Better shell interaction"
-  :lighter " z-sh")
-(add-hook 'shell-mode-hook 'z-shell-mode)
-(add-hook 'eshell-mode-hook 'z-shell-mode)
-
-(define-minor-mode z-code-mode
-  "Accelerate coding"
-  :lighter " z-code")
-(add-hook 'c-mode-hook 'z-code-mode)
-(add-hook 'c++-mode-hook 'z-code-mode)
-(add-hook 'java-mode-hook 'z-code-mode)
-(add-hook 'csharp-mode-hook 'z-code-mode)
-(add-hook 'typescript-mode-hook 'z-code-mode)
-
-(define-minor-mode z-web-mode
-  "Accelerate web programming"
-  :lighter " z-web")
-(add-hook 'html-mode-hook 'z-web-mode)
-(add-hook 'web-mode-hook 'z-web-mode)
-
-(define-minor-mode z-msbuild-mode
-  "Accelerate msbuild"
-  :lighter " z-msb")
-
-#+END_SRC
-
-* abbreviations
-#+BEGIN_SRC emacs-lisp
-(load-file "~/.emacs.d/mylisp/z-abbrevs.el")
-(setq-default abbrev-mode t)
-
-#+END_SRC
-
-* init buffer
+** Init buffer
 #+BEGIN_SRC emacs-lisp
   (setq initial-buffer-choice
         (lambda ()
@@ -313,26 +144,253 @@ default org key binding.
           (eshell)))
 #+END_SRC
 
-* work on windows
-The following code loads Windows specific helper functions.
+** Tab
+By default, tab expands to 4 spaces.
+#+BEGIN_SRC emacs-lisp
+  (setq-default indent-tabs-mode nil)
+  (setq-default tab-width 4)
+#+END_SRC
+
+** Org
+By default, (org-cycle-agenda-files) is bound to C-', C-,. I use C-,
+for set-mark-command, and use the following code to override the
+default org key binding.
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (local-set-key (kbd "C-,") 'set-mark-command)))
+#+END_SRC
+* Programming
+** c
+#+BEGIN_SRC emacs-lisp
+  (setq c-default-style "linux"
+        c-basic-offset 4)
+
+  (c-add-style "my-style"
+               '(
+                 (indent-tabs-mode . nil)
+                 (c-basic-offset . 4)))
+#+END_SRC
+
+** csharp
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'csharp-mode-hook 'hs-minor-mode)
+
+  (add-hook 'csharp-mode-hook
+            (lambda ()
+              (setq indent-tabs-mode nil)
+              (c-set-offset 'substatement-open 0)
+              (c-set-offset 'inline-open 0)
+              (c-set-offset 'case-label '+)
+              (if (assoc 'inexpr-class c-offsets-alist)
+                  (c-set-offset 'inexpr-class 0))
+              (hs-minor-mode)
+              (local-set-key (kbd "C-; C-; C-h") 'z-csharp-hide-methods)))
+#+END_SRC
+
+** java
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'java-mode-hook
+            (lambda ()
+              (setq indent-tabs-mode nil)
+              (c-set-offset 'substatement-open 0)
+              (if (assoc 'inexpr-class c-offsets-alist)
+                  (c-set-offset 'inexpr-class 0))))
+#+END_SRC
+
+** perl
+#+BEGIN_SRC emacs-lisp
+(defalias 'perl-mode 'cperl-mode)
+(add-to-list 'auto-mode-alist '("\\.t?\\'" . cperl-mode))
+#+END_SRC
+** json
+First set the path for the node executable.
+#+BEGIN_SRC emacs-lisp
+(setq z-node-exe "D:/CorextCache/Node.js.with.uv.pipe.name.fixed.6.9.1/node.exe")
+#+END_SRC
+
+Then define the following function to beautify json in region. *node*
+is required for this function to work.
+#+BEGIN_SRC emacs-lisp
+  (defun z-node-beautify-json ()
+    "Beautify JSON in region."
+    (interactive)
+    (if (file-exists-p z-node-exe)
+        (let ((file)
+              (json (buffer-substring-no-properties (region-beginning) (region-end)))
+              (cmd))
+          (with-temp-buffer
+            (find-file "~/.emacs.d/tmp.json")
+            (erase-buffer)
+            (insert json)
+            (save-buffer)
+            (setq file (buffer-file-name))
+            (kill-buffer))
+          (setq cmd (concat (replace-regexp-in-string "/" "\\\\" z-node-exe) " "
+                            (replace-regexp-in-string "/" "\\\\" (expand-file-name "~/.emacs.d/javascript/beautify_json.js ")) " "
+                            (replace-regexp-in-string "/" "\\\\" file)))
+          (setq json (shell-command-to-string cmd))
+          (delete-region (region-beginning) (region-end))
+          (insert json))
+      (message "Cannot find node executable file")))
+#+END_SRC
+
+* Utilities
+** Common
+#+BEGIN_SRC emacs-lisp
+  (load-file "~/.emacs.d/mylisp/z-string.el")
+  (load-file "~/.emacs.d/mylisp/z-util.el")
+#+END_SRC
+
+** csharp
+#+BEGIN_SRC emacs-lisp
+  (load-file "~/.emacs.d/mylisp/z-csharp.el")
+#+END_SRC
+
+** Git
+#+BEGIN_SRC emacs-lisp
+  (load-file "~/.emacs.d/mylisp/z-git.el")
+#+END_SRC
+
+** Reminder
+#+BEGIN_SRC emacs-lisp
+  (load-file "~/.emacs.d/mylisp/z-reminder.el")
+  (z-reminder-start t)
+  (global-set-key (kbd "C-; r s") 'z-reminder-start)
+  (global-set-key (kbd "C-; r e") 'z-reminder-stop)
+  (global-set-key (kbd "C-; r r") 'z-reminder-report)
+#+END_SRC
+* Key bindings
+** Change default key bindings
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-x f") 'find-file-at-point)
+  (global-set-key (kbd "C-x C-b") 'ibuffer)
+#+END_SRC
+
+** Load ffap bindings
+#+BEGIN_SRC emacs-lisp
+(ffap-bindings)
+#+END_SRC
+
+** Set mark
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-,") 'set-mark-command)
+#+END_SRC
+
+** Run eshell
+Define a function to run eshell in the current directory.
+#+BEGIN_SRC emacs-lisp
+  (defun z-run-eshell ()
+    "Run eshell"
+    (interactive)
+    (if (string= major-mode "eshell-mode")
+        (message "already in eshell mode")
+      (let ((buf-name (concat "esh-" (buffer-name))))
+        (if (get-buffer buf-name)
+            (switch-to-buffer buf-name)
+          (progn (eshell "dummy")
+                 (rename-buffer buf-name))))))
+#+END_SRC
+
+Then bind it to "C-x C-h".
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-x C-h") 'z-run-eshell)
+#+END_SRC
+
+** "C-;" prefix key bindings
+Use "C-;" as prefix to avoid conflicts with builtin key bindings.
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-; i") 'imenu)
+  (global-set-key (kbd "C-; p") 'z-goto-match-paren)
+  (global-set-key (kbd "C-; g") 'rgrep)
+  (global-set-key (kbd "C-; f") 'find-dired)
+  (global-set-key (kbd "C-; w") 'ffap-copy-string-as-kill)
+  (global-set-key (kbd "C-; C-; y") 'z-dup-line)
+  (global-set-key (kbd "C-; C-; i") 'z-inc-num)
+  (global-set-key (kbd "C-; d d") 'z-word-definition)
+  (global-set-key (kbd "C-; d r") 'z-word-definition-region)
+  (global-set-key (kbd "C-; o c") 'org-capture)
+#+END_SRC
+
+** go to web bookmarks file
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-; b")
+                  (lambda ()
+                    (interactive)
+                    (find-file "~/.emacs.d/web_bookmarks.org")))
+#+END_SRC
+* Abbreviations
+** Minor modes
+*** z-shell-mode
+This mode is enabled when in shell or eshell mode.
+#+BEGIN_SRC emacs-lisp
+  (define-minor-mode z-shell-mode
+    "Better shell interaction"
+    :lighter " z-sh")
+  (add-hook 'shell-mode-hook 'z-shell-mode)
+  (add-hook 'eshell-mode-hook 'z-shell-mode)
+#+END_SRC
+
+*** z-code-mode
+This mode is enabled when writing code.
+#+BEGIN_SRC emacs-lisp
+  (define-minor-mode z-code-mode
+    "Accelerate coding"
+    :lighter " z-code")
+  (add-hook 'c-mode-hook 'z-code-mode)
+  (add-hook 'c++-mode-hook 'z-code-mode)
+  (add-hook 'java-mode-hook 'z-code-mode)
+  (add-hook 'csharp-mode-hook 'z-code-mode)
+  (add-hook 'typescript-mode-hook 'z-code-mode)
+
+#+END_SRC
+
+*** z-web-mode
+This mode is enabled when in web-mode or html-mode.
+#+BEGIN_SRC emacs-lisp
+  (define-minor-mode z-web-mode
+    "Accelerate web programming"
+    :lighter " z-web")
+  (add-hook 'html-mode-hook 'z-web-mode)
+  (add-hook 'web-mode-hook 'z-web-mode)
+#+END_SRC
+
+*** z-msbuild-mode
+This mode is enabled when writing msbuild files.
+#+BEGIN_SRC emacs-lisp
+  (define-minor-mode z-msbuild-mode
+    "Accelerate msbuild"
+    :lighter " z-msb")
+#+END_SRC
+
+** Abbrev tables
+Abbrevs are defined in a separate file. They are linked to
+corresponding modes through the above minor modes.
+#+BEGIN_SRC emacs-lisp
+(load-file "~/.emacs.d/mylisp/z-abbrevs.el")
+(setq-default abbrev-mode t)
+#+END_SRC
+
+* Windows specific
+** Win32 API wrappers
 #+BEGIN_SRC emacs-lisp
   (when (eq system-type 'windows-nt)
     (load-file "~/.emacs.d/mylisp/z-win.el"))
 #+END_SRC
 
-AutoHotKey related functions:
+** AutoHotKey
 #+BEGIN_SRC emacs-lisp
   (when (eq system-type 'windows-nt)
     (load-file "~/.emacs.d/mylisp/z-ahk.el"))
 #+END_SRC
 
-Open file in visual studio:
+** Visual studio integration
 #+BEGIN_SRC emacs-lisp
   (when (eq system-type 'windows-nt)
     (global-set-key (kbd "C-; C-o C-v") 'z-open-file-at-point-in-vs))
 #+END_SRC
 
-Run SQL in SSMS:
+** SSMS integration
 #+BEGIN_SRC emacs-lisp
   (when (eq system-type 'windows-nt)
     (add-hook 'sql-mode-hook
@@ -340,38 +398,7 @@ Run SQL in SSMS:
                 (local-set-key (kbd "C-c s s") 'z-ssms-run-sql-in-region))))
 #+END_SRC
 
-* NodeJS functions wrappers for working with JSON.
-First set the path for the node executable.
-#+BEGIN_SRC emacs-lisp
-(setq z-node-exe "D:/CorextCache/Node.js.with.uv.pipe.name.fixed.6.9.1/node.exe")
-#+END_SRC
-
-Then define the following function to beautify json in region.
-#+BEGIN_SRC emacs-lisp
-  (defun z-node-beautify-json ()
-	"Beautify JSON in region."
-	(interactive)
-	(if (file-exists-p z-node-exe)
-		(let ((file)
-			  (json (buffer-substring-no-properties (region-beginning) (region-end)))
-			  (cmd))
-		  (with-temp-buffer
-			(find-file "~/.emacs.d/tmp.json")
-			(erase-buffer)
-			(insert json)
-			(save-buffer)
-			(setq file (buffer-file-name))
-			(kill-buffer))
-		  (setq cmd (concat (replace-regexp-in-string "/" "\\\\" z-node-exe) " "
-							(replace-regexp-in-string "/" "\\\\" (expand-file-name "~/.emacs.d/javascript/beautify_json.js ")) " "
-							(replace-regexp-in-string "/" "\\\\" file)))
-		  (setq json (shell-command-to-string cmd))
-		  (delete-region (region-beginning) (region-end))
-		  (insert json))
-	  (message "cannot find node executable file")))
-#+END_SRC
-
-* The following config are not used
+* COMMENT Unused config that may be useful in the futhre
 ;; run as server
 ;; (require 'server)
 ;; (unless (server-running-p) (server-start))
@@ -379,7 +406,6 @@ Then define the following function to beautify json in region.
 ;; macros
 ;(fset 'comment-c [?\C-a ?\C-x ?\C-x ?\C-a ?\C-x ?r ?t ?/ ?/ return])
 ;(put 'comment-c 'kmacro t)
-
 
 ;;auto-complete
 ;;(require 'auto-complete)
@@ -402,8 +428,8 @@ Then define the following function to beautify json in region.
 ;; (add-to-list 'auto-mode-alist '("\\.jsp?\\'" . web-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.vue?\\'" . web-mode))
 ;; (add-hook 'web-mode-hook
-;; 		  (lambda ()
-;; 			(setq indent-tabs-mode nil)))
+;;           (lambda ()
+;;             (setq indent-tabs-mode nil)))
 
 ;; rainbow-mode
 ;; (require 'rainbow-mode)
@@ -417,8 +443,8 @@ Then define the following function to beautify json in region.
 ;;         (user :default "root")
 ;;         (password)))
 ;; (add-hook 'sql-interactive-mode-hook
-;; 		  (lambda ()
-;; 			(toggle-truncate-lines t)))
+;;           (lambda ()
+;;             (toggle-truncate-lines t)))
 ;; ;;(setq sql-user "fc")
 ;; ;;(setq sql-password "Fc654321")
 ;; ;;(setq sql-server "192.168.8.8")
@@ -436,13 +462,45 @@ Then define the following function to beautify json in region.
 ;;               (sql-database "fcgyldb_docker4")
 ;;               (sql-user "fc")
 ;;               (sql-password "Fc654321"))
-;; 		(prod (sql-product 'mysql)
+;;         (prod (sql-product 'mysql)
 ;;               (sql-server "192.168.8.4")
 ;;               (sql-port 3309)
 ;;               (sql-database "zunpindb")
 ;;               (sql-user "readonly_user")
 ;;               (sql-password "Fengchao4006221999"))
-;; 		))
+;;         ))
 
 ;; (require 'clojure-mode)
 ;;(require 'cider-mode)
+
+  ;; transparent frame
+  ;;(set-frame-parameter (selected-frame) 'alpha '(<active> [<inactive>]))
+  ;(set-frame-parameter (selected-frame) 'alpha '(95 95))
+
+  ;(add-to-list 'default-frame-alist '(alpha 95 95))
+  ;(add-to-list 'default-frame-alist '(top . 10))
+  ;(add-to-list 'default-frame-alist '(left . 0))
+  ;(add-to-list 'default-frame-alist '(height . 65))
+  ;(add-to-list 'default-frame-alist '(width . 240))
+
+  ;; theme
+  ;;(load-theme 'wombat t)
+  ;;(load-theme 'deeper-blue t)
+  ;(set-background-color "gray15")
+
+  ;; line number
+  ;;(global-linum-mode t)
+
+;;(setq org-export-with-sub-superscripts nil) (setq
+;;org-default-notes-file "/Users/dzhu/Documents/notes/notes.org")
+
+;;(defun my-c++-mode-hook ()
+;;  (c-set-style "my-style")
+;;  (auto-fill-mode)
+;;  (c-toggle-auto-hungry-state 0))
+;;(add-hook 'c++-mode-hook 'my-c++-mode-hook)
+
+;; open .h in c++ mode
+;;(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+  ;; buffer-menu
+  ;;(global-set-key (kbd "C-x C-b") 'buffer-menu)

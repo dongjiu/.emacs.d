@@ -13,7 +13,7 @@ Send u
 WinActivate, ahk_exe emacs.exe
 WinWaitActive, ahk_exe emacs.exe
 Send ^{x}{r}{w}{l} ; save window config to register 'l'
-Send ^{x}^{f}^{y}{Enter} ; open file
+Send ^{x}^{f}^{a}^{k}^{y}{Enter} ; open file
 Send ^{x}{1} ; use single window
 }
 return

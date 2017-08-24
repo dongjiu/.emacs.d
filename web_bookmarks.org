@@ -1,11 +1,38 @@
-#+STARTUP: showall
+#+STARTUP: content
+* UCM
+VSTS
+https://msasg.visualstudio.com/Bing_Ads/UCM%20Team/_backlogs/board/Features
+
+SharePoint
+https://microsoft.sharepoint.com/teams/BingAds/Shared%20Documents/Forms/AllItems.aspx?id=%2Fteams%2FBingAds%2FShared%20Documents%2FTeams%2FUCM
+
+** Wiki
+[[https://microsoft.sharepoint.com/teams/BingAds/_layouts/15/WopiFrame2.aspx?sourcedoc={1cafa1d1-25d8-4da7-a2bf-b3a0b6a3fb26}]]
+
+*** architecture
+https://microsoft.sharepoint.com/teams/BingAds/_layouts/15/WopiFrame.aspx?sourcedoc={1cafa1d1-25d8-4da7-a2bf-b3a0b6a3fb26}&action=view&wd=target%28%2F%2FDev%20Wiki%2FArchitecture.one%7Cb5bba6cd-3bb4-4830-8f27-2d534c0b01ef%2FOverview%7C22a5bdd7-60b1-4e20-aa47-f23dae1f7e27%2F%29
+
+*** software development lifecycle
+https://microsoft.sharepoint.com/teams/BingAds/_layouts/15/WopiFrame.aspx?sourcedoc={1cafa1d1-25d8-4da7-a2bf-b3a0b6a3fb26}&action=view&wd=target%28%2F%2FDev%20Wiki%2FSoftware%20Dev%20Lifecycle.one%7Cf7e473a7-951a-4eab-80e3-e54ed8859aa3%2FOverview%7C2954e48e-3f14-4bd4-9b6c-3e720eeff34a%2F%29
+
+**** Workflow and checking in
+https://microsoft.sharepoint.com/teams/BingAds/_layouts/15/WopiFrame.aspx?sourcedoc={1cafa1d1-25d8-4da7-a2bf-b3a0b6a3fb26}&action=view&wd=target%28%2F%2FDev%20Wiki%2FSoftware%20Dev%20Lifecycle.one%7Cf7e473a7-951a-4eab-80e3-e54ed8859aa3%2FWorkflow%20and%20Checking%20In%7Cb20cbeae-d7f4-459f-98f4-8a67d9c3b695%2F%29
+
+**** build and test
+https://microsoft.sharepoint.com/teams/BingAds/_layouts/15/WopiFrame.aspx?sourcedoc={1cafa1d1-25d8-4da7-a2bf-b3a0b6a3fb26}&action=view&wd=target%28%2F%2FDev%20Wiki%2FSoftware%20Dev%20Lifecycle.one%7Cf7e473a7-951a-4eab-80e3-e54ed8859aa3%2FBuild%20%20Test%7Cd559978f-d429-4baf-9f3e-4a8f23b53018%2F%29
+
+*** release process
+https://microsoft.sharepoint.com/teams/BingAds/_layouts/15/WopiFrame.aspx?sourcedoc={1cafa1d1-25d8-4da7-a2bf-b3a0b6a3fb26}&action=view&wd=target%28%2F%2FDev%20Wiki%2FDRI.one%7Cb136ed15-4ec4-4861-a065-ec69f9ac8c7b%2FUCM%20Release%20Process%7C4d49fc3d-6501-4670-8de2-4838105d0f66%2F%29
+
+*** team process overview
+https://microsoft.sharepoint.com/teams/BingAds/_layouts/15/WopiFrame.aspx?sourcedoc={1cafa1d1-25d8-4da7-a2bf-b3a0b6a3fb26}&action=view&wd=target%28%2F%2FDev%20Wiki%2FTeam%20Process.one%7C9f5551f1-259b-454b-90be-e02c81cefd46%2FOverview%7Cba249cf8-cc25-418f-999a-e0f9e3b6111e%2F%29
+
 * github
 https://github.com/dongjiu/.emacs.d
 https://github.com/dongjiu/tools4win
 
 * windows os
 https://stackoverflow.com/questions/21754255/cmd-command-user-name
-
 
 ** win 10
 https://developer.microsoft.com/en-US/windows/downloads/windows-10-sdk
@@ -16,11 +43,20 @@ http://landinghub.visualstudio.com/visual-cpp-build-tools
 * emacs
 https://emacs.stackexchange.com/questions/11052/how-to-determine-operating-system-bits-32-vs-64-bit-in-elisp
 
+** hooks
+https://www.gnu.org/software/emacs/manual/html_node/elisp/Standard-Hooks.html
+
+https://www.reddit.com/r/emacs/comments/2au7t4/split_window_after_creating_frame/
 ** org
-org-add-link-type
+*** add link type
 http://endlessparentheses.com/use-org-mode-links-for-absolutely-anything.html
+
+*** hide text
+https://stackoverflow.com/questions/9879462/how-can-one-hide-some-text-from-being-published-by-the-org-publish-functions
+** package
+https://stackoverflow.com/questions/20541322/how-to-remove-installed-elpa-package
 
 * .NET
 ** ASP.NET MVC
-Specify layout file:
+*** Specify layout file:
 https://stackoverflow.com/questions/5161380/how-do-i-specify-different-layouts-in-the-asp-net-mvc-3-razor-viewstart-file
