@@ -205,12 +205,12 @@ The following code overrides the default org key binding for "C-,".
 (add-to-list 'auto-mode-alist '("\\.t?\\'" . cperl-mode))
 #+END_SRC
 ** json
-First set the path for the node executable.
+*z-node-exe* points to the node executable.
 #+BEGIN_SRC emacs-lisp
 (setq z-node-exe "D:/CorextCache/Node.js.with.uv.pipe.name.fixed.6.9.1/node.exe")
 #+END_SRC
 
-Then define the following function to beautify json in region. *node*
+The following function can be used to beautify json in region. *node*
 is required for this function to work.
 #+BEGIN_SRC emacs-lisp
   (defun z-node-beautify-json ()
@@ -279,7 +279,7 @@ is required for this function to work.
 #+END_SRC
 
 ** Run eshell
-Define a function to run eshell in the current directory.
+This function runs eshell in the current directory.
 #+BEGIN_SRC emacs-lisp
   (defun z-run-eshell ()
     "Run eshell"
@@ -293,13 +293,13 @@ Define a function to run eshell in the current directory.
                  (rename-buffer buf-name))))))
 #+END_SRC
 
-Then bind it to "C-x C-h".
+Here is the key binding for it.
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-x C-h") 'z-run-eshell)
 #+END_SRC
 
 ** "C-;" prefix
-I use "C-;" as prefix to avoid conflicts with builtin key bindings.
+"C-;" is used as prefix to avoid conflicts with builtin key bindings.
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-; i") 'imenu)
   (global-set-key (kbd "C-; p") 'z-goto-match-paren)
@@ -314,7 +314,8 @@ I use "C-;" as prefix to avoid conflicts with builtin key bindings.
 #+END_SRC
 
 ** Bookmarks
-I use bookmarks.org to save bookmarks for URL, file/directory paths.
+Key binding for opening the /bookmarks.org/ file that is used save
+bookmarks for URL, files and directories.
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-; b")
                   (lambda ()
