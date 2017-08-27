@@ -554,15 +554,6 @@
 (define-abbrev-table 'z-web-mode-abbrev-table
   '(
 	("zhtml" "" z-web-html)
-	("zdiv" "<div></div>" (lambda () (backward-char 6)))
-	("zh1" "<h1></h1>" (lambda () (backward-char 5)))
-	("zh2" "<h2></h2>" (lambda () (backward-char 5)))
-	("zul" "<ul></ul>" (lambda () (backward-char 5)))
-	("zli" "<li></li>" (lambda () (backward-char 5)))
-	("ztr" "<tr></tr>" (lambda () (backward-char 5)))
-	("ztd" "<td></td>" (lambda () (backward-char 5)))
-	("zth" "<th></th>" (lambda () (backward-char 5)))
-	("zp" "<p></p>" (lambda () (backward-char 4)))
 	("za" "<a href=\"\"></a>" (lambda () (backward-char 6)))
 	("zt" "" z-web-tag)
 	("zinp" "<input type=\"\" value=\"\" />" (lambda () (backward-char 13)))
