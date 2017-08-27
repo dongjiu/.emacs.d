@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Presentation</title>
+    <script src="jquery.js"></script>
+    <script src="main.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.css" />
+  </head>
+  <body>
+    <div id="templates">
+      <div id="header-template">
+        <div class="header">
+          <h1 class="title">TITLE</h1>
+          <hr />
+        </div>
+      </div>
+      <div id="nav-template">
+        <div class="footer">
+          <a class="go-home" href="javascript:void(0)">Go to home</a>
+          <a class="slides-overview" href="javascript:void(0)">Overview</a>
+        </div>
+      </div>
+    </div>
+    <div class="slide" data-title="Slide 1">
+      <div class="content">
+        <h2>Table of contents</h2>
+        <ul>
+          <li>Hello</li>
+          <li>world</li>
+          <li>foo</li>
+          <li>bar</li>
+        </ul>
+      </div>
+    </div>
+    <div class="slide" data-title="Slide 2" data-with-nav="true">
+      <h2>good morning</h2>
+      <ol>
+        <li>foo</li>
+        <li>
+          bar
+          <ol>
+            <li>inner 1</li>
+            <li>inner 2</li>
+            <li>inner 3</li>
+          </ol>
+        </li>
+        <li>yes</li>
+        <li>no</li>
+      </ol>
+    </div>
+    <div class="slide" data-title="Slide 3" data-with-nav="true">
+      Hello from slide 3
+    </div>
+
+    <div id="overview">
+    </div>
+  </body>
+</html>

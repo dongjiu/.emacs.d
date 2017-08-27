@@ -1,0 +1,31 @@
+#templates {
+    display: none;
+}
+
+#overview {
+    display: none;
+    width: 500px;
+}
+
+#overview .slide {
+    margin-bottom: 1em;
+    border: 2px solid black;
+}
+
+#overview .slide:hover {
+    background-color: yellow;
+}
+
+body {
+    background-color: lightblue;
+}
+
+.header > hr {
+    border: 1px solid black;
+}
+
+.slide .content {
+    width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
