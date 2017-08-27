@@ -43,6 +43,10 @@ http://landinghub.visualstudio.com/visual-cpp-build-tools
 * emacs
 https://emacs.stackexchange.com/questions/11052/how-to-determine-operating-system-bits-32-vs-64-bit-in-elisp
 
+** elisp
+*** unhighlight region
+https://stackoverflow.com/questions/7496397/about-elisps-highlight-region
+
 ** hooks
 https://www.gnu.org/software/emacs/manual/html_node/elisp/Standard-Hooks.html
 
@@ -53,6 +57,15 @@ http://endlessparentheses.com/use-org-mode-links-for-absolutely-anything.html
 
 *** hide text
 https://stackoverflow.com/questions/9879462/how-can-one-hide-some-text-from-being-published-by-the-org-publish-functions
+
+*** presentation
+http://jr0cket.co.uk/2013/10/create-cool-slides--Org-mode-Revealjs.html
+
+http://orgmode.org/worg/org-tutorials/non-beamer-presentations.html#S5
+*** api
+https://emacs.stackexchange.com/questions/17622/how-can-i-walk-an-org-mode-tree
+
+https://emacs.stackexchange.com/questions/35042/parsing-an-orgmode-file-with-org-element-parse-buffer
 ** package
 https://stackoverflow.com/questions/20541322/how-to-remove-installed-elpa-package
 
@@ -60,3 +73,14 @@ https://stackoverflow.com/questions/20541322/how-to-remove-installed-elpa-packag
 ** ASP.NET MVC
 *** Specify layout file:
 https://stackoverflow.com/questions/5161380/how-do-i-specify-different-layouts-in-the-asp-net-mvc-3-razor-viewstart-file
+* Reveal JS
+https://github.com/hakimel/reveal.js
+* html
+** disable href link
+https://stackoverflow.com/questions/5376444/how-do-i-disable-a-href-link-in-javascript
+
+** pop up
+https://stackoverflow.com/questions/1328723/how-to-generate-a-simple-popup-using-jquery
+* css
+** centering
+https://www.w3.org/Style/Examples/007/center.en.html
