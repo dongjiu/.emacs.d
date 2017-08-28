@@ -27,6 +27,12 @@ https://microsoft.sharepoint.com/teams/BingAds/_layouts/15/WopiFrame.aspx?source
 *** team process overview
 https://microsoft.sharepoint.com/teams/BingAds/_layouts/15/WopiFrame.aspx?sourcedoc={1cafa1d1-25d8-4da7-a2bf-b3a0b6a3fb26}&action=view&wd=target%28%2F%2FDev%20Wiki%2FTeam%20Process.one%7C9f5551f1-259b-454b-90be-e02c81cefd46%2FOverview%7Cba249cf8-cc25-418f-999a-e0f9e3b6111e%2F%29
 
+*** meeting, design, code review
+https://microsoft.sharepoint.com/teams/BingAds/Shared%20Documents/Forms/AllItems.aspx?id=%2Fteams%2FBingAds%2FShared%20Documents%2FTeams%2FUCM%2FDevelopment%2FMeeting%20-%20Design%2C%20Code%20Review%2C%20Idea
+** Kendo
+*** router
+http://docs.telerik.com/kendo-ui/framework/spa/router
+
 * Github
 https://github.com/dongjiu/.emacs.d
 https://github.com/dongjiu/tools4win
@@ -40,6 +46,10 @@ https://superuser.com/questions/321988/how-do-i-determine-if-my-windows-is-32-bi
 
 http://landinghub.visualstudio.com/visual-cpp-build-tools
 
+* Typescript
+** backtick '`'
+https://basarat.gitbooks.io/typescript/docs/template-strings.html
+
 * emacs
 https://emacs.stackexchange.com/questions/11052/how-to-determine-operating-system-bits-32-vs-64-bit-in-elisp
 
@@ -52,6 +62,10 @@ https://www.gnu.org/software/emacs/manual/html_node/elisp/Standard-Hooks.html
 
 https://www.reddit.com/r/emacs/comments/2au7t4/split_window_after_creating_frame/
 ** org
+*** use cases
+http://kitchingroup.cheme.cmu.edu/blog/2014/08/08/What-we-are-using-org-mode-for/
+*** presentation
+http://sachachua.com/blog/2013/04/how-to-present-using-org-mode-in-emacs/
 *** add link type
 http://endlessparentheses.com/use-org-mode-links-for-absolutely-anything.html
 
@@ -68,11 +82,15 @@ https://emacs.stackexchange.com/questions/17622/how-can-i-walk-an-org-mode-tree
 https://emacs.stackexchange.com/questions/35042/parsing-an-orgmode-file-with-org-element-parse-buffer
 ** package
 https://stackoverflow.com/questions/20541322/how-to-remove-installed-elpa-package
+** windows
+*** png
+https://stackoverflow.com/questions/2650041/emacs-under-windows-and-png-files
 
 * .NET
 ** ASP.NET MVC
 *** Specify layout file:
 https://stackoverflow.com/questions/5161380/how-do-i-specify-different-layouts-in-the-asp-net-mvc-3-razor-viewstart-file
+<<<<<<< Updated upstream
 * Reveal JS
 https://github.com/hakimel/reveal.js
 * html
@@ -84,3 +102,11 @@ https://stackoverflow.com/questions/1328723/how-to-generate-a-simple-popup-using
 * css
 ** centering
 https://www.w3.org/Style/Examples/007/center.en.html
+=======
+*** Bundle
+http://www.tutorialsteacher.com/mvc/scriptbundle-mvc
+* life
+** credit card
+score
+https://club.bankcomm.com/customer/index.htm
+>>>>>>> Stashed changes

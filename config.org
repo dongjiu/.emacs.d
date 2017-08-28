@@ -1,12 +1,3 @@
-* Packages
-#+BEGIN_SRC emacs-lisp
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/"))
-
-(package-initialize)
-#+END_SRC
-
 * Environment
 ** User directory
 On Windows, use environment variable %USERPROFILE% as the user
@@ -399,6 +390,17 @@ corresponding modes through the above minor modes.
     (add-hook 'sql-mode-hook
               (lambda ()
                 (local-set-key (kbd "C-c s s") 'z-ssms-run-sql-in-region))))
+#+END_SRC
+
+** Path conversion
+Convert path in region to standard Windows path.
+#+BEGIN_SRC emacs-lisp
+  (defun z-win-format-path-in-region ()
+    "Convert path in region to standard Windows path."
+    (interactive)
+    (let ((file (buffer-substring-no-properties (region-beginning) (region-end))))
+      (delete-region (region-beginning) (region-end))
+      (insert (z-string-win-style-path file))))
 #+END_SRC
 
 * COMMENT Unused config that may be useful in the futhre
