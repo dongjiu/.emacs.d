@@ -1,4 +1,7 @@
 #+STARTUP: content
+* MS
+** family day
+http://suzhoufamilyday/home.html
 * UCM
 VSTS
 https://msasg.visualstudio.com/Bing_Ads/UCM%20Team/_backlogs/board/Features
@@ -86,6 +89,10 @@ https://stackoverflow.com/questions/20541322/how-to-remove-installed-elpa-packag
 *** png
 https://stackoverflow.com/questions/2650041/emacs-under-windows-and-png-files
 
+** sytanx highlighting source code to html
+http://ergoemacs.org/emacs/elisp_htmlize.html
+https://www.emacswiki.org/emacs/Htmlize
+
 * .NET
 ** ASP.NET MVC
 *** Specify layout file:
@@ -110,3 +117,10 @@ http://www.tutorialsteacher.com/mvc/scriptbundle-mvc
 score
 https://club.bankcomm.com/customer/index.htm
 >>>>>>> Stashed changes
+
+* javascript
+** jquery
+*** custom events
+https://learn.jquery.com/events/introduction-to-custom-events/
+** detecting keys
+https://stackoverflow.com/questions/37557990/detecting-combination-keypresses-control-alt-shift

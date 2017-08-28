@@ -227,6 +227,17 @@ is required for this function to work.
       (message "Cannot find node executable file")))
 #+END_SRC
 
+** html
+Use web-mode to edit html files.
+#+BEGIN_SRC emacs-lisp
+  (setq web-mode-markup-indent-offset 4)
+  (setq web-mode-css-indent-offset 4)
+  (setq web-mode-code-indent-offset 4)
+  (setq web-mode-script-padding 4)
+  (setq web-mode-style-padding 4)
+  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+#+END_SRC
+
 * Utilities
 ** Common
 #+BEGIN_SRC emacs-lisp
@@ -302,6 +313,20 @@ Here is the key binding for it.
   (global-set-key (kbd "C-; d d") 'z-word-definition)
   (global-set-key (kbd "C-; d r") 'z-word-definition-region)
   (global-set-key (kbd "C-; o c") 'org-capture)
+#+END_SRC
+
+*** Go to next appropriate point
+Use "C-; C-f" to go to the next appropriate point in the buffer.
+#+BEGIN_SRC emacs-lisp
+  (defun z-next-appropriate-point ()
+    "Go to the next appropriate point based on the context."
+    (interactive)
+    (cond
+     ((string= major-mode "web-mode")
+      (search-forward "=\"" nil t))
+     (t forward-char)))
+
+  (global-set-key (kbd "C-; C-f") 'z-next-appropriate-point)
 #+END_SRC
 
 ** Bookmarks

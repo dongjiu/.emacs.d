@@ -551,6 +551,55 @@
   _
   "\n</svg>\n")
 
+(define-skeleton z-web-js-function
+  "Insert JavaScript function."
+  nil
+  "function () {\n"
+  '(indent-for-tab-command) _
+  "\n}"
+  '(indent-for-tab-command)
+  "\n")
+
+(define-skeleton z-svg-circle
+  "Insert circle element."
+  nil
+  "<circle cx=\"" _ "\" cy=\"\" r=\"\" style=\"stroke: black; fill: none\" />")
+
+(define-skeleton z-svg-line
+  "Insert line element."
+  nil
+  "<line x1=\"" _ "\" y1=\"\" x2=\"\" y2=\"\" style=\"stroke: black;\" />")
+
+(define-skeleton z-svg-polyline
+  "Insert polyline element."
+  nil
+  "<polyline points=\"" _ "\" style=\"stroke: black;\" />")
+
+(define-skeleton z-svg-polygon
+  "Insert polygon element."
+  nil
+  "<polygon points=\"" _ "\" style=\"stroke: black; fill: none;\" />")
+
+(define-skeleton z-svg-rect
+  "Insert rect element."
+  nil
+  "<rect x=\"" _ "\" y=\"\" width=\"\" height=\"\" style=\"stroke: black; fill: none;\" />")
+
+(define-skeleton z-svg-path
+  "Insert path element."
+  nil
+  "<path d=\"M " _ "\" style=\"stroke: black; fill: none\" />")
+
+(define-skeleton z-svg-text
+  "Insert text element."
+  nil
+  "<text x=\"" _ "\" y=\"\" style=\"font-family: sans-serif; font-size: 14pt; stroke: black; fill: black;\"></text>")
+
+(define-skeleton z-svg-ellipse
+  "Insert ellipse element."
+  nil
+  "<ellipse cx=\"" _ "\" cy=\"\" rx=\"\" ry=\"\" style=\"stroke: black; fill: none;\" />")
+
 (define-abbrev-table 'z-web-mode-abbrev-table
   '(
 	("zhtml" "" z-web-html)
@@ -561,7 +610,7 @@
 
 	("zjs" "<script></script>" (lambda () (backward-char 9)))
 	("zjsref" "<script src=\"\"></script>" (lambda () (backward-char 11)))
-	("zf" "function () {\n\n}" (lambda () (backward-char 6)))
+	("zf" "" z-web-js-function)
 	("zdrd" "$(document).ready(function () {\n});" (lambda () (backward-char 4)))
 	("zfo" "for () {\n}" (lambda () (backward-char 5)))
 	("zif" "if () {\n}" (lambda () (backward-char 5)))

@@ -1,7 +1,3 @@
-#templates {
-    display: none;
-}
-
 #overview {
     display: none;
     width: 500px;
@@ -17,15 +13,13 @@
 }
 
 body {
-    background-color: lightblue;
+/*    background-color: lightblue; */
 }
 
 .header > hr {
     border: 1px solid black;
 }
 
-.slide .content {
-    width: 700px;
-    margin-left: auto;
-    margin-right: auto;
+.to-show:not(.showed) {
+    opacity: 0.5;
 }

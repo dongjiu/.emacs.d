@@ -3,25 +3,50 @@ var keys = {
     up: 38,
     right: 39,
     down: 40,
+    t: 84,
 };
 
 var presentation = {
     registerEvents: function () {
         var i, self = this;
         $('body').keyup(function (event) {
-            if (event.which == keys.down) {
+            if (event.which == keys.left) {
+                self.prevSlide();
+            } else if (event.which == keys.right) {
                 self.nextSlide();
             } else if (event.which == keys.up) {
-                self.prevSlide();
+                self.prevView();
+            } else if (event.which == keys.down) {
+                self.nextView();
+            } else if (event.which == keys.t && event.ctrlKey && event.altKey) {
+                self.showOverview();
             }
         });
 
         $('body').on('click', '.go-home', function() {
-            presentation.showSlide(0);
+            self.showSlide(0);
         });
 
         $('body').on('click', '.slides-overview', function() {
-            presentation.showOverview();
+            self.showOverview();
+        });
+
+        $('body').on('next-view', '.slide:visible', function () {
+            var $elems = $(this).find('.to-show:not(.showed)');
+            if ($elems.length > 0) {
+                $elems.first().addClass('showed');
+            } else {
+                self.nextSlide();
+            }
+        });
+
+        $('body').on('prev-view', '.slide:visible', function () {
+            var $elems = $(this).find('.to-show.showed');
+            if ($elems.length > 0) {
+                $elems.last().removeClass('showed');
+            } else {
+                self.prevSlide();
+            }
         });
     },
 
@@ -63,13 +88,23 @@ var presentation = {
         }
     },
 
+    prevView: function () {
+        $('.slide:visible').trigger('prev-view');
+    },
+
+    nextView: function () {
+        $('.slide:visible').trigger('next-view');
+    },
+
     addHeaders: function () {
         var $header = $('#templates > #header-template');
         $('.slide').each(function () {
             var title = $(this).data('title');
-            var $h = $header.clone();
-            $h.find('.title').text(title);
-            $h.children().prependTo(this);
+            if (title) {
+                var $h = $header.clone();
+                $h.find('.title').text(title);
+                $h.children().prependTo(this);
+            }
         });
     },
 
@@ -87,7 +122,6 @@ var presentation = {
         $('#overview').html('')
             .append($('.slide').clone())
             .show();
-        $('#overview .slide *').attr('disabled', true);
         $('#overview .slide').show();
         $('#overview .slide').animate({'zoom': 0.5}, 0);
 

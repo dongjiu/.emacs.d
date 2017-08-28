@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!-- Created by htmlize-1.51 in css mode. -->
+<html>
+  <head>
+    <title>DataTableProvider.cs</title>
+    <style type="text/css">
+    <!--
+      body {
+        color: #eeeeec;
+        background-color: #262626;
+      }
+      .comment {
+        /* font-lock-comment-face */
+        color: #73d216;
+      }
+      .comment-delimiter {
+        /* font-lock-comment-delimiter-face */
+        color: #73d216;
+      }
+      .constant {
+        /* font-lock-constant-face */
+        color: #e9b2e3;
+      }
+      .function-name {
+        /* font-lock-function-name-face */
+        color: #fce94f;
+      }
+      .keyword {
+        /* font-lock-keyword-face */
+        color: #b4fa70;
+      }
+      .string {
+        /* font-lock-string-face */
+        color: #e9b96e;
+      }
+      .type {
+        /* font-lock-type-face */
+        color: #8cc4ff;
+      }
+      .variable-name {
+        /* font-lock-variable-name-face */
+        color: #fcaf3e;
+      }
+
+      a {
+        color: inherit;
+        background-color: inherit;
+        font: inherit;
+        text-decoration: inherit;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    -->
+    </style>
+  </head>
+  <body>
+    <pre>
+<span class="comment-delimiter">// </span><span class="comment">Copyright Microsoft 2014
+</span>
+<span class="keyword">using</span> <span class="constant">System</span>;
+<span class="keyword">using</span> <span class="constant">System.Collections.Generic</span>;
+<span class="keyword">using</span> <span class="constant">System.Diagnostics</span>;
+<span class="keyword">using</span> <span class="constant">System.Linq</span>;
+<span class="keyword">using</span> <span class="constant">System.Runtime.InteropServices</span>;
+<span class="keyword">using</span> <span class="constant">System.Threading.Tasks</span>;
+<span class="keyword">using</span> <span class="constant">Microsoft.Ads.Ucm.Astro.Interface</span>;
+<span class="keyword">using</span> <span class="constant">Microsoft.Ads.UcmApi.Contract.V2.External</span>;
+<span class="keyword">using</span> <span class="constant">Microsoft.Ads.UcmApi.Core</span>;
+<span class="keyword">using</span> <span class="constant">Microsoft.Ucm.Shared.Logging</span>;
+<span class="keyword">using</span> <span class="constant">Microsoft.Ads.Ucm.Astro.Internal</span>;
+<span class="keyword">using</span> <span class="constant">Microsoft.Ads.UcmApi.Core.Converters</span>;
+<span class="keyword">using</span> <span class="constant">Microsoft.Ads.Ucm.Astro.Interface.QueryConditions</span>;
+<span class="keyword">using</span> <span class="constant">Microsoft.Ads.UcmApi.Contract.Constants</span>;
+<span class="keyword">using</span> <span class="constant">Microsoft.Ads.UcmApi.Contract.Enums.ExposureKeys</span>;
+<span class="keyword">using</span> <span class="constant">Microsoft.Ads.UcmApi.Exposure.Interfaces</span>;
+
+<span class="keyword">namespace</span> <span class="constant">Microsoft.Ads.UcmApi.Web.DataTable</span>
+{
+    <span class="keyword">public</span> <span class="keyword">class</span> <span class="type">DataTableProvider</span> : <span class="type">IDataTableProvider</span>
+    {
+        <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="type">IAstroTableRetriever</span> <span class="variable-name">_astroTableRetriever</span>;
+        <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="type">IAstroTableRequestParser</span> <span class="variable-name">_requestParser</span>;
+        <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="type">ITimeLoggerFactory</span> <span class="variable-name">_timeLoggerFactory</span>;
+        <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="type">IExposureEvaluatorAsync</span> <span class="variable-name">_exposureEvaluator</span>;
+        <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="type">HashSet</span>&lt;<span class="type">string</span>&gt; <span class="variable-name">_summaryRowsKey</span> = <span class="keyword">new</span> <span class="type">HashSet</span>&lt;<span class="type">string</span>&gt;() { Constants.FILTERED, Constants.TOTAL };
+
+        <span class="keyword">public</span> DataTableProvider(<span class="type">IAstroTableRetriever</span> <span class="variable-name">astroTableRetriever</span>, <span class="type">IAstroTableRequestParser</span> <span class="variable-name">requestParser</span>, <span class="type">ITimeLoggerFactory</span> <span class="variable-name">timeLoggerFactory</span>,
+            <span class="type">IExposureEvaluatorAsync</span> <span class="variable-name">exposureEvaluator</span>)
+        {
+            _astroTableRetriever = astroTableRetriever;
+            _requestParser = requestParser;
+            _timeLoggerFactory = timeLoggerFactory;
+            _exposureEvaluator = exposureEvaluator;
+        }
+
+        <span class="keyword">public</span> <span class="keyword">async</span> <span class="type">Task</span>&lt;<span class="type">IEnumerable</span>&lt;UcmApiTable&gt;&gt; <span class="function-name">GetDataTablesAsync</span>(<span class="type">IEnumerable</span>&lt;UcmApiTableRequest&gt; <span class="variable-name">tableRequests</span>)
+        {
+            <span class="keyword">var</span> <span class="variable-name">requestedDataTablesCount</span> = tableRequests.Count();
+
+            <span class="keyword">var</span> <span class="variable-name">tableRequestTasks</span> = <span class="keyword">new</span> <span class="type">Task</span>&lt;UcmApiTable&gt;[requestedDataTablesCount];
+            <span class="keyword">using</span> (<span class="keyword">var</span> <span class="variable-name">timeLog</span> = _timeLoggerFactory.CreateTimeLogger(<span class="string">"Astro.GetDataTablesAsync:"</span>))
+            {
+                <span class="keyword">var</span> <span class="variable-name">context</span> = <span class="keyword">new</span> <span class="type">ExecutionContext</span>();
+                <span class="comment-delimiter">//</span><span class="comment">Just for unit test check
+</span>                <span class="keyword">if</span>(timeLog != <span class="constant">null</span>)
+                    timeLog.SetContext(context);
+                <span class="keyword">for</span> (<span class="keyword">var</span> <span class="variable-name">i</span> = 0; i &lt; requestedDataTablesCount; i++)
+                {
+                    <span class="keyword">var</span> <span class="variable-name">currRequest</span> = tableRequests.ElementAt(i);
+                    tableRequestTasks[i] = GetDataTableAsync(currRequest, context);
+                }
+
+                <span class="comment-delimiter">//</span><span class="comment">TODO: follow up if we need to support partial success
+</span>                <span class="keyword">await</span> Task.WhenAll(tableRequestTasks).ConfigureAwait(<span class="constant">false</span>);
+            }
+            <span class="keyword">return</span> tableRequestTasks.Select(t =&gt; t.Result);
+        }
+
+        <span class="keyword">private</span> <span class="keyword">async</span> <span class="type">Task</span>&lt;UcmApiTable&gt; <span class="function-name">GetDataTableAsync</span>(<span class="type">UcmApiTableRequest</span> <span class="variable-name">request</span>, <span class="type">ExecutionContext</span> <span class="variable-name">context</span>)
+        {
+            <span class="keyword">var</span> <span class="variable-name">queryConditions</span> = _requestParser.GetQueryConditions(request);
+
+            <span class="keyword">var</span> <span class="variable-name">astroRequest</span> = <span class="keyword">new</span> <span class="type">GetAstroTableRequest</span>(request.DataTableName, queryConditions.ToArray())
+            {
+                ActivityId = GetActivityId()
+            };
+
+            astroRequest.ExecutionContext = GetContext(context.ContextId);
+
+            TableContextHelper.InitializeContext();
+            <span class="keyword">var</span> <span class="variable-name">dataTable</span> = <span class="keyword">await</span> _astroTableRetriever.GetAstroTableAsync(astroRequest).ConfigureAwait(<span class="constant">false</span>);
+
+            <span class="keyword">if</span> (dataTable.TotalRecordCount == <span class="constant">null</span>)
+            {
+                dataTable.TotalRecordCount = dataTable.Rows.Count();
+            }
+
+            dataTable.DataTableName = request.DataTableName;
+
+            <span class="keyword">var</span> <span class="variable-name">externalTable</span> = dataTable.ToExternal();
+       
+            externalTable.SummaryRows = LoadSummaryRows();
+
+            externalTable.TotalSubRecordCount = GetTotalSubRecordCount();
+
+            TableContextHelper.ReleaseContext();
+
+            <span class="keyword">return</span> externalTable;
+        }
+
+        <span class="keyword">private</span> <span class="type">int</span>? GetTotalSubRecordCount()
+        {
+            <span class="keyword">var</span> <span class="variable-name">context</span> = TableContextHelper.CloneContext();
+            <span class="type">int</span>? totalSubRecordCount = <span class="constant">null</span>;
+            <span class="keyword">foreach</span> (<span class="keyword">var</span> <span class="variable-name">kv</span> <span class="keyword">in</span> context)
+            {
+                <span class="keyword">if</span> (kv.Key.Equals(Constants.OPPORTUNITY_COUNT))
+                {
+                    <span class="keyword">var</span> <span class="variable-name">table</span> = kv.Value <span class="keyword">as</span> <span class="type">AstroTable</span>;
+                    totalSubRecordCount = (<span class="type">int</span> ?)table.Rows[0][0];
+                    <span class="keyword">break</span>;
+                }
+            }
+            <span class="keyword">return</span> totalSubRecordCount;
+        }
+
+        <span class="keyword">private</span> <span class="type">Dictionary</span>&lt;<span class="type">string</span>, UcmApiSummaryRow&gt; <span class="function-name">LoadSummaryRows</span>()
+        {
+            <span class="keyword">var</span> <span class="variable-name">context</span> = TableContextHelper.CloneContext();
+            <span class="keyword">var</span> <span class="variable-name">summaryRows</span> = <span class="keyword">new</span> <span class="type">Dictionary</span>&lt;<span class="type">string</span>, <span class="function-name">UcmApiSummaryRow</span>&gt;();
+
+            <span class="keyword">foreach</span> (<span class="keyword">var</span> <span class="variable-name">kv</span> <span class="keyword">in</span> context)
+            {
+                <span class="keyword">var</span> <span class="variable-name">name</span> = kv.Key;
+                <span class="keyword">if</span> (!_summaryRowsKey.Contains(name))
+                    <span class="keyword">continue</span>;
+
+                <span class="type">AstroTable</span> <span class="variable-name">summaryTable</span> = <span class="constant">null</span>;
+                <span class="keyword">if</span> (kv.Value <span class="keyword">is</span> <span class="type">Task</span>&lt;AstroTable&gt;)
+                {
+                    summaryTable = (kv.Value <span class="keyword">as</span> <span class="type">Task</span>&lt;AstroTable&gt;).GetAwaiter().GetResult();
+                }
+                <span class="keyword">else</span>
+                {
+                    summaryTable = kv.Value <span class="keyword">as</span> <span class="type">AstroTable</span>;
+                }
+
+                <span class="keyword">var</span> <span class="variable-name">summaryRow</span> = <span class="keyword">new</span> <span class="type">UcmApiSummaryRow</span>
+                {
+                    SummaryFields = <span class="keyword">new</span> <span class="type">UcmApiSummaryField</span>[summaryTable.Columns.Length]
+                };
+
+                <span class="keyword">for</span> (<span class="type">int</span> <span class="variable-name">k</span> = 0; k &lt; summaryTable.Columns.Length; ++k)
+                {
+                    summaryRow.SummaryFields[k] = <span class="keyword">new</span> <span class="type">UcmApiSummaryField</span>
+                    {
+                        ColumnName = summaryTable.Columns[k].Name,
+                        ColumnType = summaryTable.Columns[k].ColumnType.Name,
+                        SummationMethod = summaryTable.Rows[1][k] <span class="keyword">as</span> <span class="type">string</span>,
+                        <span class="type">Data</span> = summaryTable.Rows[0][k]
+                    };
+                }
+
+                summaryRows.Add(name, summaryRow);
+            }
+
+            <span class="keyword">return</span> summaryRows;
+        }
+
+        <span class="comment-delimiter">// </span><span class="comment">Is virtual protected for tests to set its on activity id.
+</span>        <span class="keyword">protected</span> <span class="keyword">virtual</span> <span class="type">string</span> <span class="function-name">GetActivityId</span>()
+        {
+            <span class="keyword">return</span> Trace.CorrelationManager.ActivityId.ToString();
+        }
+
+        <span class="keyword">protected</span> <span class="keyword">virtual</span> <span class="type">ExecutionContext</span> <span class="function-name">GetContext</span>(<span class="type">Guid</span> <span class="variable-name">contextId</span>)
+        {
+            <span class="keyword">return</span> <span class="keyword">new</span> <span class="type">ExecutionContext</span>(contextId);
+        }
+    }
+}</pre>
+  </body>
+</html>
