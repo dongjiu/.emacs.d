@@ -23,3 +23,9 @@ body {
 .to-show:not(.showed) {
     opacity: 0.5;
 }
+
+.nav {
+    position: absolute;
+    right: 200px;
+    bottom: 50px;
+}

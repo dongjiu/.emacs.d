@@ -112,7 +112,7 @@ var presentation = {
         var $nav = $('#templates > #nav-template');
         $('.slide').each(function () {
             if ($(this).data('with-nav')) {
-                $nav.clone().children().appendTo(this);
+                $nav.clone().children().appendTo($('body'));
             }
         });
     },
