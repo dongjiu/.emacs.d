@@ -51,44 +51,67 @@ whether the system is 32-bit or 64-bit.
                           "-*-PingFang SC-normal-normal-normal-*-*-*-*-*-p-0-iso10646-1"))))
 #+END_SRC
 
-** Theme
-#+BEGIN_SRC emacs-lisp
-  (load-theme 'tango-dark t)
-#+END_SRC
-
-** Scroll bar, tool bar and fringe
+** Menu bar, scroll bar, tool bar and fringe
 #+BEGIN_SRC emacs-lisp
   (when (display-graphic-p)
+    (menu-bar-mode -1)
     (scroll-bar-mode -1)
     (tool-bar-mode -1)
     (set-fringe-mode 0))
 #+END_SRC
 
-** Mode line
+** Theme
+Dark theme:
 #+BEGIN_SRC emacs-lisp
-  (set-face-attribute 'mode-line nil
-                      :box nil
-                      :foreground "gray"
-                      :background "purple"
-                      :box nil)
+  (defun z-dark-theme ()
+    "Config dark theme."
+    ;; load theme
+    (load-theme 'tango-dark t)
+    ;; mode line
+    (set-face-attribute 'mode-line nil
+                        :box nil
+                        :foreground "gray"
+                        :background "purple"
+                        :box nil)
+    ;; background color
+    ;;    initial frame
+    (add-to-list 'initial-frame-alist '(background-color . "gray15"))
+    ;;    subsequent frames
+    (add-to-list 'default-frame-alist '(background-color . "gray15"))
+    ;; vertical bar color
+    (set-face-attribute 'vertical-border nil :foreground "gray"))
 #+END_SRC
 
-** Vertical bar
+Light theme:
 #+BEGIN_SRC emacs-lisp
-  (set-face-attribute 'vertical-border nil :foreground "gray")
+  (defun z-light-theme ()
+    "Config light theme."
+    ;; load theme
+    (load-theme 'leuven t)
+    ;; vertical bar color
+    (set-face-attribute 'vertical-border nil :foreground "gray"))
 #+END_SRC
 
-** Initial frame
+Enable light theme:
 #+BEGIN_SRC emacs-lisp
-  (add-to-list 'initial-frame-alist '(background-color . "gray15"))
-#+END_SRC
-
-** Subsequent frames
-#+BEGIN_SRC emacs-lisp
-  (add-to-list 'default-frame-alist '(background-color . "gray15"))
+  (z-light-theme)
 #+END_SRC
 
 * Customization
+** World time
+Specify the time zones for display-time-world to display.
+#+BEGIN_SRC emacs-lisp
+  (setq display-time-world-list
+        '(("UTC" "UTC")
+          ("UTC-8" "Shanghai")
+          ("PST8PDT" "Seattle")
+          ("EST5EDT" "New York")
+          ("GMT0BST" "London")
+          ("CET-1CDT" "Paris")
+          ("IST-5:30" "Bangalore")
+          ("JST-9" "Tokyo")))
+#+END_SRC
+
 ** No beep
 #+BEGIN_SRC emacs-lisp
 (setq visible-bell 1)
@@ -152,6 +175,12 @@ The following code overrides the default org key binding for "C-,".
             (lambda ()
               (local-set-key (kbd "C-,") 'set-mark-command)))
 #+END_SRC
+
+The following config hides the markup elements
+#+BEGIN_SRC emacs-lisp
+  (setq org-hide-emphasis-markers t)
+#+END_SRC
+
 * Programming
 ** c
 #+BEGIN_SRC emacs-lisp
@@ -303,6 +332,7 @@ Here is the key binding for it.
 ** "C-;" prefix
 "C-;" is used as prefix to avoid conflicts with builtin key bindings.
 #+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-; t") 'display-time-world)
   (global-set-key (kbd "C-; i") 'imenu)
   (global-set-key (kbd "C-; p") 'z-goto-match-paren)
   (global-set-key (kbd "C-; g") 'rgrep)

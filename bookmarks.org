@@ -1,7 +1,14 @@
 #+STARTUP: content
+* search engine
+** symbolhound
+http://symbolhound.com/
 * MS
 ** family day
 http://suzhoufamilyday/home.html
+** hr
+*** payslip
+https://portal0012.globalview.adp.com/gvolution/home/msft
+
 * UCM
 VSTS
 https://msasg.visualstudio.com/Bing_Ads/UCM%20Team/_backlogs/board/Features
@@ -11,7 +18,8 @@ https://microsoft.sharepoint.com/teams/BingAds/Shared%20Documents/Forms/AllItems
 
 ** Wiki
 [[https://microsoft.sharepoint.com/teams/BingAds/_layouts/15/WopiFrame2.aspx?sourcedoc={1cafa1d1-25d8-4da7-a2bf-b3a0b6a3fb26}]]
-
+*** build script
+https://microsoft.sharepoint.com/teams/BingAds/_layouts/15/WopiFrame.aspx?sourcedoc={1cafa1d1-25d8-4da7-a2bf-b3a0b6a3fb26}&action=view&wd=target%28%2F%2FDev%20Wiki%2FGetting%20Started.one%7C04b940c5-d538-4cdb-8f62-863a109466e2%2FSetup%20Local%20Env%20By%20Script%7Cb94d8d2f-fd60-4f36-af90-f2abcf3f443f%2F%29
 *** architecture
 https://microsoft.sharepoint.com/teams/BingAds/_layouts/15/WopiFrame.aspx?sourcedoc={1cafa1d1-25d8-4da7-a2bf-b3a0b6a3fb26}&action=view&wd=target%28%2F%2FDev%20Wiki%2FArchitecture.one%7Cb5bba6cd-3bb4-4830-8f27-2d534c0b01ef%2FOverview%7C22a5bdd7-60b1-4e20-aa47-f23dae1f7e27%2F%29
 
@@ -32,6 +40,12 @@ https://microsoft.sharepoint.com/teams/BingAds/_layouts/15/WopiFrame.aspx?source
 
 *** meeting, design, code review
 https://microsoft.sharepoint.com/teams/BingAds/Shared%20Documents/Forms/AllItems.aspx?id=%2Fteams%2FBingAds%2FShared%20Documents%2FTeams%2FUCM%2FDevelopment%2FMeeting%20-%20Design%2C%20Code%20Review%2C%20Idea
+
+*** shiproom
+https://microsoft.sharepoint.com/teams/BingAds/_layouts/15/WopiFrame.aspx?sourcedoc=%7B6DBB5D7C-68D9-4BB1-8A8A-46FFD1A6ABD1%7D&file=UCM%20Shiproom&action=default
+** UCM Team process
+https://microsoft.sharepoint.com/teams/BingAds/Shared%20Documents/Forms/AllItems.aspx?id=%2Fteams%2FBingAds%2FShared%20Documents%2FTeams%2FUCM%2FTeam%20Process
+
 ** Kendo
 *** router
 http://docs.telerik.com/kendo-ui/framework/spa/router
@@ -57,6 +71,8 @@ https://basarat.gitbooks.io/typescript/docs/template-strings.html
 https://emacs.stackexchange.com/questions/11052/how-to-determine-operating-system-bits-32-vs-64-bit-in-elisp
 
 ** elisp
+*** system environment
+https://www.gnu.org/software/emacs/manual/html_node/elisp/System-Environment.html#System-Environment
 *** unhighlight region
 https://stackoverflow.com/questions/7496397/about-elisps-highlight-region
 
@@ -98,6 +114,11 @@ https://www.emacswiki.org/emacs/Htmlize
 *** Specify layout file:
 https://stackoverflow.com/questions/5161380/how-do-i-specify-different-layouts-in-the-asp-net-mvc-3-razor-viewstart-file
 <<<<<<< Updated upstream
+* SQL Server
+** set nocount
+https://docs.microsoft.com/en-us/sql/t-sql/statements/set-nocount-transact-sql
+** sqlcmdvariable
+http://sqlblog.com/blogs/jamie_thomson/archive/2012/12/10/editing-sqlcmdvariable-nodes-in-ssdt-publish-profile-files-using-msbuild.aspx
 * Reveal JS
 https://github.com/hakimel/reveal.js
 * html
@@ -124,3 +145,7 @@ https://club.bankcomm.com/customer/index.htm
 https://learn.jquery.com/events/introduction-to-custom-events/
 ** detecting keys
 https://stackoverflow.com/questions/37557990/detecting-combination-keypresses-control-alt-shift
+* common knowledge
+** time zone
+abbreviations
+https://en.wikipedia.org/wiki/List_of_time_zone_abbreviations
