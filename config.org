@@ -102,14 +102,19 @@ Enable light theme:
 Specify the time zones for display-time-world to display.
 #+BEGIN_SRC emacs-lisp
   (setq display-time-world-list
-        '(("UTC" "UTC")
-          ("UTC-8" "Shanghai")
+        '(("UTC-8" "Shanghai")
+          ("UTC" "UTC")
           ("PST8PDT" "Seattle")
           ("EST5EDT" "New York")
           ("GMT0BST" "London")
           ("CET-1CDT" "Paris")
           ("IST-5:30" "Bangalore")
           ("JST-9" "Tokyo")))
+#+END_SRC
+
+The output format is as follows:
+#+BEGIN_SRC emacs-lisp
+  (setq display-time-world-time-format "[%Z][%z]\t%Y-%m-%d %H:%M\t%A\n")
 #+END_SRC
 
 ** No beep
@@ -340,8 +345,9 @@ Here is the key binding for it.
   (global-set-key (kbd "C-; w") 'ffap-copy-string-as-kill)
   (global-set-key (kbd "C-; C-; y") 'z-dup-line)
   (global-set-key (kbd "C-; C-; i") 'z-inc-num)
-  (global-set-key (kbd "C-; d d") 'z-word-definition)
-  (global-set-key (kbd "C-; d r") 'z-word-definition-region)
+  (global-set-key (kbd "C-; d d") 'z-bing-dict-search-word)
+  (global-set-key (kbd "C-; d r") 'z-bing-dict-search-region)
+  (global-set-key (kbd "C-; d l") 'z-bing-dict-search-line)
   (global-set-key (kbd "C-; o c") 'org-capture)
 #+END_SRC
 

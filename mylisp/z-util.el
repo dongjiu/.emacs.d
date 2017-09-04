@@ -1,13 +1,24 @@
-(defun z-word-definition ()
-  "Search word definition in a dictionary"
+(defun z-bing-dict-search-word ()
+  "Search current word in bing dict."
   (interactive)
   ;;  (browse-url (concat "http://cn.bing.com/dict/search?q=" (thing-at-point 'word))))
   (z-bing-dict (current-word)))
 
-(defun z-word-definition-region ()
-  "Search word (in region) definition in a dictionary"
+(defun z-bing-dict-search-region ()
+  "Search text in region in a bing dict."
   (interactive)
   (z-bing-dict (buffer-substring-no-properties (region-beginning) (region-end))))
+
+(defun z-bing-dict-search-line ()
+  "Search current line in bing dict."
+  (interactive)
+  (let ((beg) (end))
+    (save-excursion
+      (beginning-of-line)
+      (setq beg (point))
+      (end-of-line)
+      (setq end (point))
+      (z-bing-dict (buffer-substring-no-properties beg end)))))
 
 (defun z-bing-dict (&optional word)
   "Search WORD in bing dict."

@@ -16,6 +16,8 @@ https://msasg.visualstudio.com/Bing_Ads/UCM%20Team/_backlogs/board/Features
 SharePoint
 https://microsoft.sharepoint.com/teams/BingAds/Shared%20Documents/Forms/AllItems.aspx?id=%2Fteams%2FBingAds%2FShared%20Documents%2FTeams%2FUCM
 
+** azure link
+https://ms.portal.azure.com 
 ** Wiki
 [[https://microsoft.sharepoint.com/teams/BingAds/_layouts/15/WopiFrame2.aspx?sourcedoc={1cafa1d1-25d8-4da7-a2bf-b3a0b6a3fb26}]]
 *** build script
@@ -147,5 +149,7 @@ https://learn.jquery.com/events/introduction-to-custom-events/
 https://stackoverflow.com/questions/37557990/detecting-combination-keypresses-control-alt-shift
 * common knowledge
 ** time zone
-abbreviations
+*** abbreviations
 https://en.wikipedia.org/wiki/List_of_time_zone_abbreviations
+*** ISO 8601
+https://en.wikipedia.org/wiki/ISO_8601
