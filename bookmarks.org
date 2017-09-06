@@ -1,4 +1,12 @@
 #+STARTUP: content
+* donzhu-work remote desktop
+  :PROPERTIES:
+  :VISIBILITY: all
+  :END:
+#+BEGIN_SRC emacs-lisp
+(shell-command "start C:\\Users\\donzhu\\Desktop\\donzhu_work.rdp")
+#+END_SRC
+
 * search engine
 ** symbolhound
 http://symbolhound.com/
