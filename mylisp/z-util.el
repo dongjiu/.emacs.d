@@ -375,6 +375,17 @@ Otherwise, do nothing."
   (dolist (p (z-path-dirs))
 	(insert (concat p "\n"))))
 
+(defun z-path-add (path)
+  "Add PATH to path environment variable."
+  (when (and (file-exists-p path)
+             (not (member path (z-path-dirs))))
+    (setenv "PATH" (concat path path-separator (getenv "PATH")))))
+
+(defun z-path-add-dirs (dirs)
+  "Add each directory in DIRS to PATH environment variable."
+  (dolist (d dirs)
+    (z-path-add d)))
+
 (defun z-cmd-here ()
   "Run Windows cmd in default directory."
   (interactive)

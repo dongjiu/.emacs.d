@@ -1,3 +1,11 @@
+* Common util functions
+Some util functions are used in the following sections, so they should
+be loaded first.
+#+BEGIN_SRC emacs-lisp
+  (load-file "~/.emacs.d/mylisp/z-string.el")
+  (load-file "~/.emacs.d/mylisp/z-util.el")
+#+END_SRC
+
 * Environment
 ** User directory
 On Windows, use environment variable %USERPROFILE% as the user
@@ -17,24 +25,23 @@ whether the system is 32-bit or 64-bit.
 #+END_SRC
 
 ** Environment variables
+Define the directories to add to PATH.
 #+BEGIN_SRC emacs-lisp
-  (if (eq system-type 'windows-nt)
-      (progn
-        (setenv "PATH" (concat z-home "\\softwares\\ES-1.1.0.8;"
-                               "C:\\Program Files\\Git\\bin;"
-                               "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\bin;"
-                               "C:\\Program Files (x86)\\MSBuild\\14.0\\Bin;"
-                               (getenv "PATH")))
+  (setq z-path-dirs-to-add
+        (if (eq system-type 'windows-nt)
+            ;; windows paths
+            (list "C:\\Program Files\\Git\\usr\\bin" ; diff
+                  (concat z-home "\\softwares\\ES-1.1.0.8"))
 
-        ;; exec-path
-        (setq exec-path (append exec-path '("C:\\Program Files\\Git\\usr\\bin" ; diff
-                                            "C:\\Program Files\\Git\\mingw64\\bin"))))
+          ;; non windows paths
+          '("/Users/dzhu/bin"
+            "/usr/local/bin")))
+#+END_SRC
 
-
-    (setenv "PATH" (concat "/Users/dzhu/bin:/usr/local/bin:/Library/TeX/texbin:/sw/bin:"
-                           "/Users/dzhu/tools/apache-maven-3.3.9/bin:"
-                           "/usr/local/share/dotnet:"
-                           (getenv "PATH"))))
+Add the directories to PATH environment variable and exec-path.
+#+BEGIN_SRC emacs-lisp
+  (z-path-add-dirs z-path-dirs-to-add)
+  (setq exec-path (append exec-path z-path-dirs-to-add))
 #+END_SRC
 
 * Appearance
@@ -273,12 +280,6 @@ Use web-mode to edit html files.
 #+END_SRC
 
 * Utilities
-** Common
-#+BEGIN_SRC emacs-lisp
-  (load-file "~/.emacs.d/mylisp/z-string.el")
-  (load-file "~/.emacs.d/mylisp/z-util.el")
-#+END_SRC
-
 ** csharp
 #+BEGIN_SRC emacs-lisp
   (load-file "~/.emacs.d/mylisp/z-csharp.el")
