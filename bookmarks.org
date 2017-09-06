@@ -48,7 +48,15 @@ https://microsoft.sharepoint.com/teams/BingAds/_layouts/15/WopiFrame.aspx?source
 ** UCM Team process
 https://microsoft.sharepoint.com/teams/BingAds/Shared%20Documents/Forms/AllItems.aspx?id=%2Fteams%2FBingAds%2FShared%20Documents%2FTeams%2FUCM%2FTeam%20Process
 
+** Prod user request
+https://microsoft.sharepoint.com/teams/BingAds/_layouts/15/WopiFrame.aspx?sourcedoc={1cafa1d1-25d8-4da7-a2bf-b3a0b6a3fb26}&action=view&wd=target%28%2F%2FDev%20Wiki%2FGetting%20Started.one%7C04b940c5-d538-4cdb-8f62-863a109466e2%2FUCM%20Prod%20User%20Request%7Cd0c88f6f-c39a-4537-acd7-861c7f7b2773%2F%29
+
+http://admaps/User
+
 ** Kendo
+** repositories
+https://msasg.visualstudio.com/DefaultCollection/Bing_Ads/_admin/_versioncontrol?_a=security
+
 *** router
 http://docs.telerik.com/kendo-ui/framework/spa/router
 

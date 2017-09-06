@@ -9,3 +9,5 @@ tmp.json
 tmp.sql
 bookmarks
 config.el
+.emacs.desktop
+.emacs.desktop.lock
