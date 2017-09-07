@@ -6,7 +6,7 @@
 								  (list-system-processes)))
   (when (and (file-exists-p z-ahk-exe)
 			 (file-exists-p z-ahk-script))
-	(w32-shell-execute "runas" z-ahk-exe z-ahk-script)))
+	(w32-shell-execute "open" z-ahk-exe z-ahk-script)))
 
 (defvar z-ahk-tmp-file nil "tmp ahk file name.")
 (with-temp-buffer
@@ -31,7 +31,7 @@
 
 (defun z--run-tmp-ahk-file ()
   "Run tmp ahk script."
-  (w32-shell-execute "runas" z-ahk-exe
+  (w32-shell-execute "open" z-ahk-exe
 					 (z-string-win-style-path z-ahk-tmp-file)))
 
 (defun z-run-everything-search (text)
