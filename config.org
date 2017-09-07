@@ -440,6 +440,41 @@ corresponding modes through the above minor modes.
     (load-file "~/.emacs.d/mylisp/z-ahk.el"))
 #+END_SRC
 
+** 7z
+Define a variable to point to the 7z exe file.
+#+BEGIN_SRC emacs-lisp
+  (setq z-7z-exe "C:/Program Files/7-Zip/7z.exe")
+#+END_SRC
+
+The following function unzips the zip file using 7z.
+#+BEGIN_SRC emacs-lisp
+  (defun z-7z-unzip (file)
+    "Unzip FILE with 7z into a folder with the same name as FILE."
+    (let ((output-dir) (cmd))
+      (setq file (expand-file-name file))
+      (setq output-dir (concat (file-name-directory file) (file-name-base file)))
+      (if (file-exists-p z-7z-exe)
+          (progn
+            (setq cmd (format "\"%s\" x \"%s\" -o\"%s\""
+                              (z-string-win-style-path z-7z-exe)
+                              (z-string-win-style-path file)
+                              (z-string-win-style-path output-dir)))
+            (message cmd)
+            (async-shell-command cmd))
+        (message "7z.exe not found"))))
+#+END_SRC
+
+The following interactive function unzips the file at point.
+#+BEGIN_SRC emacs-lisp
+  (defun z-7z-unzip-file-at-point ()
+    "Unzip file at point using 7z."
+    (interactive)
+    (let ((file (thing-at-point 'filename)))
+      (if file
+          (z-7z-unzip file)
+        (message "No file at point."))))
+#+END_SRC
+
 ** Visual studio
 #+BEGIN_SRC emacs-lisp
   (when (eq system-type 'windows-nt)
