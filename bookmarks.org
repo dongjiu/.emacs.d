@@ -7,6 +7,8 @@
 (shell-command "start C:\\Users\\donzhu\\Desktop\\donzhu_work.rdp")
 #+END_SRC
 
+* SQL Server Connections
+Server=tcp:donzhu.database.windows.net,1433;Initial Catalog=donzhu_db;Persist Security Info=False;User ID={your_username};Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
 * search engine
 ** symbolhound
 http://symbolhound.com/
@@ -17,6 +19,11 @@ http://suzhoufamilyday/home.html
 *** payslip
 https://portal0012.globalview.adp.com/gvolution/home/msft
 
+** ms keys
+https://mskeys.microsoft.com/
+** visual studio subscription
+https://my.visualstudio.com/Benefits?wt.mc_id=o~msft~profile~devprogram_attach&workflowid=devprogram&mkt=en-us
+https://my.visualstudio.com/subscriptions
 * UCM
 VSTS
 https://msasg.visualstudio.com/Bing_Ads/UCM%20Team/_backlogs/board/Features
@@ -28,6 +35,8 @@ https://microsoft.sharepoint.com/teams/BingAds/Shared%20Documents/Forms/AllItems
 https://ms.portal.azure.com 
 ** Wiki
 [[https://microsoft.sharepoint.com/teams/BingAds/_layouts/15/WopiFrame2.aspx?sourcedoc={1cafa1d1-25d8-4da7-a2bf-b3a0b6a3fb26}]]
+*** glossary
+https://microsoft.sharepoint.com/teams/BingAds/_layouts/15/WopiFrame.aspx?sourcedoc={1cafa1d1-25d8-4da7-a2bf-b3a0b6a3fb26}&action=view&wd=target%28%2F%2FWiki%20Home.one%7C027b556a-097e-4010-970b-004bbb0a671d%2FGlossary%7C3a9c5c91-2a68-43f4-8432-bb4d2b056355%2F%29
 *** build script
 https://microsoft.sharepoint.com/teams/BingAds/_layouts/15/WopiFrame.aspx?sourcedoc={1cafa1d1-25d8-4da7-a2bf-b3a0b6a3fb26}&action=view&wd=target%28%2F%2FDev%20Wiki%2FGetting%20Started.one%7C04b940c5-d538-4cdb-8f62-863a109466e2%2FSetup%20Local%20Env%20By%20Script%7Cb94d8d2f-fd60-4f36-af90-f2abcf3f443f%2F%29
 *** architecture
@@ -67,6 +76,10 @@ https://msasg.visualstudio.com/DefaultCollection/Bing_Ads/_admin/_versioncontrol
 
 *** router
 http://docs.telerik.com/kendo-ui/framework/spa/router
+
+** dev tools
+\\products\PUBLIC\PRODUCTS\Developers\
+
 
 * Github
 https://github.com/dongjiu/.emacs.d
