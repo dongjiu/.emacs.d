@@ -349,6 +349,8 @@ Here is the key binding for it.
   (global-set-key (kbd "C-; d d") 'z-bing-dict-search-word)
   (global-set-key (kbd "C-; d r") 'z-bing-dict-search-region)
   (global-set-key (kbd "C-; d l") 'z-bing-dict-search-line)
+  (global-set-key (kbd "C-; s l") 'z-bing-search-line)
+  (global-set-key (kbd "C-; s r") 'z-bing-search-region)
   (global-set-key (kbd "C-; o c") 'org-capture)
 #+END_SRC
 

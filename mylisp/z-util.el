@@ -9,27 +9,39 @@
   (interactive)
   (z-bing-dict (buffer-substring-no-properties (region-beginning) (region-end))))
 
-(defun z-bing-dict-search-line ()
-  "Search current line in bing dict."
-  (interactive)
+(defun z-current-line ()
+  "Return text in current line."
   (let ((beg) (end))
     (save-excursion
       (beginning-of-line)
       (setq beg (point))
       (end-of-line)
       (setq end (point))
-      (z-bing-dict (buffer-substring-no-properties beg end)))))
+      (buffer-substring-no-properties beg end))))
+
+(defun z-bing-dict-search-line ()
+  "Search current line in bing dict."
+  (interactive)
+  (z-bing-dict (z-current-line)))
 
 (defun z-bing-dict (&optional word)
   "Search WORD in bing dict."
   (interactive "sWord: ")
   (browse-url (concat "http://cn.bing.com/dict/search?q=" word)))
 
-(defun z-search-region ()
-  "Search text (in region) in search engine."
+(defun z-bing-search-text (text)
+  "Search TEXT in bing search."
+  (browse-url (concat "https://www.bing.com/search?q=" text)))
+
+(defun z-bing-search-region ()
+  "Search text (in region) in bing search."
   (interactive)
-  (browse-url (concat "https://www.bing.com/search?q="
-					  (buffer-substring-no-properties (region-beginning) (region-end)))))
+  (z-bing-search-text (buffer-substring-no-properties (region-beginning) (region-end))))
+
+(defun z-bing-search-line ()
+  "Search linetext (in region) in bing search."
+  (interactive)
+  (z-bing-search-text (z-current-line)))
 
 (defun z-goto-close-paren (open-paren close-paren)
   (let ((parens-to-match 1)

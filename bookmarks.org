@@ -176,6 +176,10 @@ https://club.bankcomm.com/customer/index.htm
 https://learn.jquery.com/events/introduction-to-custom-events/
 ** detecting keys
 https://stackoverflow.com/questions/37557990/detecting-combination-keypresses-control-alt-shift
+* openssl
+** encrypt/decrypt files
+https://stackoverflow.com/questions/16056135/how-to-use-openssl-to-encrypt-decrypt-files
+
 * common knowledge
 ** time zone
 *** abbreviations
