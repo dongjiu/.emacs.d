@@ -158,6 +158,22 @@ https://stackoverflow.com/questions/5161380/how-do-i-specify-different-layouts-i
 https://docs.microsoft.com/en-us/sql/t-sql/statements/set-nocount-transact-sql
 ** sqlcmdvariable
 http://sqlblog.com/blogs/jamie_thomson/archive/2012/12/10/editing-sqlcmdvariable-nodes-in-ssdt-publish-profile-files-using-msbuild.aspx
+** convert vbinary
+https://blogs.msdn.microsoft.com/sqltips/2008/07/02/converting-from-hex-string-to-varbinary-and-vice-versa/
+https://stackoverflow.com/questions/14145904/sql-server-hex-string-to-varbinary-conversion
+** read vbinary into file
+https://stackoverflow.com/questions/4056050/script-to-save-varbinary-data-to-disk
+http://www.jitendrazaa.com/blog/sql/sqlserver/export-documents-saved-as-blob-binary-from-sql-server/
+
+** bulk insert
+https://www.red-gate.com/simple-talk/sql/learn-sql-server/bulk-inserts-via-tsql-in-sql-server/
+https://weblogs.asp.net/aghausman/saving-and-retrieving-file-using-filestream-sql-server-2008
+https://stackoverflow.com/questions/7474862/insert-a-client-file-into-a-column-on-a-server-database
+http://www.dotnetspark.com/kb/2052-sql-server-blob-data-net--tutorial.aspx
+
+** ADO.NET
+*** large value
+[[https://msdn.microsoft.com/en-us/library/a1904w6t(VS.80).aspx]]
 * Reveal JS
 https://github.com/hakimel/reveal.js
 * html
