@@ -9,9 +9,12 @@
 
 * SQL Server Connections
 Server=tcp:donzhu.database.windows.net,1433;Initial Catalog=donzhu_db;Persist Security Info=False;User ID={your_username};Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
-* search engine
+* search
 ** symbolhound
 http://symbolhound.com/
+** english examples
+http://www.linguee.fr/francais-anglais/search?source=auto&query=
+
 * MS
 ** family day
 http://suzhoufamilyday/home.html
@@ -93,6 +96,11 @@ https://developer.microsoft.com/en-US/windows/downloads/windows-10-sdk
 https://superuser.com/questions/321988/how-do-i-determine-if-my-windows-is-32-bit-or-64-bit-using-a-command
 
 http://landinghub.visualstudio.com/visual-cpp-build-tools
+
+** redirect stderr to null
+https://stackoverflow.com/questions/4507312/how-to-redirect-stderr-to-null-in-cmd-exe
+
+Your DOS command 2> nul
 
 * Typescript
 ** backtick '`'
@@ -180,9 +188,32 @@ https://stackoverflow.com/questions/37557990/detecting-combination-keypresses-co
 ** encrypt/decrypt files
 https://stackoverflow.com/questions/16056135/how-to-use-openssl-to-encrypt-decrypt-files
 
+http://www.czeskis.com/random/openssl-encrypt-file.html
+
+** message "writing RSA key"
+https://stackoverflow.com/questions/16608154/openssl-how-to-disable-writing-rsa-key-message-in-console
 * common knowledge
 ** time zone
 *** abbreviations
 https://en.wikipedia.org/wiki/List_of_time_zone_abbreviations
 *** ISO 8601
 https://en.wikipedia.org/wiki/ISO_8601
+* perl
+** catch warning
+https://perlmaven.com/how-to-capture-and-save-warnings-in-perl
+* GPG
+** example
+http://www.spywarewarrior.com/uiuc/gpg/gpg-com-4.htm
+http://edoceo.com/cli/gpg
+
+** inline pgp
+http://josefsson.org/inline-openpgp-considered-harmful.html
+
+** expiration
+http://www.g-loaded.eu/2010/11/01/change-expiration-date-gpg-key/
+
+** emacs and gpg
+https://www.masteringemacs.org/article/keeping-secrets-in-emacs-gnupg-auth-sources
+
+** org mode
+https://nakkaya.com/2009/11/19/keeping-secrets-with-emacs-and-gpg/

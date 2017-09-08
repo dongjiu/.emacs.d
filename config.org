@@ -25,6 +25,7 @@ whether the system is 32-bit or 64-bit.
 #+END_SRC
 
 ** Environment variables
+*** PATH
 Define the directories to add to PATH.
 #+BEGIN_SRC emacs-lisp
   (setq z-path-dirs-to-add
@@ -191,6 +192,12 @@ The following code overrides the default org key binding for "C-,".
 The following config hides the markup elements
 #+BEGIN_SRC emacs-lisp
   (setq org-hide-emphasis-markers t)
+#+END_SRC
+
+** yes or no
+Substitute y-or-n-p for yes-or-no-p.
+#+BEGIN_SRC emacs-lisp
+  (defalias 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
 
 * Programming
@@ -471,7 +478,9 @@ The following interactive function unzips the file at point.
   (defun z-7z-unzip-file-at-point ()
     "Unzip file at point using 7z."
     (interactive)
-    (let ((file (thing-at-point 'filename)))
+    (let ((file (if (string= major-mode "dired-mode")
+                    (dired-copy-filename-as-kill 0)
+                  (thing-at-point 'filename))))
       (if file
           (z-7z-unzip file)
         (message "No file at point."))))

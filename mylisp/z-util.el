@@ -391,7 +391,7 @@ Otherwise, do nothing."
   "Add PATH to path environment variable."
   (when (and (file-exists-p path)
              (not (member path (z-path-dirs))))
-    (setenv "PATH" (concat path path-separator (getenv "PATH")))))
+    (setenv "PATH" (concat (getenv "PATH") path-separator path))))
 
 (defun z-path-add-dirs (dirs)
   "Add each directory in DIRS to PATH environment variable."
