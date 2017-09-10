@@ -102,19 +102,27 @@ https://stackoverflow.com/questions/4507312/how-to-redirect-stderr-to-null-in-cm
 
 Your DOS command 2> nul
 
+** disable cortana
+https://www.pcworld.com/article/2949759/windows/killing-cortana-how-to-disable-windows-10s-info-hungry-digital-assistant.html
+https://www.windowscentral.com/how-turn-cortana-and-stop-personal-data-gathering-windows-10
 * Typescript
 ** backtick '`'
 https://basarat.gitbooks.io/typescript/docs/template-strings.html
 
 * emacs
+** os bits
 https://emacs.stackexchange.com/questions/11052/how-to-determine-operating-system-bits-32-vs-64-bit-in-elisp
 
+** shell-command-to-string exit code
+https://stackoverflow.com/questions/23299314/finding-the-exit-code-of-a-shell-command-in-elisp
 ** elisp
 *** system environment
 https://www.gnu.org/software/emacs/manual/html_node/elisp/System-Environment.html#System-Environment
 *** unhighlight region
 https://stackoverflow.com/questions/7496397/about-elisps-highlight-region
 
+*** check if a function exists
+http://ergoemacs.org/emacs/elisp_check_defined.html
 ** hooks
 https://www.gnu.org/software/emacs/manual/html_node/elisp/Standard-Hooks.html
 
@@ -154,8 +162,26 @@ https://www.emacswiki.org/emacs/Htmlize
 https://stackoverflow.com/questions/5161380/how-do-i-specify-different-layouts-in-the-asp-net-mvc-3-razor-viewstart-file
 <<<<<<< Updated upstream
 * SQL Server
+** trusted connection
+https://stackoverflow.com/questions/1250552/what-is-a-trusted-connection
 ** set nocount
 https://docs.microsoft.com/en-us/sql/t-sql/statements/set-nocount-transact-sql
+** format sqlcmd output
+https://stackoverflow.com/questions/10561961/formatting-output-in-sqlcmd-mode
+
+sqlcmd -S server -U usr -P pwd -d database
+    -h -1 -s "," -W
+    -Q \"select * from some_table\"
+** quote string
+https://docs.microsoft.com/en-us/sql/t-sql/functions/quotename-transact-sql
+** insert vbinary
+https://stackoverflow.com/questions/1120689/how-can-i-insert-binary-file-data-into-a-binary-sql-field-using-a-simple-insert
+** .NET upload file to sql server
+https://www.codeproject.com/Articles/308552/Upload-and-Download-Files-to-SQL-Servers-in-ASP-Ne
+** datetime
+https://stackoverflow.com/questions/1334143/datetime2-vs-datetime-in-sql-server
+** varchar(max) vs text
+https://stackoverflow.com/questions/834788/using-varcharmax-vs-text-on-sql-server
 ** sqlcmdvariable
 http://sqlblog.com/blogs/jamie_thomson/archive/2012/12/10/editing-sqlcmdvariable-nodes-in-ssdt-publish-profile-files-using-msbuild.aspx
 ** convert vbinary
@@ -171,6 +197,8 @@ https://weblogs.asp.net/aghausman/saving-and-retrieving-file-using-filestream-sq
 https://stackoverflow.com/questions/7474862/insert-a-client-file-into-a-column-on-a-server-database
 http://www.dotnetspark.com/kb/2052-sql-server-blob-data-net--tutorial.aspx
 
+** large objects
+http://www.developer.com/net/asp/article.php/3761486/Working-with-Binary-Large-Objects-BLOBs-Using-SQL-Server-and-ADONET.htm
 ** ADO.NET
 *** large value
 [[https://msdn.microsoft.com/en-us/library/a1904w6t(VS.80).aspx]]
@@ -217,12 +245,25 @@ https://en.wikipedia.org/wiki/ISO_8601
 * perl
 ** catch warning
 https://perlmaven.com/how-to-capture-and-save-warnings-in-perl
+** DBI truncate
+DBD::ODBC::st fetchrow_hashref failed: st_fetch/SQLFetch (long truncated DBI attribute LongTruncOk not set and/or LongReadLen too small) (SQL-HY000) [state was HY000 now 01004]
+[Microsoft][ODBC SQL Server Driver]String data, right truncation (SQL-01004) at test_dbi.pl line 13.
+
+https://stackoverflow.com/questions/12315397/database-fetchrow-array-failed-long-truncated-dbi-attribute
+
+https://docstore.mik.ua/orelly/linux/dbi/ch06_02.htm
+
+** binary file
+http://www.devx.com/DevX/Tip/17116
+** base64
+https://stackoverflow.com/questions/19658314/how-do-i-convert-a-base64-encoded-file-using-perl
+https://stackoverflow.com/questions/11301854/perl-convert-image-to-base64
 * GPG
 ** example
 http://www.spywarewarrior.com/uiuc/gpg/gpg-com-4.htm
 http://edoceo.com/cli/gpg
 
-** inline pgp
+** inline gpg
 http://josefsson.org/inline-openpgp-considered-harmful.html
 
 ** expiration
@@ -233,3 +274,5 @@ https://www.masteringemacs.org/article/keeping-secrets-in-emacs-gnupg-auth-sourc
 
 ** org mode
 https://nakkaya.com/2009/11/19/keeping-secrets-with-emacs-and-gpg/
+** emacs prompts untrusted key
+https://superuser.com/questions/366035/how-can-i-disable-prompt-about-trust-when-encrypting-file-with-gpg-in-emacs

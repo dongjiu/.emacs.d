@@ -436,6 +436,86 @@ corresponding modes through the above minor modes.
 (setq-default abbrev-mode t)
 #+END_SRC
 
+* GPG
+The following function encrypts a file using GPG.
+#+BEGIN_SRC emacs-lisp
+  (defun z-encrypt-file (file key-name)
+    "Encrypt FILE with public key that matches NAME."
+    (let ((context (epg-make-context)) (keys))
+      (if (file-exists-p file)
+          (progn (setq keys (epg-list-keys context key-name))
+                 (if keys
+                     (epg-encrypt-file context file keys nil)
+                   (message "Cannot find key that matches %s." key-name)))
+        (message "File %s does not exist." file))))
+#+END_SRC
+
+The following function descrypts file from string.
+#+BEGIN_SRC emacs-lisp
+  (defun z-decrypt-string (encrypted-string &optional out-file)
+    "Decrypt ENCRYPTED-STRING and save the result in OUT-FILE.
+  If OUT-FILE is nil, return the descrypted string."
+    (let ((decrypt-string
+           (lambda (encrypted-string)
+             (epg-decrypt-string (epg-make-context) encrypted-string)))
+          (need-decrypt-p
+           (lambda ()
+             (if (file-exists-p out-file)
+                 (if (yes-or-no-p (format "File %s already exists. Overwrite? "  out-file))
+                     (progn (delete-file out-file) t)
+                   nil)
+               t))))
+      (if out-file
+          (when (funcall need-decrypt-p)
+            (append-to-file (funcall decrypt-string encrypted-string) nil out-file))
+        (funcall decrypt-string encrypted-string))))
+#+END_SRC
+
+* Azure Database
+Upload file:
+#+BEGIN_SRC emacs-lisp
+  (defun z-upload-file (file upload-dir upload-name)
+    "Upload file to azure database."
+    (let ((default-directory "~/.emacs.d/perl")
+          (buffer "*UPLOAD FILE*"))
+      (start-process "perl_upload_file" buffer
+                     "perl" "azure_db.pl" "upload"
+                     "--file" file
+                     "--directory" upload-dir
+                     "--upload_name" upload-name
+                     "--password" (read-passwd "Database password: "))
+      (display-buffer buffer)))
+#+END_SRC
+
+Pull file:
+#+BEGIN_SRC emacs-lisp
+  (defun z-pull-file (directory file-name output-file)
+    "Pull file from azure database."
+    (let ((default-directory "~/.emacs.d/perl")
+          (buffer "*PULL FILE*"))
+      (start-process "perl_pull_file" buffer
+                     "perl" "azure_db.pl" "pull"
+                     "--directory" directory
+                     "--file_name" file-name
+                     "--output_file" output-file
+                     "--password" (read-passwd "Database password: "))
+      (display-buffer buffer)))
+#+END_SRC
+
+Delete file:
+#+BEGIN_SRC emacs-lisp
+  (defun z-delete-file (directory file-name)
+    "Delete file from azure database."
+    (let ((default-directory "~/.emacs.d/perl")
+          (buffer "*DELETE FILE*"))
+      (start-process "perl_delete_file" buffer
+                     "perl" "azure_db.pl" "delete"
+                     "--directory" directory
+                     "--file_name" file-name
+                     "--password" (read-passwd "Database password: "))
+      (display-buffer buffer)))
+#+END_SRC
+
 * Windows specific
 ** Win32 API wrappers
 #+BEGIN_SRC emacs-lisp

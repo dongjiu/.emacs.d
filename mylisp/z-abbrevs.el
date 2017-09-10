@@ -67,7 +67,7 @@
 
 	("plp" "" z-shell-perl-one-liner)
 	("plpath" "" z-shell-perl-path)
-	("devlog" "sudo docker logs --tail=100 -f dockerscripts_dev_1")
+	("scts" "shell-command-to-string")
 	))
 
 (push (cons 'z-shell-mode z-shell-mode-abbrev-table)
