@@ -22,7 +22,8 @@ create table file_chunk (
 );
 
 select * from [file];
-
+truncate table [file_chunk];
+truncate table [file];
 select * from [file_chunk];
 
 create table tag (
@@ -54,3 +55,6 @@ create table file_tag (
         foreign key (tag_code)
         references tag (tag_code)
 );
+
+select * from tag;
+select * from file_tag;

@@ -105,4 +105,22 @@ sub list_files {
   }
 }
 
+sub create_tag {
+  my ($dbh, $tag_code, $tag_name) = @_;
+
+  my $sth = $dbh->prepare("insert into tag (tag_code, tag_name) values (?, ?)");
+  $sth->bind_param(1, $tag_code);
+  $sth->bind_param(2, $tag_name);
+  $sth->execute;
+}
+
+sub add_file_tag {
+  my ($dbh, $file_id, $tag_code) = @_;
+
+  my $sth = $dbh->prepare("insert into file_tag (file_id, tag_code) values (?, ?)");
+  $sth->bind_param(1, $file_id);
+  $sth->bind_param(2, $tag_code);
+  $sth->execute;
+}
+
 1;

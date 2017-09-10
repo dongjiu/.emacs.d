@@ -52,6 +52,28 @@ given ($action) {
     my $dbh = AzureDb::sql_server_dbh($server, $user, $password, $database);
     AzureDb::list_files($dbh);
   }
+  when ('newtag') {
+    my ($password, $tag_code, $tag_name);
+    GetOptions("password=s" => \$password,
+               "tag_code=s" => \$tag_code,
+               "tag_name=s" => \$tag_name);
+    die "--tag_code not specified." unless $tag_code;
+    die "--tag_name not specified." unless $tag_name;
+    die "--password not specified." unless $password;
+    my $dbh = AzureDb::sql_server_dbh($server, $user, $password, $database);
+    AzureDb::create_tag($dbh, $tag_code, $tag_name);
+  }
+  when ('addfiletag') {
+    my ($password, $file_id, $tag_code);
+    GetOptions("password=s" => \$password,
+               "file_id=s" => \$file_id,
+               "tag_code=s" => \$tag_code);
+    die "--file_id not specified." unless $file_id;
+    die "--tag_code not specified." unless $tag_code;
+    die "--password not specified." unless $password;
+    my $dbh = AzureDb::sql_server_dbh($server, $user, $password, $database);
+    AzureDb::add_file_tag($dbh, $file_id, $tag_code);
+  }
   default {
     die "Unknown action $action";
   }

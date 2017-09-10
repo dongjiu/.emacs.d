@@ -528,6 +528,35 @@ List all files:
       (display-buffer buffer)))
 #+END_SRC
 
+Add tag:
+#+BEGIN_SRC emacs-lisp
+  (defun z-new-tag (tag-code tag-name)
+    "Add new tag."
+    (let ((default-directory "~/.emacs.d/perl")
+          (buffer "*Database*"))
+      (start-process "perl_new_tag" buffer
+                     "perl" "azure_db.pl" "newtag"
+                     "--tag_code" tag-code
+                     "--tag_name" tag-name
+                     "--password" (read-passwd "Database password: "))
+      (display-buffer buffer)))
+#+END_SRC
+
+Add file tag:
+#+BEGIN_SRC emacs-lisp
+  (defun z-add-file-tag (file-id tag-code)
+    "Add file tag."
+    (let ((default-directory "~/.emacs.d/perl")
+          (buffer "*Database*"))
+      (start-process "perl_add_file_tag" buffer
+                     "perl" "azure_db.pl" "addfiletag"
+                     "--file_id" file-id
+                     "--tag_code" tag-code
+                     "--password" (read-passwd "Database password: "))
+      (display-buffer buffer)))
+#+END_SRC
+
+
 * Windows specific
 ** Win32 API wrappers
 #+BEGIN_SRC emacs-lisp
@@ -603,7 +632,7 @@ Convert path in region to standard Windows path.
       (insert (z-string-win-style-path file))))
 #+END_SRC
 
-* COMMENT Unused config that may be useful in the futhre
+* COMMENT Unused config that may be useful in the future
 ;; run as server
 ;; (require 'server)
 ;; (unless (server-running-p) (server-start))
