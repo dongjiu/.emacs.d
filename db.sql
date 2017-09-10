@@ -1,15 +1,23 @@
-create table encrypted_file (
-    directory varchar(128),
-    file_name varchar(30),
-    encrypted_content varchar(max),
-    last_modified_time datetime2,
-    primary key (directory, file_name)
+drop table file_chunk;
+drop table [file];
+
+create table [file] (
+    file_id varchar(50),
+    file_name varchar(50),
+    last_modified_time int,
+    primary key (file_id)
 );
 
-insert into encrypted_file (directory, file_name, encrypted_content, last_modified_time)
-values ('/', 'test.txt', 'hello', getdate());
+create table file_chunk (
+    file_id varchar(50),
+    chunk_number int,
+    chunk_string varchar(max),
+    primary key (file_id, chunk_number),
+    constraint File_ConsistsOf_Chunk
+        foreign key (file_id)
+        references [file] (file_id)
+);
 
-select * from encrypted_file;
+select * from [file];
 
-select encrypted_content from encrypted_file
-where directory = 'test' and file_name = 'README.md'
+select * from [file_chunk];

@@ -5,58 +5,102 @@ use DBI;
 use MIME::Base64;
 use Data::Dumper;
 
-#my $server = "donzhu.database.windows.net";
+use constant {
+              CHUNK_SIZE => 1024 * 1024,
+              LONG_READ_LEN => 1024 * 1024 * 1.5,
+             };
 
 sub sql_server_dbh {
   my ($server, $user, $password, $database) = @_;
   DBI->connect("dbi:ODBC:Driver={SQL Server};Server=$server;Database=$database;UID=$user;PWD=$password");
 }
 
-sub get_file_content {
-  my ($dbh, $directory, $file_name) = @_;
+sub upload_file {
+  my ($dbh, $file, $file_id, $file_name) = @_;
 
-  my $sth = $dbh->prepare("select encrypted_content from encrypted_file where directory = ? and file_name = ?");
-  $sth->bind_param(1, $directory);
+  my $last_modified_time = time();
+  my $sth = $dbh->prepare("insert into [file] (file_id, file_name, last_modified_time) values (?, ?, ?)");
+  $sth->bind_param(1, $file_id);
   $sth->bind_param(2, $file_name);
-
-  $sth->{'LongReadLen'} = 1024 * 1024;
+  $sth->bind_param(3, $last_modified_time);
   $sth->execute;
-  while (my $row = $sth->fetchrow_hashref) {
-    return $row->{encrypted_content};
+
+  upload_file_chunks($dbh, $file, $file_id);
+}
+
+sub upload_file_chunks {
+  my ($dbh, $file, $file_id) = @_;
+
+  open my $fh, '<', $file or die "Cannot open file $file";
+  binmode $fh;
+  my $chunk_number = 0;
+  my $buffer;
+  while (read($fh, $buffer, CHUNK_SIZE)) {
+    ++$chunk_number;
+    my $chunk_string = encode_base64($buffer, '');
+    upload_file_chunk($dbh, $file_id, $chunk_number, $chunk_string);
   }
 }
 
-sub convert_base64_to_file {
-  my ($base64_string, $file) = @_;
+sub upload_file_chunk {
+  my ($dbh, $file_id, $chunk_number, $chunk_string) = @_;
 
-  open my $fh, '>', $file;
-  binmode $fh;
-  print $fh decode_base64($base64_string);
+  my $sth = $dbh->prepare("insert into file_chunk (file_id, chunk_number, chunk_string) values (?, ?, ?)");
+  $sth->bind_param(1, $file_id);
+  $sth->bind_param(2, $chunk_number);
+  $sth->bind_param(3, $chunk_string);
+  $sth->execute;
 }
 
-sub encode_file_to_base64 {
-  my ($file) = @_;
+sub pull_file {
+  my ($dbh, $file_id, $output_file) = @_;
 
-  open my $fh, '<', $file;
+  die "File $output_file already exists." if -f $output_file;
+
+  my $sql = "select chunk_string from file_chunk where file_id = ? order by chunk_number";
+  my $sth = $dbh->prepare($sql);
+  $sth->bind_param(1, $file_id);
+  $sth->{'LongReadLen'} = LONG_READ_LEN;
+  $sth->execute;
+
+  open my $fh, '>>', $output_file;
   binmode $fh;
-  my $raw_string = do { local $/ = undef; <$fh>; };
-  encode_base64($raw_string, '');
-}
-
-sub upload_file {
-  my ($dbh, $directory, $file_name, $file_content) = @_;
-
-  my $sql = "insert into encrypted_file (directory, file_name, encrypted_content, last_modified_time) values ('$directory', '$file_name', '$file_content', getdate())";
-  $dbh->do($sql);
+  while (my $row = $sth->fetchrow_hashref) {
+    print $fh decode_base64($row->{chunk_string});
+  }
 }
 
 sub delete_file {
-  my ($dbh, $directory, $file_name) = @_;
+  my ($dbh, $file_id) = @_;
 
-  my $sth = $dbh->prepare("delete from encrypted_file where directory = ? and file_name = ?");
-  $sth->bind_param(1, $directory);
-  $sth->bind_param(2, $file_name);
+  delete_file_chunks($dbh, $file_id);
+
+  my $sth = $dbh->prepare("delete from [file] where file_id = ?");
+  $sth->bind_param(1, $file_id);
   $sth->execute;
+}
+
+sub delete_file_chunks {
+  my ($dbh, $file_id) = @_;
+
+  my $sth = $dbh->prepare("delete from file_chunk where file_id = ?");
+  $sth->bind_param(1, $file_id);
+  $sth->execute;
+}
+
+sub list_files {
+  my ($dbh) = @_;
+
+  my $sth = $dbh->prepare("select file_id, file_name, last_modified_time from [file]");
+  $sth->execute;
+
+  while (my ($file_id, $file_name, $last_modified_time) = $sth->fetchrow_array) {
+    say '-' x 80;
+    say "file_id:\t$file_id";
+    say "file_name:\t$file_name";
+    say "last_modified_time:\t" . localtime($last_modified_time);
+    say '-' x 80;
+  }
 }
 
 1;

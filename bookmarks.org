@@ -255,9 +255,17 @@ https://docstore.mik.ua/orelly/linux/dbi/ch06_02.htm
 
 ** binary file
 http://www.devx.com/DevX/Tip/17116
+https://stackoverflow.com/questions/9765423/open-a-file-in-binary-mode-and-verify-that-the-file-ends-with-a-specified-string
 ** base64
 https://stackoverflow.com/questions/19658314/how-do-i-convert-a-base64-encoded-file-using-perl
 https://stackoverflow.com/questions/11301854/perl-convert-image-to-base64
+** read
+http://www.tutorialspoint.com/perl/perl_read.htm
+
+** append to file
+https://perlmaven.com/appending-to-files
+** unix timestamp
+https://stackoverflow.com/questions/15064446/convert-unix-timestamp-to-a-readable-date-in-perl
 * GPG
 ** example
 http://www.spywarewarrior.com/uiuc/gpg/gpg-com-4.htm

@@ -474,29 +474,30 @@ The following function descrypts file from string.
 * Azure Database
 Upload file:
 #+BEGIN_SRC emacs-lisp
-  (defun z-upload-file (file upload-dir upload-name)
+  (defun z-upload-file (file file-id file-name)
     "Upload file to azure database."
+    (setq file (expand-file-name file))
     (let ((default-directory "~/.emacs.d/perl")
           (buffer "*UPLOAD FILE*"))
       (start-process "perl_upload_file" buffer
                      "perl" "azure_db.pl" "upload"
                      "--file" file
-                     "--directory" upload-dir
-                     "--upload_name" upload-name
+                     "--file_id" file-id
+                     "--file_name" file-name
                      "--password" (read-passwd "Database password: "))
       (display-buffer buffer)))
 #+END_SRC
 
 Pull file:
 #+BEGIN_SRC emacs-lisp
-  (defun z-pull-file (directory file-name output-file)
+  (defun z-pull-file (file-id output-file)
     "Pull file from azure database."
+    (setq output-file (expand-file-name output-file))
     (let ((default-directory "~/.emacs.d/perl")
           (buffer "*PULL FILE*"))
       (start-process "perl_pull_file" buffer
                      "perl" "azure_db.pl" "pull"
-                     "--directory" directory
-                     "--file_name" file-name
+                     "--file_id" file-id
                      "--output_file" output-file
                      "--password" (read-passwd "Database password: "))
       (display-buffer buffer)))
@@ -504,14 +505,25 @@ Pull file:
 
 Delete file:
 #+BEGIN_SRC emacs-lisp
-  (defun z-delete-file (directory file-name)
+  (defun z-delete-file (file-id)
     "Delete file from azure database."
     (let ((default-directory "~/.emacs.d/perl")
           (buffer "*DELETE FILE*"))
       (start-process "perl_delete_file" buffer
                      "perl" "azure_db.pl" "delete"
-                     "--directory" directory
-                     "--file_name" file-name
+                     "--file_id" file-id
+                     "--password" (read-passwd "Database password: "))
+      (display-buffer buffer)))
+#+END_SRC
+
+List all files:
+#+BEGIN_SRC emacs-lisp
+  (defun z-list-files ()
+    "List files in azure database."
+    (let ((default-directory "~/.emacs.d/perl")
+          (buffer "*FILES*"))
+      (start-process "perl_list_files" buffer
+                     "perl" "azure_db.pl" "list"
                      "--password" (read-passwd "Database password: "))
       (display-buffer buffer)))
 #+END_SRC
