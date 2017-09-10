@@ -3,6 +3,7 @@ package AzureDb;
 use v5.14;
 use DBI;
 use MIME::Base64;
+use Date::Format;
 use Data::Dumper;
 
 use constant {
@@ -98,7 +99,8 @@ sub list_files {
     say '-' x 80;
     say "file_id:\t$file_id";
     say "file_name:\t$file_name";
-    say "last_modified_time:\t" . localtime($last_modified_time);
+    my $last_modified = time2str('%Y-%m-%d %H:%M:%S', $last_modified_time);
+    say "last_modified_time:\t$last_modified";
     say '-' x 80;
   }
 }
