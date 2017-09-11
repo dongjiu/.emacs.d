@@ -92,6 +92,8 @@ sub delete_file_chunks {
 sub list_files {
   my ($dbh) = @_;
 
+  my $file_tags = list_file_tags($dbh);
+
   my $sth = $dbh->prepare("select file_id, file_name, last_modified_time from [file]");
   $sth->execute;
 
@@ -101,6 +103,7 @@ sub list_files {
     say "file_name:\t$file_name";
     my $last_modified = time2str('%Y-%m-%d %H:%M:%S', $last_modified_time);
     say "last_modified_time:\t$last_modified";
+    say "tags:\t" . join(', ', map { $_->{tag_name} } @{ $file_tags->{$file_id} });
     say '-' x 80;
   }
 }
@@ -118,6 +121,28 @@ sub add_file_tag {
   my ($dbh, $file_id, $tag_code) = @_;
 
   my $sth = $dbh->prepare("insert into file_tag (file_id, tag_code) values (?, ?)");
+  $sth->bind_param(1, $file_id);
+  $sth->bind_param(2, $tag_code);
+  $sth->execute;
+}
+
+sub list_file_tags {
+  my ($dbh) = @_;
+
+  my $sth = $dbh->prepare("select file_tag.file_id, tag.tag_code, tag.tag_name
+ from file_tag join tag on tag.tag_code = file_tag.tag_code");
+  $sth->execute;
+
+  my %file_tags;
+  while (my ($file_id, $tag_code, $tag_name) = $sth->fetchrow_array) {
+    push @{ $file_tags{$file_id} }, { tag_code => $tag_code, tag_name => $tag_name };
+  }
+  \%file_tags;
+}
+
+sub remove_file_tag {
+  my ($dbh, $file_id, $tag_code) = @_;
+  my $sth = $dbh->prepare("delete from file_tag where file_id = ? and tag_code = ?");
   $sth->bind_param(1, $file_id);
   $sth->bind_param(2, $tag_code);
   $sth->execute;

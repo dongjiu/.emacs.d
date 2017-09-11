@@ -74,6 +74,17 @@ given ($action) {
     my $dbh = AzureDb::sql_server_dbh($server, $user, $password, $database);
     AzureDb::add_file_tag($dbh, $file_id, $tag_code);
   }
+  when ('rmfiletag') {
+    my ($password, $file_id, $tag_code);
+    GetOptions("password=s" => \$password,
+               "file_id=s" => \$file_id,
+               "tag_code=s" => \$tag_code);
+    die "--file_id not specified." unless $file_id;
+    die "--tag_code not specified." unless $tag_code;
+    die "--password not specified." unless $password;
+    my $dbh = AzureDb::sql_server_dbh($server, $user, $password, $database);
+    AzureDb::remove_file_tag($dbh, $file_id, $tag_code);
+  }
   default {
     die "Unknown action $action";
   }
