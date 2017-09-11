@@ -492,6 +492,21 @@ The buffer name to show process.
   (setq z-database-buffer "*DATABASE*")
 #+END_SRC
 
+Password cache:
+#+BEGIN_SRC emacs-lisp
+(setq z--database-password nil)
+#+END_SRC
+
+Prompt for password:
+#+BEGIN_SRC emacs-lisp
+  (defun z-database-password ()
+    "Prompt for database password."
+    (if z--database-password
+        z--database-password
+      (setq z--database-password (read-passwd "Database password: "))))
+#+END_SRC
+
+
 Upload file:
 #+BEGIN_SRC emacs-lisp
   (defun z-upload-file (file file-id file-name)
@@ -503,7 +518,7 @@ Upload file:
                      "--file" file
                      "--file_id" file-id
                      "--file_name" file-name
-                     "--password" (read-passwd "Database password: "))
+                     "--password" (z-database-password))
       (display-buffer z-database-buffer)))
 #+END_SRC
 
@@ -517,7 +532,7 @@ Pull file:
                      "perl" "azure_db.pl" "pull"
                      "--file_id" file-id
                      "--output_file" output-file
-                     "--password" (read-passwd "Database password: "))
+                     "--password" (z-database-password))
       (display-buffer z-database-buffer)))
 #+END_SRC
 
@@ -529,7 +544,7 @@ Delete file:
       (start-process "perl_delete_file" z-database-buffer
                      "perl" "azure_db.pl" "delete"
                      "--file_id" file-id
-                     "--password" (read-passwd "Database password: "))
+                     "--password" (z-database-password))
       (display-buffer z-database-buffer)))
 #+END_SRC
 
@@ -540,7 +555,7 @@ List all files:
     (let ((default-directory "~/.emacs.d/perl"))
       (start-process "perl_list_files" z-database-buffer
                      "perl" "azure_db.pl" "list"
-                     "--password" (read-passwd "Database password: "))
+                     "--password" (z-database-password))
       (display-buffer z-database-buffer)))
 #+END_SRC
 
@@ -553,7 +568,20 @@ Add tag:
                      "perl" "azure_db.pl" "newtag"
                      "--tag_code" tag-code
                      "--tag_name" tag-name
-                     "--password" (read-passwd "Database password: "))
+                     "--password" (z-database-password))
+      (display-buffer z-database-buffer)))
+#+END_SRC
+
+Change tag name:
+#+BEGIN_SRC emacs-lisp
+  (defun z-change-tag-name (tag-code tag-name)
+    "Change tag name."
+    (let ((default-directory "~/.emacs.d/perl"))
+      (start-process "perl_rename_tag" z-database-buffer
+                     "perl" "azure_db.pl" "renametag"
+                     "--tag_code" tag-code
+                     "--tag_name" tag-name
+                     "--password" (z-database-password))
       (display-buffer z-database-buffer)))
 #+END_SRC
 
@@ -566,7 +594,7 @@ Add file tag:
                      "perl" "azure_db.pl" "addfiletag"
                      "--file_id" file-id
                      "--tag_code" tag-code
-                     "--password" (read-passwd "Database password: "))
+                     "--password" (z-database-password))
       (display-buffer z-database-buffer)))
 #+END_SRC
 
@@ -579,7 +607,7 @@ Remove file tag:
                      "perl" "azure_db.pl" "rmfiletag"
                      "--file_id" file-id
                      "--tag_code" tag-code
-                     "--password" (read-passwd "Database password: "))
+                     "--password" (z-database-password))
       (display-buffer z-database-buffer)))
 #+END_SRC
 

@@ -117,6 +117,15 @@ sub create_tag {
   $sth->execute;
 }
 
+sub change_tag_name {
+  my ($dbh, $tag_code, $tag_name) = @_;
+
+  my $sth = $dbh->prepare("update tag set tag_name = ? where tag_code = ?");
+  $sth->bind_param(1, $tag_name);
+  $sth->bind_param(2, $tag_code);
+  $sth->execute;
+}
+
 sub add_file_tag {
   my ($dbh, $file_id, $tag_code) = @_;
 
