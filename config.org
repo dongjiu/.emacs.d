@@ -472,20 +472,39 @@ The following function descrypts file from string.
 #+END_SRC
 
 * Azure Database
+SQL Server login info:
+#+BEGIN_SRC emacs-lisp
+  (setq sql-ms-login-params
+        '((server :default "donzhu.database.windows.net")
+          (database :default "donzhu_db")
+          (user :default "donzhu")
+          (password)))
+
+  (setq sql-connection-alist
+        '((mydb (sql-product 'ms)
+                (sql-server "donzhu.database.windows.net")
+                (sql-database "donzhu_db")
+                (sql-user "donzhu"))))
+#+END_SRC
+
+The buffer name to show process.
+#+BEGIN_SRC emacs-lisp
+  (setq z-database-buffer "*DATABASE*")
+#+END_SRC
+
 Upload file:
 #+BEGIN_SRC emacs-lisp
   (defun z-upload-file (file file-id file-name)
     "Upload file to azure database."
     (setq file (expand-file-name file))
-    (let ((default-directory "~/.emacs.d/perl")
-          (buffer "*UPLOAD FILE*"))
-      (start-process "perl_upload_file" buffer
+    (let ((default-directory "~/.emacs.d/perl"))
+      (start-process "perl_upload_file" z-database-buffer
                      "perl" "azure_db.pl" "upload"
                      "--file" file
                      "--file_id" file-id
                      "--file_name" file-name
                      "--password" (read-passwd "Database password: "))
-      (display-buffer buffer)))
+      (display-buffer z-database-buffer)))
 #+END_SRC
 
 Pull file:
@@ -493,67 +512,75 @@ Pull file:
   (defun z-pull-file (file-id output-file)
     "Pull file from azure database."
     (setq output-file (expand-file-name output-file))
-    (let ((default-directory "~/.emacs.d/perl")
-          (buffer "*PULL FILE*"))
-      (start-process "perl_pull_file" buffer
+    (let ((default-directory "~/.emacs.d/perl"))
+      (start-process "perl_pull_file" z-database-buffer
                      "perl" "azure_db.pl" "pull"
                      "--file_id" file-id
                      "--output_file" output-file
                      "--password" (read-passwd "Database password: "))
-      (display-buffer buffer)))
+      (display-buffer z-database-buffer)))
 #+END_SRC
 
 Delete file:
 #+BEGIN_SRC emacs-lisp
   (defun z-delete-file (file-id)
     "Delete file from azure database."
-    (let ((default-directory "~/.emacs.d/perl")
-          (buffer "*DELETE FILE*"))
-      (start-process "perl_delete_file" buffer
+    (let ((default-directory "~/.emacs.d/perl"))
+      (start-process "perl_delete_file" z-database-buffer
                      "perl" "azure_db.pl" "delete"
                      "--file_id" file-id
                      "--password" (read-passwd "Database password: "))
-      (display-buffer buffer)))
+      (display-buffer z-database-buffer)))
 #+END_SRC
 
 List all files:
 #+BEGIN_SRC emacs-lisp
   (defun z-list-files ()
     "List files in azure database."
-    (let ((default-directory "~/.emacs.d/perl")
-          (buffer "*FILES*"))
-      (start-process "perl_list_files" buffer
+    (let ((default-directory "~/.emacs.d/perl"))
+      (start-process "perl_list_files" z-database-buffer
                      "perl" "azure_db.pl" "list"
                      "--password" (read-passwd "Database password: "))
-      (display-buffer buffer)))
+      (display-buffer z-database-buffer)))
 #+END_SRC
 
 Add tag:
 #+BEGIN_SRC emacs-lisp
   (defun z-new-tag (tag-code tag-name)
     "Add new tag."
-    (let ((default-directory "~/.emacs.d/perl")
-          (buffer "*Database*"))
-      (start-process "perl_new_tag" buffer
+    (let ((default-directory "~/.emacs.d/perl"))
+      (start-process "perl_new_tag" z-database-buffer
                      "perl" "azure_db.pl" "newtag"
                      "--tag_code" tag-code
                      "--tag_name" tag-name
                      "--password" (read-passwd "Database password: "))
-      (display-buffer buffer)))
+      (display-buffer z-database-buffer)))
 #+END_SRC
 
 Add file tag:
 #+BEGIN_SRC emacs-lisp
   (defun z-add-file-tag (file-id tag-code)
     "Add file tag."
-    (let ((default-directory "~/.emacs.d/perl")
-          (buffer "*Database*"))
-      (start-process "perl_add_file_tag" buffer
+    (let ((default-directory "~/.emacs.d/perl"))
+      (start-process "perl_add_file_tag" z-database-buffer
                      "perl" "azure_db.pl" "addfiletag"
                      "--file_id" file-id
                      "--tag_code" tag-code
                      "--password" (read-passwd "Database password: "))
-      (display-buffer buffer)))
+      (display-buffer z-database-buffer)))
+#+END_SRC
+
+Remove file tag:
+#+BEGIN_SRC emacs-lisp
+  (defun z-remove-file-tag (file-id tag-code)
+    "Remove file tag."
+    (let ((default-directory "~/.emacs.d/perl"))
+      (start-process "perl_add_file_tag" z-database-buffer
+                     "perl" "azure_db.pl" "rmfiletag"
+                     "--file_id" file-id
+                     "--tag_code" tag-code
+                     "--password" (read-passwd "Database password: "))
+      (display-buffer z-database-buffer)))
 #+END_SRC
 
 

@@ -28,10 +28,11 @@ https://mskeys.microsoft.com/
 https://my.visualstudio.com/Benefits?wt.mc_id=o~msft~profile~devprogram_attach&workflowid=devprogram&mkt=en-us
 https://my.visualstudio.com/subscriptions
 * UCM
-VSTS
-https://msasg.visualstudio.com/Bing_Ads/UCM%20Team/_backlogs/board/Features
+** VSTS
+feature board
+https://msasg.visualstudio.com/Bing_Ads/UCM%20Team/_backlogs/board/Features 
 
-SharePoint
+** SharePoint
 https://microsoft.sharepoint.com/teams/BingAds/Shared%20Documents/Forms/AllItems.aspx?id=%2Fteams%2FBingAds%2FShared%20Documents%2FTeams%2FUCM
 
 ** azure link
@@ -83,6 +84,8 @@ http://docs.telerik.com/kendo-ui/framework/spa/router
 ** dev tools
 \\products\PUBLIC\PRODUCTS\Developers\
 
+** database connections
+https://microsoft.sharepoint.com/teams/BingAds/_layouts/OneNote.aspx?id=%2Fteams%2FBingAds%2FShared%20Documents%2FTeams%2FUCM%2FWiki%2FUCM%20Wiki&wd=target%28Dev%20Wiki%2FArchitecture.one%7CB5BBA6CD-3BB4-4830-8F27-2D534C0B01EF%2FAzure%20Services%5C%2FMachines%7C7DF7BB2E-9C90-44D0-AD45-54D946E8FAAC%2F%29
 
 * Github
 https://github.com/dongjiu/.emacs.d
@@ -155,6 +158,9 @@ https://stackoverflow.com/questions/2650041/emacs-under-windows-and-png-files
 ** sytanx highlighting source code to html
 http://ergoemacs.org/emacs/elisp_htmlize.html
 https://www.emacswiki.org/emacs/Htmlize
+
+** connect to sql server
+https://stackoverflow.com/questions/299512/how-do-i-connect-to-sql-server-using-emacs
 
 * .NET
 ** ASP.NET MVC
