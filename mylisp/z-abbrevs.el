@@ -14,7 +14,7 @@
   "Run perl find_text."
   nil
   '(setq v1 default-directory)
-  "async-shell-command 'es " v1 " " _ " | perl c:/Users/donzhu/bin/filter_files.pl '")
+  "async-shell-command 'es " v1 " " _ " | perl ~/.emacs.d/filter_files.pl '")
 
 (define-skeleton z-shell-git-commit
   "git commit."
@@ -48,7 +48,7 @@
 	("fn" "" z-shell-find)
 	("ft" "" z-shell-find-text)
 	("lc" "" z-shell-perl-line-count)
-	("zpf" "perl c:/Users/donzhu/bin/filter_files.pl")
+	("zpf" "perl ~/.emacs.d/perl/filter_files.pl")
 	("zs" "z-run-everything-search-in-current-dir")
 
 	("gs" "git status")
