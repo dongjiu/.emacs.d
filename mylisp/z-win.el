@@ -38,6 +38,18 @@
 					  (string-match-p (regexp-quote str) (nth 1 w)))
 					(z-windows)))
 
+(defun z-cmd-here (&optional cmd)
+  "Run Windows cmd.exe in default directory and execute CMD."
+  (interactive)
+  (let ((dir default-directory))
+	(setq dir (z-string-win-style-path dir))
+	(w32-shell-execute "runas" "cmd" (concat " /K cd /d " dir (when cmd (concat " && " cmd))))))
+
+(defun z-ucmba ()
+  "Run UCM Business Analytics shell."
+  (interactive)
+  (z-cmd-here "cd /d D:\\work\\UCM-BusinessAnalytics && title Business Analytics && set PATH=C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\MSBuild\\15.0\\Bin;%PATH% && init.cmd"))
+
 (defun z-set-cl-env ()
   "Set environment variables for cl.exe."
   (setenv "LIB" "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\LIB;C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\ATLMFC\\LIB;C:\\Program Files (x86)\\Windows Kits\\10\\lib\\10.0.10240.0\\ucrt\\x86;C:\\Program Files (x86)\\Windows Kits\\NETFXSDK\\4.6.1\\lib\\um\\x86;C:\\Program Files (x86)\\Windows Kits\\8.1\\lib\\winv6.3\\um\\x86;")

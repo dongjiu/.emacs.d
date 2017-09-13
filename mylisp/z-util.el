@@ -398,13 +398,6 @@ Otherwise, do nothing."
   (dolist (d dirs)
     (z-path-add d)))
 
-(defun z-cmd-here ()
-  "Run Windows cmd in default directory."
-  (interactive)
-  (let ((dir default-directory))
-	(setq dir (z-string-win-style-path dir))
-	(w32-shell-execute "runas" "cmd" (concat " /K cd /d " dir))))
-
 (defun z-file-contains (es-input &optional regex)
   "Run Everything Search to find files using ES-INPUT, and filter the files by REGEX."
   (let ((buf "*Files*") (file))

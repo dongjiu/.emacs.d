@@ -106,34 +106,50 @@
   (interactive)
   (z-ssms-run-sql (buffer-substring-no-properties (region-beginning) (region-end))))
 
-(defun z-corex-run (cmd)
+(defun z-run-in-cmd (cmd win-title)
   "Run CMD from Corex."
-  (if (z-windows-title-contains "Corext-Based Enlistment")
+  (if (z-windows-title-contains win-title)
 	  (progn (kill-new cmd)
 			 (z--write-to-file z-ahk-tmp-file
 							   (concat "SetTitleMatchMode, 2\n"
-									   "IfWinExist, Corex\n"
+									   "IfWinExist, " win-title "\n"
 									   "{\n"
-									   "WinActivate, Corex\n"
-									   "WinWaitActive, Corex\n"
+									   "WinActivate, " win-title "\n"
+									   "WinWaitActive, " win-title "\n"
 									   "Send ^{v}\n"
 									   "Send {Enter}\n"
 									   "}\n"))
 			 (z--run-tmp-ahk-file))
-	(message "Corex console is not started.")))
+	(message "Window '%s' not found" win-title)))
 
 (defun z-ucmweb ()
   "Run UCMWeb from Corex."
   (interactive)
   (let ((title "UCMWeb - Microsoft Visual Studio"))
 	(if (z-windows-title-contains title)
-	  (call-process "C:\\Users\\donzhu\\github\\tools4win\\activate_win.exe" nil 0 nil title)
-	  (z-corex-run "D:\\work\\UCM\\private\\UI\\UCMWeb\\UCMWeb.sln"))))
+        (call-process "C:\\Users\\donzhu\\github\\tools4win\\activate_win.exe" nil 0 nil title)
+	  (z-run-in-cmd "D:\\work\\UCM\\private\\UI\\UCMWeb\\UCMWeb.sln" "Corext-Based Enlistment"))))
 
 (defun z-ucmapi ()
   "Run UcmApi from Corex."
   (interactive)
   (let ((title "UcmApi - Microsoft Visual Studio"))
 	(if (z-windows-title-contains title)
-	  (call-process "C:\\Users\\donzhu\\github\\tools4win\\activate_win.exe" nil 0 nil title)
-	  (z-corex-run "D:\\work\\UCM\\private\\Service\\UcmApi\\UcmApi.sln"))))
+        (call-process "C:\\Users\\donzhu\\github\\tools4win\\activate_win.exe" nil 0 nil title)
+	  (z-run-in-cmd "D:\\work\\UCM\\private\\Service\\UcmApi\\UcmApi.sln" "Corext-Based Enlistment"))))
+
+(defun z-ucmbasql ()
+  "UCM Business Analytics SQL project."
+  (interactive)
+  (let ((title "UcmBusinessAnalytics -"))
+    (if (z-windows-title-contains title)
+        (call-process "C:\\Users\\donzhu\\github\\tools4win\\activate_win.exe" nil 0 nil title)
+	  (z-run-in-cmd "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Common7\\IDE\\devenv.exe\" D:\\work\\UCM-BusinessAnalytics\\private\\Databases\\UcmBusinessAnalytics\\UcmBusinessAnalytics.sln" "Business Analytics"))))
+
+(defun z-ucmbadf ()
+  "UCM Business Analytics Data Factory project."
+  (interactive)
+  (let ((title "UcmBusinessAnalyticsDataFactories -"))
+    (if (z-windows-title-contains title)
+        (call-process "C:\\Users\\donzhu\\github\\tools4win\\activate_win.exe" nil 0 nil title)
+	  (z-run-in-cmd "\"C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\IDE\\devenv.exe\" D:\\work\\UCM-BusinessAnalytics\\private\\AzureDataFactories\\UcmBusinessAnalyticsDataFactories\\UcmBusinessAnalyticsDataFactories.sln" "Business Analytics"))))
