@@ -74,6 +74,13 @@ given ($action) {
     my $dbh = AzureDb::sql_server_dbh($server, $user, $password, $database);
     AzureDb::change_tag_name($dbh, $tag_code, $tag_name);
   }
+  when ('tags') {
+    my ($password);
+    GetOptions("password=s" => \$password);
+    die "--password not specified." unless $password;
+    my $dbh = AzureDb::sql_server_dbh($server, $user, $password, $database);
+    AzureDb::list_tags($dbh);
+  }
   when ('addfiletag') {
     my ($password, $file_id, $tag_code);
     GetOptions("password=s" => \$password,

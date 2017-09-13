@@ -585,6 +585,17 @@ Change tag name:
       (display-buffer z-database-buffer)))
 #+END_SRC
 
+List tags:
+#+BEGIN_SRC emacs-lisp
+  (defun z-list-tags ()
+    "List all tags."
+    (let ((default-directory "~/.emacs.d/perl"))
+      (start-process "perl_list_tags" z-database-buffer
+                     "perl" "azure_db.pl" "tags"
+                     "--password" (z-database-password))
+      (display-buffer z-database-buffer)))
+#+END_SRC
+
 Add file tag:
 #+BEGIN_SRC emacs-lisp
   (defun z-add-file-tag (file-id tag-code)

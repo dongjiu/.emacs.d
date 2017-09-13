@@ -126,6 +126,19 @@ sub change_tag_name {
   $sth->execute;
 }
 
+sub list_tags {
+  my ($dbh) = @_;
+
+  my $sth = $dbh->prepare("select tag_code, tag_name from tag");
+  $sth->execute;
+  while (my ($tag_code, $tag_name) = $sth->fetchrow_array) {
+    say '-' x 80;
+    say "tag_code: $tag_code";
+    say "tag_name: $tag_name";
+    say '-' x 80;
+  }
+}
+
 sub add_file_tag {
   my ($dbh, $file_id, $tag_code) = @_;
 
