@@ -375,6 +375,16 @@ Use "C-; C-f" to go to the next appropriate point in the buffer.
   (global-set-key (kbd "C-; C-f") 'z-next-appropriate-point)
 #+END_SRC
 
+*** Go to scratch buffer
+#+BEGIN_SRC emacs-lisp
+  (defun z-goto-scratch ()
+    "Go to scratch buffer."
+    (interactive)
+    (switch-to-buffer "*scratch*"))
+
+  (global-set-key (kbd "C-; C-; s") 'z-goto-scratch)
+#+END_SRC
+
 ** Bookmarks
 Key binding for opening the /bookmarks.org/ file that is used save
 bookmarks for URL, files and directories.
