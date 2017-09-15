@@ -252,6 +252,9 @@ https://en.wikipedia.org/wiki/List_of_time_zone_abbreviations
 *** ISO 8601
 https://en.wikipedia.org/wiki/ISO_8601
 * perl
+** delete file
+unlink
+https://perlmaven.com/how-to-remove-copy-or-rename-a-file-with-perl
 ** catch warning
 https://perlmaven.com/how-to-capture-and-save-warnings-in-perl
 ** DBI truncate

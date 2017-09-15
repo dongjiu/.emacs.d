@@ -66,8 +66,15 @@ sub pull_file {
 
   open my $fh, '>>', $output_file;
   binmode $fh;
+  my $found = 0;
   while (my $row = $sth->fetchrow_hashref) {
+    $found = 1;
     print $fh decode_base64($row->{chunk_string});
+  }
+  unless ($found) {
+    close $fh;
+    unlink $output_file;
+    die "File $file_id not found.";
   }
 }
 
