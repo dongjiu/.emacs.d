@@ -105,7 +105,6 @@ sub list_files {
   $sth->execute;
 
   while (my ($file_id, $file_name, $last_modified_time) = $sth->fetchrow_array) {
-    say '-' x 80;
     say "file_id:\t$file_id";
     say "file_name:\t$file_name";
     my $last_modified = time2str('%Y-%m-%d %H:%M:%S', $last_modified_time);
@@ -139,7 +138,6 @@ sub list_tags {
   my $sth = $dbh->prepare("select tag_code, tag_name from tag");
   $sth->execute;
   while (my ($tag_code, $tag_name) = $sth->fetchrow_array) {
-    say '-' x 80;
     say "tag_code: $tag_code";
     say "tag_name: $tag_name";
     say '-' x 80;

@@ -449,15 +449,26 @@ corresponding modes through the above minor modes.
 * GPG
 The following function encrypts a file using GPG.
 #+BEGIN_SRC emacs-lisp
-  (defun z-encrypt-file (file key-name)
+  (defun z-encrypt-file (file key-name &optional output-file)
     "Encrypt FILE with public key that matches NAME."
     (let ((context (epg-make-context)) (keys))
       (if (file-exists-p file)
           (progn (setq keys (epg-list-keys context key-name))
                  (if keys
-                     (epg-encrypt-file context file keys nil)
+                     (epg-encrypt-file context file keys output-file)
                    (message "Cannot find key that matches %s." key-name)))
         (message "File %s does not exist." file))))
+#+END_SRC
+
+Encrypt a list of files:
+#+BEGIN_SRC emacs-lisp
+  (defun z-encrypt-files (files key-name)
+    (let ((context (epg-make-context)) (keys))
+      (setq keys (epg-list-keys context key-name))
+      (if keys
+          (dolist (file files)
+            (epg-encrypt-file context file keys (concat file ".gpg")))
+        (message "Cannot find key that matches %s." key-name))))
 #+END_SRC
 
 The following function descrypts file from string.
@@ -499,7 +510,7 @@ SQL Server login info:
 
 The buffer name to show process.
 #+BEGIN_SRC emacs-lisp
-  (setq z-database-buffer "*DATABASE*")
+  (setq z-database-buffer "*My Database*")
 #+END_SRC
 
 Password cache:
@@ -630,6 +641,29 @@ Remove file tag:
                      "--tag_code" tag-code
                      "--password" (z-database-password))
       (display-buffer z-database-buffer)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (defun z-upload-gpg ()
+    "Encrypt and upload marked files."
+    (interactive)
+    (when (string= major-mode "dired-mode")
+      (let ((files (dired-get-marked-files))
+            (get-gpg-file
+             (lambda (file)
+               (concat file ".gpg")))
+            (get-file-id
+             (lambda (file)
+               (file-name-nondirectory file)))
+            (get-file-name
+             (lambda (file)
+               (file-name-nondirectory file))))
+        (z-encrypt-files files (read-string "Key name: "))
+        (dolist (file files)
+          (z-upload-file (funcall get-gpg-file file)
+                         (funcall get-file-id file)
+                         (funcall get-file-name file))
+          (z-add-file-tag (funcall get-file-id file) "GPG")))))
 #+END_SRC
 
 

@@ -9,6 +9,9 @@ my $database = "donzhu_db";
 my $action = shift;
 die "No action specified." unless $action;
 
+say '=' x 80;
+say "Action: $action";
+say '=' x 80;
 given ($action) {
   when ('upload') {
     my ($file, $file_id, $file_name, $password);
