@@ -571,13 +571,14 @@ Delete file:
 
 List all files:
 #+BEGIN_SRC emacs-lisp
-  (defun z-list-files ()
-    "List files in azure database."
-    (let ((default-directory "~/.emacs.d/perl"))
-      (start-process "perl_list_files" z-database-buffer
-                     "perl" "azure_db.pl" "list"
-                     "--password" (z-database-password))
-      (display-buffer z-database-buffer)))
+    (defun z-list-files ()
+      "List files in azure database."
+      (interactive)
+      (let ((default-directory "~/.emacs.d/perl"))
+        (start-process "perl_list_files" z-database-buffer
+                       "perl" "azure_db.pl" "list"
+                       "--password" (z-database-password))
+        (display-buffer z-database-buffer)))
 #+END_SRC
 
 Add tag:
@@ -610,6 +611,7 @@ List tags:
 #+BEGIN_SRC emacs-lisp
   (defun z-list-tags ()
     "List all tags."
+    (interactive)
     (let ((default-directory "~/.emacs.d/perl"))
       (start-process "perl_list_tags" z-database-buffer
                      "perl" "azure_db.pl" "tags"
@@ -644,26 +646,21 @@ Remove file tag:
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (defun z-upload-gpg ()
+  (defun z-upload ()
     "Encrypt and upload marked files."
     (interactive)
     (when (string= major-mode "dired-mode")
       (let ((files (dired-get-marked-files))
-            (get-gpg-file
-             (lambda (file)
-               (concat file ".gpg")))
             (get-file-id
              (lambda (file)
                (file-name-nondirectory file)))
             (get-file-name
              (lambda (file)
                (file-name-nondirectory file))))
-        (z-encrypt-files files (read-string "Key name: "))
         (dolist (file files)
-          (z-upload-file (funcall get-gpg-file file)
+          (z-upload-file file
                          (funcall get-file-id file)
-                         (funcall get-file-name file))
-          (z-add-file-tag (funcall get-file-id file) "GPG")))))
+                         (funcall get-file-name file))))))
 #+END_SRC
 
 
