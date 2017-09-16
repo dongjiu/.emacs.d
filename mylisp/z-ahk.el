@@ -29,9 +29,10 @@
 	(save-buffer)
 	(kill-buffer)))
 
-(defun z--run-tmp-ahk-file ()
+(defun z--run-tmp-ahk-file (&optional as-admin)
   "Run tmp ahk script."
-  (w32-shell-execute "open" z-ahk-exe
+  (w32-shell-execute (if as-admin "runas" "open")
+                     z-ahk-exe
 					 (z-string-win-style-path z-ahk-tmp-file)))
 
 (defun z-run-everything-search (text)
@@ -106,7 +107,7 @@
   (interactive)
   (z-ssms-run-sql (buffer-substring-no-properties (region-beginning) (region-end))))
 
-(defun z-run-in-cmd (cmd win-title)
+(defun z-run-in-cmd (cmd win-title &optional as-admin)
   "Run CMD from Corex."
   (if (z-windows-title-contains win-title)
 	  (progn (kill-new cmd)
@@ -119,7 +120,7 @@
 									   "Send ^{v}\n"
 									   "Send {Enter}\n"
 									   "}\n"))
-			 (z--run-tmp-ahk-file))
+			 (z--run-tmp-ahk-file as-admin))
 	(message "Window '%s' not found" win-title)))
 
 (defun z-ucmweb ()
@@ -144,7 +145,7 @@
   (let ((title "UcmBusinessAnalytics -"))
     (if (z-windows-title-contains title)
         (call-process "C:\\Users\\donzhu\\github\\tools4win\\activate_win.exe" nil 0 nil title)
-	  (z-run-in-cmd "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Common7\\IDE\\devenv.exe\" D:\\work\\UCM-BusinessAnalytics\\private\\Databases\\UcmBusinessAnalytics\\UcmBusinessAnalytics.sln" "Business Analytics"))))
+	  (z-run-in-cmd "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\Common7\\IDE\\devenv.exe\" D:\\work\\UCM-BusinessAnalytics\\private\\Databases\\UcmBusinessAnalytics\\UcmBusinessAnalytics.sln" "Business Analytics" t))))
 
 (defun z-ucmbadf ()
   "UCM Business Analytics Data Factory project."
@@ -152,4 +153,4 @@
   (let ((title "UcmBusinessAnalyticsDataFactories -"))
     (if (z-windows-title-contains title)
         (call-process "C:\\Users\\donzhu\\github\\tools4win\\activate_win.exe" nil 0 nil title)
-	  (z-run-in-cmd "\"C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\IDE\\devenv.exe\" D:\\work\\UCM-BusinessAnalytics\\private\\AzureDataFactories\\UcmBusinessAnalyticsDataFactories\\UcmBusinessAnalyticsDataFactories.sln" "Business Analytics"))))
+	  (z-run-in-cmd "\"C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\IDE\\devenv.exe\" D:\\work\\UCM-BusinessAnalytics\\private\\AzureDataFactories\\UcmBusinessAnalyticsDataFactories\\UcmBusinessAnalyticsDataFactories.sln" "Business Analytics" t))))

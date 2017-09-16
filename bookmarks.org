@@ -200,6 +200,8 @@ https://stackoverflow.com/questions/14145904/sql-server-hex-string-to-varbinary-
 https://stackoverflow.com/questions/4056050/script-to-save-varbinary-data-to-disk
 http://www.jitendrazaa.com/blog/sql/sqlserver/export-documents-saved-as-blob-binary-from-sql-server/
 
+** nvarchar vs varchar
+https://stackoverflow.com/questions/144283/what-is-the-difference-between-varchar-and-nvarchar
 ** bulk insert
 https://www.red-gate.com/simple-talk/sql/learn-sql-server/bulk-inserts-via-tsql-in-sql-server/
 https://weblogs.asp.net/aghausman/saving-and-retrieving-file-using-filestream-sql-server-2008
@@ -211,6 +213,9 @@ http://www.developer.com/net/asp/article.php/3761486/Working-with-Binary-Large-O
 ** ADO.NET
 *** large value
 [[https://msdn.microsoft.com/en-us/library/a1904w6t(VS.80).aspx]]
+** Kimball vs Inmon
+http://tdan.com/data-warehouse-design-inmon-versus-kimball/20300
+
 * Reveal JS
 https://github.com/hakimel/reveal.js
 * html
