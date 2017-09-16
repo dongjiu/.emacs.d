@@ -14,7 +14,7 @@ create table [file] (
 create table file_chunk (
     file_id varchar(50) not null,
     chunk_number int not null,
-    chunk_string varchar(max) not null,
+    chunk varbinary(max) not null,
     primary key (file_id, chunk_number),
     constraint File_ConsistsOf_Chunk
         foreign key (file_id)

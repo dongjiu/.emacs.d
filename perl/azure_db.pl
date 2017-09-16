@@ -9,6 +9,8 @@ my $database = "donzhu_db";
 my $action = shift;
 die "No action specified." unless $action;
 
+$| = 1;
+
 say '=' x 80;
 say "Action: $action";
 say '=' x 80;

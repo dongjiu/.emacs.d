@@ -2,7 +2,6 @@ package AzureDb;
 
 use v5.14;
 use DBI;
-use MIME::Base64;
 use Date::Format;
 use Data::Dumper;
 
@@ -35,21 +34,22 @@ sub upload_file_chunks {
   open my $fh, '<', $file or die "Cannot open file $file";
   binmode $fh;
   my $chunk_number = 0;
-  my $buffer;
-  while (read($fh, $buffer, CHUNK_SIZE)) {
+  my $chunk;
+  while (read($fh, $chunk, CHUNK_SIZE)) {
     ++$chunk_number;
-    my $chunk_string = encode_base64($buffer, '');
-    upload_file_chunk($dbh, $file_id, $chunk_number, $chunk_string);
+    my $time = time2str('%Y-%m-%d %H:%M:%S', time());
+    say "[$time] upload $file, chunk $chunk_number";
+    upload_file_chunk($dbh, $file_id, $chunk_number, $chunk);
   }
 }
 
 sub upload_file_chunk {
-  my ($dbh, $file_id, $chunk_number, $chunk_string) = @_;
+  my ($dbh, $file_id, $chunk_number, $chunk) = @_;
 
-  my $sth = $dbh->prepare("insert into file_chunk (file_id, chunk_number, chunk_string) values (?, ?, ?)");
+  my $sth = $dbh->prepare("insert into file_chunk (file_id, chunk_number, chunk) values (?, ?, ?)");
   $sth->bind_param(1, $file_id);
   $sth->bind_param(2, $chunk_number);
-  $sth->bind_param(3, $chunk_string);
+  $sth->bind_param(3, $chunk, DBI::SQL_LONGVARBINARY);
   $sth->execute;
 }
 
@@ -58,7 +58,7 @@ sub pull_file {
 
   die "File $output_file already exists." if -f $output_file;
 
-  my $sql = "select chunk_string from file_chunk where file_id = ? order by chunk_number";
+  my $sql = "select chunk from file_chunk where file_id = ? order by chunk_number";
   my $sth = $dbh->prepare($sql);
   $sth->bind_param(1, $file_id);
   $sth->{'LongReadLen'} = LONG_READ_LEN;
@@ -67,9 +67,9 @@ sub pull_file {
   open my $fh, '>>', $output_file;
   binmode $fh;
   my $found = 0;
-  while (my $row = $sth->fetchrow_hashref) {
+  while (my ($chunk) = $sth->fetchrow_array) {
     $found = 1;
-    print $fh decode_base64($row->{chunk_string});
+    print $fh $chunk;
   }
   unless ($found) {
     close $fh;
