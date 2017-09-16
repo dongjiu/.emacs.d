@@ -278,6 +278,9 @@ http://www.tutorialspoint.com/perl/perl_read.htm
 https://perlmaven.com/appending-to-files
 ** unix timestamp
 https://stackoverflow.com/questions/15064446/convert-unix-timestamp-to-a-readable-date-in-perl
+** blob
+https://www.experts-exchange.com/questions/26218018/Perl-Win32-ODBC-or-DBI-insert-blob-into-MSSQL-2005.html
+https://stackoverflow.com/questions/3574812/insert-blob-into-ms-sql-db-using-perl-script
 * GPG
 ** example
 http://www.spywarewarrior.com/uiuc/gpg/gpg-com-4.htm
@@ -296,3 +299,6 @@ https://www.masteringemacs.org/article/keeping-secrets-in-emacs-gnupg-auth-sourc
 https://nakkaya.com/2009/11/19/keeping-secrets-with-emacs-and-gpg/
 ** emacs prompts untrusted key
 https://superuser.com/questions/366035/how-can-i-disable-prompt-about-trust-when-encrypting-file-with-gpg-in-emacs
+* markdown
+** strikethrough
+https://webapps.stackexchange.com/questions/14986/strikethrough-with-github-markdown
