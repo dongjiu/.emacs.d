@@ -650,9 +650,10 @@ Remove file tag:
       (display-buffer z-database-buffer)))
 #+END_SRC
 
+Upload files in dired:
 #+BEGIN_SRC emacs-lisp
   (defun z-upload ()
-    "Encrypt and upload marked files."
+    "Upload files in dired."
     (interactive)
     (when (string= major-mode "dired-mode")
       (let ((files (dired-get-marked-files))
@@ -667,7 +668,6 @@ Remove file tag:
                          (funcall get-file-id file)
                          (funcall get-file-name file))))))
 #+END_SRC
-
 
 * Windows specific
 ** Win32 API wrappers
