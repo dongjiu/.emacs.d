@@ -121,6 +121,9 @@ https://emacs.stackexchange.com/questions/11052/how-to-determine-operating-syste
 
 ** shell-command-to-string exit code
 https://stackoverflow.com/questions/23299314/finding-the-exit-code-of-a-shell-command-in-elisp
+** font
+Chinese font
+http://blog.sina.com.cn/s/blog_4d2bb0b10101272j.html
 ** elisp
 *** system environment
 https://www.gnu.org/software/emacs/manual/html_node/elisp/System-Environment.html#System-Environment
@@ -307,3 +310,6 @@ https://superuser.com/questions/366035/how-can-i-disable-prompt-about-trust-when
 * markdown
 ** strikethrough
 https://webapps.stackexchange.com/questions/14986/strikethrough-with-github-markdown
+* life
+** electric charge
+http://www.95598.cn/person/index.shtml
