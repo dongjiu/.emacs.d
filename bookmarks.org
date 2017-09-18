@@ -32,9 +32,14 @@ https://my.visualstudio.com/subscriptions
 feature board
 https://msasg.visualstudio.com/Bing_Ads/UCM%20Team/_backlogs/board/Features 
 
+MSL
+https://ucmsz.visualstudio.com/MSL/_backlogs/board/Backlog%20items
+
 ** SharePoint
 https://microsoft.sharepoint.com/teams/BingAds/Shared%20Documents/Forms/AllItems.aspx?id=%2Fteams%2FBingAds%2FShared%20Documents%2FTeams%2FUCM
 
+** Zhaojia shared
+\\ZHAMA-WORK\shared
 ** azure link
 https://ms.portal.azure.com 
 ** Wiki
@@ -111,6 +116,9 @@ Your DOS command 2> nul
 ** disable cortana
 https://www.pcworld.com/article/2949759/windows/killing-cortana-how-to-disable-windows-10s-info-hungry-digital-assistant.html
 https://www.windowscentral.com/how-turn-cortana-and-stop-personal-data-gathering-windows-10
+** cmd encoding
+command chcp
+https://stackoverflow.com/questions/1259084/what-encoding-code-page-is-cmd-exe-using
 * Typescript
 ** backtick '`'
 https://basarat.gitbooks.io/typescript/docs/template-strings.html

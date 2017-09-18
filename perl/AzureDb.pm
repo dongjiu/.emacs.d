@@ -175,4 +175,20 @@ sub remove_file_tag {
   $sth->execute;
 }
 
+sub query {
+  my ($dbh, $sql) = @_;
+
+  my $sth = $dbh->prepare($sql);
+  say "SQL:\n$sql";
+  say '=' x 80;
+  $sth->execute;
+  my $columns = $sth->{NAME};
+  while (my $row = $sth->fetchrow_hashref) {
+    for (@$columns) {
+      say "$_: $row->{$_}";
+    }
+    say '-' x 80;
+  }
+}
+
 1;
