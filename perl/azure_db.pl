@@ -10,6 +10,7 @@ my $action = shift;
 die "No action specified." unless $action;
 
 $| = 1;
+binmode STDIN, ":utf8";
 binmode STDOUT, ":utf8";
 
 say '=' x 80;
@@ -50,6 +51,17 @@ given ($action) {
     die "--password not specified." unless $password;
     my $dbh = AzureDb::sql_server_dbh($server, $user, $password, $database);
     AzureDb::delete_file($dbh, $file_id);
+  }
+  when ('update') {
+    my ($password, $file, $file_id);
+    GetOptions("password=s" => \$password,
+               "file=s" => \$file,
+               "file_id=s" => \$file_id);
+    die "--file not specified." unless $file;
+    die "--file_id not specified." unless $file_id;
+    die "--password not specified." unless $password;
+    my $dbh = AzureDb::sql_server_dbh($server, $user, $password, $database);
+    AzureDb::update_file($dbh, $file, $file_id);
   }
   when ('list') {
     my ($password);

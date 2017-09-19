@@ -88,6 +88,18 @@ sub delete_file {
   $sth->execute;
 }
 
+sub update_file {
+  my ($dbh, $file, $file_id) = @_;
+
+  delete_file_chunks($dbh, $file_id);
+  upload_file_chunks($dbh, $file, $file_id);
+
+  my $sth = $dbh->prepare("update [file] set last_modified_time = ? where file_id = ?");
+  $sth->bind_param(1, time());
+  $sth->bind_param(2, $file_id);
+  $sth->execute;
+}
+
 sub delete_file_chunks {
   my ($dbh, $file_id) = @_;
 

@@ -669,6 +669,20 @@ Upload files in dired:
                          (funcall get-file-name file))))))
 #+END_SRC
 
+Update file:
+#+BEGIN_SRC emacs-lisp
+  (defun z-update-file (file file-id)
+    "Update file."
+    (setq file (expand-file-name file))
+    (let ((default-directory "~/.emacs.d/perl"))
+      (start-process "perl_update_file" z-database-buffer
+                     "perl" "azure_db.pl" "update"
+                     "--file" file
+                     "--file_id" file-id
+                     "--password" (z-database-password))
+      (display-buffer z-database-buffer)))
+#+END_SRC
+
 #+BEGIN_SRC emacs-lisp
   (defun z-query (sql)
     "Run sql against the database."
