@@ -10,7 +10,6 @@ my $action = shift;
 die "No action specified." unless $action;
 
 $| = 1;
-binmode STDIN, ":utf8";
 binmode STDOUT, ":utf8";
 
 say '=' x 80;
