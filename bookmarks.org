@@ -176,11 +176,27 @@ https://www.emacswiki.org/emacs/Htmlize
 ** connect to sql server
 https://stackoverflow.com/questions/299512/how-do-i-connect-to-sql-server-using-emacs
 
+** eshell redirect
+echo "hello world" > #<buffer universal-greeting>
+
+https://www.emacswiki.org/emacs/EshellRedirection
 * .NET
 ** ASP.NET MVC
 *** Specify layout file:
 https://stackoverflow.com/questions/5161380/how-do-i-specify-different-layouts-in-the-asp-net-mvc-3-razor-viewstart-file
 <<<<<<< Updated upstream
+** C# Console UTF8
+Console.OutputEncoding = Encoding.UTF8;
+
+https://stackoverflow.com/questions/2062875/show-utf8-characters-in-console
+** Format number
+*** padding
+https://stackoverflow.com/questions/9587819/c-sharp-padding-amount-with-zeros
+https://stackoverflow.com/questions/8293392/format-decimal-value-to-string-with-leading-spaces
+** Parse date
+https://stackoverflow.com/questions/341175/datetime-parse-and-making-it-work-with-a-specific-format
+** LINQ aggregate
+https://www.dotnetperls.com/aggregate
 * SQL Server
 ** trusted connection
 https://stackoverflow.com/questions/1250552/what-is-a-trusted-connection
@@ -226,6 +242,31 @@ http://www.developer.com/net/asp/article.php/3761486/Working-with-Binary-Large-O
 [[https://msdn.microsoft.com/en-us/library/a1904w6t(VS.80).aspx]]
 ** Kimball vs Inmon
 http://tdan.com/data-warehouse-design-inmon-versus-kimball/20300
+
+** MDX
+*** and/or
+http://www.sqlblogspot.com/2013/10/mdx-where-clause-slicer-axis-andor.html
+*** more than two axes
+https://stackoverflow.com/questions/380616/how-to-use-3rd-dimension-in-mdx-query-on-pages-syntax
+*** hierarchy already appears in the axis0 axis
+https://stackoverflow.com/questions/12964203/mdx-error-hierarchy-already-appears-in-the-axis0-axis
+*** non null records
+https://stackoverflow.com/questions/20569672/mdx-query-for-getting-the-non-null-value-records
+*** cross join
+http://www.databasejournal.com/features/mssql/article.php/10894_3334631_2/MDX-Essentials-Basic-Set-Functions-The-CrossJoin-Function.htm
+https://docs.microsoft.com/en-us/sql/mdx/crossjoin-mdx
+*** ampersand
+http://blog-mstechnology.blogspot.jp/2010/11/pupose-of-ampersand-character-in-mdx.html
+*** members, tuples, and sets
+http://www.olapcube.com/mdxhelp/MembersTuplesSets.htm
+** DAX
+http://www.sqlservercentral.com/articles/DAX/92740/
+** ADOMD.NET
+*** CellSet
+https://docs.microsoft.com/en-us/sql/analysis-services/multidimensional-models-adomd-net-client/retrieving-data-using-the-cellset
+
+** data warehouse concepts
+http://www.1keydata.com/datawarehousing/molap-rolap.html
 
 * Reveal JS
 https://github.com/hakimel/reveal.js
