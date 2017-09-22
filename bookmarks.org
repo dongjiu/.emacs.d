@@ -1,5 +1,4 @@
-#+STARTUP: content
-* donzhu-work remote desktop
+* Remote desktop
   :PROPERTIES:
   :VISIBILITY: all
   :END:
