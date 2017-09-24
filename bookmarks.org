@@ -318,6 +318,14 @@ https://superuser.com/questions/366035/how-can-i-disable-prompt-about-trust-when
 * markdown
 ** strikethrough
 https://webapps.stackexchange.com/questions/14986/strikethrough-with-github-markdown
+** telecom
+http://jf.189.cn/selfcenter/order.aspx
 * life
 ** electric charge
 http://www.95598.cn/person/index.shtml
+* hack
+** note3 n9009 root
+https://www.muzisoft.com/root/93498.html
+* standards
+** url escape
+https://www.werockyourweb.com/url-escape-characters/

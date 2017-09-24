@@ -1,3 +1,44 @@
+(defun z-url-escape (url)
+  "Escape URL."
+  (setq url (replace-regexp-in-string "%" "%25" url))
+
+  (setq url-special-char-escape (make-hash-table :test 'equal :size 30))
+  (puthash " " "%20" url-special-char-escape)
+  (puthash "#" "%23" url-special-char-escape)
+  (puthash "$" "%24" url-special-char-escape)
+;  (puthash "%" "%25" url-special-char-escape)
+  (puthash "&" "%26" url-special-char-escape)
+  (puthash "@" "%40" url-special-char-escape)
+  (puthash "`" "%60" url-special-char-escape)
+  (puthash "/" "%2F" url-special-char-escape)
+  (puthash ":" "%3A" url-special-char-escape)
+  (puthash ";" "%3B" url-special-char-escape)
+  (puthash "<" "%3C" url-special-char-escape)
+  (puthash "=" "%3D" url-special-char-escape)
+  (puthash ">" "%3E" url-special-char-escape)
+  (puthash "?" "%3F" url-special-char-escape)
+  (puthash "[" "%5B" url-special-char-escape)
+  (puthash "\\" "%5C" url-special-char-escape)
+  (puthash "]" "%5D" url-special-char-escape)
+  (puthash "^" "%5E" url-special-char-escape)
+  (puthash "{" "%7B" url-special-char-escape)
+  (puthash "|" "%7C" url-special-char-escape)
+  (puthash "}" "%7D" url-special-char-escape)
+  (puthash "~" "%7E" url-special-char-escape)
+  (puthash "\"" "%22" url-special-char-escape)
+  (puthash "'" "%27" url-special-char-escape)
+  (puthash "+" "%2B" url-special-char-escape)
+  (puthash "," "%2C" url-special-char-escape)
+
+  (maphash
+   (lambda (key value)
+     (let ((reg (regexp-quote key)))
+       (when (string-match-p reg url)
+         (setq url (replace-regexp-in-string reg value url)))))
+   url-special-char-escape)
+
+  url)
+
 (defun z-bing-dict-search-word ()
   "Search current word in bing dict."
   (interactive)
@@ -27,11 +68,11 @@
 (defun z-bing-dict (&optional word)
   "Search WORD in bing dict."
   (interactive "sWord: ")
-  (browse-url (concat "http://cn.bing.com/dict/search?q=" word)))
+  (browse-url (concat "http://cn.bing.com/dict/search?q=" (z-url-escape word))))
 
 (defun z-bing-search-text (text)
   "Search TEXT in bing search."
-  (browse-url (concat "https://www.bing.com/search?q=" text)))
+  (browse-url (concat "https://www.bing.com/search?q=" (z-url-escape text))))
 
 (defun z-bing-search-region ()
   "Search text (in region) in bing search."
