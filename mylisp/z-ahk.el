@@ -154,3 +154,11 @@
     (if (z-windows-title-contains title)
         (call-process "C:\\Users\\donzhu\\github\\tools4win\\activate_win.exe" nil 0 nil title)
 	  (z-run-in-cmd "\"C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\IDE\\devenv.exe\" D:\\work\\UCM-BusinessAnalytics\\private\\AzureDataFactories\\UcmBusinessAnalyticsDataFactories\\UcmBusinessAnalyticsDataFactories.sln" "Business Analytics" t))))
+
+(defun z-ucmcube ()
+  "UCM Business Analytics cube project."
+  (interactive)
+  (let ((title "UcmBusinessAnalyticsCube -"))
+    (if (z-windows-title-contains title)
+        (call-process "C:\\Users\\donzhu\\github\\tools4win\\activate_win.exe" nil 0 nil title)
+	  (z-run-in-cmd "\"C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\IDE\\devenv.exe\" D:\\work\\UCM-BusinessAnalytics\\private\\Cubes\\UcmBusinessAnalyticsCube\\UcmBusinessAnalyticsCube.sln" "Business Analytics" t))))
