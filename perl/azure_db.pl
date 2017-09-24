@@ -12,9 +12,12 @@ die "No action specified." unless $action;
 $| = 1;
 binmode STDOUT, ":utf8";
 
-say '=' x 80;
-say "Action: $action";
-say '=' x 80;
+unless ($action eq 'value') {
+  say '=' x 80;
+  say "Action: $action";
+  say '=' x 80;
+}
+
 given ($action) {
   when ('upload') {
     my ($file, $file_id, $file_name, $password);
@@ -128,6 +131,15 @@ given ($action) {
     die "--sql not specified." unless $sql;
     my $dbh = AzureDb::sql_server_dbh($server, $user, $password, $database);
     AzureDb::query($dbh, $sql);
+  }
+  when ('value') {
+    my ($password, $sql);
+    GetOptions("password=s" => \$password,
+               "sql=s" => \$sql);
+    die "--password not specified." unless $password;
+    die "--sql not specified." unless $sql;
+    my $dbh = AzureDb::sql_server_dbh($server, $user, $password, $database);
+    AzureDb::query_value($dbh, $sql);
   }
   default {
     die "Unknown action $action";

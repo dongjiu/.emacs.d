@@ -203,4 +203,19 @@ sub query {
   }
 }
 
+sub query_value {
+  my ($dbh, $sql) = @_;
+
+  my $sth = $dbh->prepare($sql);
+  $sth->execute;
+  my $row_num = 0;
+  my $value;
+  while ( my ($col) = $sth->fetchrow_array) {
+    $value = $col;
+    ++$row_num;
+  }
+  die "More than one rows" if $row_num > 1;
+  print $value;
+}
+
 1;

@@ -533,6 +533,28 @@ Prompt for password:
 #+END_SRC
 
 
+#+BEGIN_SRC emacs-lisp
+  (defun z-query (sql)
+    "Run sql against the database."
+    (interactive "sQuery: ")
+    (let ((default-directory "~/.emacs.d/perl"))
+      (start-process "perl_query" z-database-buffer
+                     "perl" "azure_db.pl" "query"
+                     "--sql" sql
+                     "--password" (z-database-password))
+      (display-buffer z-database-buffer)))
+#+END_SRC
+
+Query and return the result.
+#+BEGIN_SRC emacs-lisp
+  (defun z-query-value (sql)
+    "Run sql against the database and return the result."
+    (let ((default-directory "~/.emacs.d/perl"))
+      (shell-command-to-string
+       (concat "perl azure_db.pl value --sql \""
+               sql "\" --password " (z-database-password)))))
+#+END_SRC
+
 Upload file:
 #+BEGIN_SRC emacs-lisp
   (defun z-upload-file (file file-id file-name)
@@ -664,9 +686,17 @@ Upload files in dired:
              (lambda (file)
                (file-name-nondirectory file))))
         (dolist (file files)
-          (z-upload-file file
-                         (funcall get-file-id file)
-                         (funcall get-file-name file))))))
+          (if (> (string-to-number
+                  (z-query-value
+                   (format "select count(*) from [file] where file_id = '%s'"
+                           (funcall get-file-id file))))
+                 0)
+              (when (y-or-n-p (format "File %s already exists. Overwrite? "
+                                      (funcall get-file-id file)))
+                (z-update-file file (funcall get-file-id file)))
+            (z-upload-file file
+                           (funcall get-file-id file)
+                           (funcall get-file-name file)))))))
 #+END_SRC
 
 Pull marked file:
@@ -702,18 +732,6 @@ Update file content:
                      "perl" "azure_db.pl" "update"
                      "--file" file
                      "--file_id" file-id
-                     "--password" (z-database-password))
-      (display-buffer z-database-buffer)))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-  (defun z-query (sql)
-    "Run sql against the database."
-    (interactive "sQuery: ")
-    (let ((default-directory "~/.emacs.d/perl"))
-      (start-process "perl_query" z-database-buffer
-                     "perl" "azure_db.pl" "query"
-                     "--sql" sql
                      "--password" (z-database-password))
       (display-buffer z-database-buffer)))
 #+END_SRC
