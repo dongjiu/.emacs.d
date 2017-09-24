@@ -721,7 +721,6 @@ Pull marked file:
           (delete-file tmp-file)))))
 #+END_SRC
 
-
 Update file content:
 #+BEGIN_SRC emacs-lisp
   (defun z-update-file (file file-id)

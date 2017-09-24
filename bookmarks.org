@@ -168,6 +168,40 @@ https://stackoverflow.com/questions/20541322/how-to-remove-installed-elpa-packag
 *** png
 https://stackoverflow.com/questions/2650041/emacs-under-windows-and-png-files
 
+https://stackoverflow.com/questions/28920230/emacs-24-4-1-image-support-cant-find-libpng16-dll-binary
+https://sourceforge.net/projects/ezwinports/files/libpng-1.6.12-w32-bin.zip/download
+
+https://www.wisdomandwonder.com/article/5647/enabling-png-jpg-and-gif-in-emacs-on-windows
+
+https://emacs.stackexchange.com/questions/5994/emacs-doesnt-display-jpeg-files-correctly
+https://www.gtk.org/download/windows.php
+http://www.msys2.org/
+https://sourceforge.net/projects/msys2/
+(cdr (assq 'png dynamic-library-alist))
+(zlib-available-p)
+(image-type-available-p 'png)
+
+  To install the optional libraries, start the MSYS2 Bash window and
+  type the following command:
+
+    pacman -S PACKAGES
+
+  where PACKAGES is the list of packages you want to install.  The
+  full list is as follows:
+
+  mingw-w64-x86_64-giflib
+  mingw-w64-x86_64-gnutls
+  mingw-w64-x86_64-libjpeg-turbo
+  mingw-w64-x86_64-libpng
+  mingw-w64-x86_64-librsvg
+  mingw-w64-x86_64-libtiff
+  mingw-w64-x86_64-libxml2
+  mingw-w64-x86_64-xpm-nox
+
+  You can type any subset of this list.  Once again, when asked
+  whether to proceed with installation, answer Y.
+
+
 ** sytanx highlighting source code to html
 http://ergoemacs.org/emacs/elisp_htmlize.html
 https://www.emacswiki.org/emacs/Htmlize
