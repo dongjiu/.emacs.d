@@ -201,7 +201,8 @@ https://sourceforge.net/projects/msys2/
   You can type any subset of this list.  Once again, when asked
   whether to proceed with installation, answer Y.
 
-
+** msys2
+https://sourceforge.net/p/emacsbinw64/wiki/Build%20guideline%20for%20MSYS2-MinGW-w64%20system/
 ** sytanx highlighting source code to html
 http://ergoemacs.org/emacs/elisp_htmlize.html
 https://www.emacswiki.org/emacs/Htmlize
