@@ -26,6 +26,11 @@ https://mskeys.microsoft.com/
 ** visual studio subscription
 https://my.visualstudio.com/Benefits?wt.mc_id=o~msft~profile~devprogram_attach&workflowid=devprogram&mkt=en-us
 https://my.visualstudio.com/subscriptions
+** gift
+http://microsoft.ylytbuy.com/cn/myorder.aspx
+** kick off
+http://stcakickoff/Registration
+
 * UCM
 ** VSTS
 feature board
@@ -33,6 +38,9 @@ https://msasg.visualstudio.com/Bing_Ads/UCM%20Team/_backlogs/board/Features
 
 MSL
 https://ucmsz.visualstudio.com/MSL/_backlogs/board/Backlog%20items
+
+Business analytics branches:
+https://msasg.visualstudio.com/Bing_Ads/UCM%20Team/_git/UCM-BusinessAnalytics/branches
 
 ** SharePoint
 https://microsoft.sharepoint.com/teams/BingAds/Shared%20Documents/Forms/AllItems.aspx?id=%2Fteams%2FBingAds%2FShared%20Documents%2FTeams%2FUCM
@@ -214,6 +222,19 @@ https://stackoverflow.com/questions/299512/how-do-i-connect-to-sql-server-using-
 echo "hello world" > #<buffer universal-greeting>
 
 https://www.emacswiki.org/emacs/EshellRedirection
+
+** inline image in org mode
+- Image related dlls are required
+- "file:" prefix is required
+C-c C-x C-v
+
+https://emacs.stackexchange.com/questions/10114/org-mode-no-images-to-display-inline
+** only search visible content in org
+https://emacs.stackexchange.com/questions/3929/make-isearch-skip-folded-content-in-org-mode
+
+While using isearch you can toggle the search on invisible text with
+M-s i.
+
 * .NET
 ** ASP.NET MVC
 *** Specify layout file:
@@ -231,7 +252,16 @@ https://stackoverflow.com/questions/8293392/format-decimal-value-to-string-with-
 https://stackoverflow.com/questions/341175/datetime-parse-and-making-it-work-with-a-specific-format
 ** LINQ aggregate
 https://www.dotnetperls.com/aggregate
+** MEF
+https://docs.microsoft.com/en-us/dotnet/framework/mef/
 * SQL Server
+** connection string
+server vs data source
+https://stackoverflow.com/questions/15025055/server-vs-data-source-in-connection-string
+
+** randomly select rows
+https://stackoverflow.com/questions/848872/select-n-random-rows-from-sql-server-table
+
 ** trusted connection
 https://stackoverflow.com/questions/1250552/what-is-a-trusted-connection
 ** set nocount
@@ -277,6 +307,8 @@ http://www.developer.com/net/asp/article.php/3761486/Working-with-Binary-Large-O
 ** Kimball vs Inmon
 http://tdan.com/data-warehouse-design-inmon-versus-kimball/20300
 
+** tabular model
+https://www.mssqltips.com/sqlservertip/2821/getting-started-with-tabular-model-in-sql-server-2012--part-1/
 ** MDX
 *** and/or
 http://www.sqlblogspot.com/2013/10/mdx-where-clause-slicer-axis-andor.html
@@ -302,6 +334,34 @@ https://docs.microsoft.com/en-us/sql/analysis-services/multidimensional-models-a
 ** data warehouse concepts
 http://www.1keydata.com/datawarehousing/molap-rolap.html
 
+** collation vs nvarchar
+https://stackoverflow.com/questions/9756769/what-is-the-point-of-collations-for-nvarchar-unicode-columns
+
+** sqlpackage.exe
+https://www.mssqltips.com/sqlservertip/4759/sql-server-database-schema-synchronization-via-sqlpackageexe-and-powershell/
+https://blogs.msdn.microsoft.com/azuresqldbsupport/2017/01/31/using-sqlpackage-to-import-or-export-azure-sql-db/
+[[https://msdn.microsoft.com/en-us/library/hh550080(v=vs.103).aspx
+
+https://dba.stackexchange.com/questions/53033/sqlpackage-exe-ignoring-blockonpossibledataloss]]
+* Analysis Services
+** tools
+*** C# process cube:
+Microsoft.AnalysisServices library,
+https://stackoverflow.com/questions/2779077/component-for-processing-cube
+
+https://msdn.microsoft.com/en-us/library/mt436122.aspx
+
+https://docs.microsoft.com/en-us/sql/analysis-services/multidimensional-models/analysis-management-objects/developing-with-analysis-management-objects-amo
+
+*** process
+https://docs.microsoft.com/en-us/sql/analysis-services/multidimensional-models/tools-and-approaches-for-processing-analysis-services
+
+https://docs.microsoft.com/en-us/sql/analysis-services/multidimensional-models/remote-processing-analysis-services
+
+https://bpmsbi.wordpress.com/2009/12/10/7-ways-to-process-analysis-services/
+
+Command line tool *ascmd*
+[[https://msdn.microsoft.com/en-us/library/ms365187.aspx?ranMID=24542&ranEAID=TnL5HPStwNw&ranSiteID=TnL5HPStwNw-0r2NmQ83hbeueRZwkIYQ2A&tduid=(26d69e2b0588c7395d50432061afeaab)(256380)(2459594)(TnL5HPStwNw-0r2NmQ83hbeueRZwkIYQ2A)()]]
 * Reveal JS
 https://github.com/hakimel/reveal.js
 * html
@@ -316,6 +376,16 @@ https://www.w3.org/Style/Examples/007/center.en.html
 =======
 *** Bundle
 http://www.tutorialsteacher.com/mvc/scriptbundle-mvc
+** overflow: hidden moves text upwards
+https://stackoverflow.com/questions/20566710/overflowhidden-displayinline-block-moves-text-upwards
+
+vertical-align: bottom
+
+Root cause: the inline-block element has height equal to its parent
+and overflow: hidden causes its bottom edge to be aligned on the text
+baseline of the parent. As a result the space that is available for
+descenders on the text is essentially doubled.
+
 * life
 ** credit card
 score
@@ -404,3 +474,42 @@ https://www.muzisoft.com/root/93498.html
 * standards
 ** url escape
 https://www.werockyourweb.com/url-escape-characters/
+* power bi
+** azure analysis services
+*** The server parameter must be a valid hostname or HTTP URL.
+Make sure you have the latest Power BI Desktop installed.
+
+In Power BI Desktop, make sure you are using the correct
+authentication type (Organizational account).
+
+File -> Options -> Data source settings -> Global permissions.
+
+Then see if you spot your asazure:// data source listed.  If so, left
+click it then click the Clear Permissions button.  That will cause
+Power BI Desktop to prompt you for credentials next time.  This way
+you can ensure you choose the proper authentication.  If your
+asazure:// data source isn't there, move on to the next step.
+
+Click Get Data and choose Analysis Services. Paste in your asazure://
+into the Server textbox and check Import and click OK. On the next
+screen choose the Organizational Account tab on the left. Then click
+Sign in and choose an Azure Active Directory account (Organizational
+account) which has permissions to your model. Then click Connect.
+
+https://stackoverflow.com/questions/41583929/i-am-getting-an-error-while-connecting-to-azure-ssas-server-in-power-bi-through
+* visual studio
+** vsix
+https://stackoverflow.com/questions/25906944/visual-studio-does-not-install-vsix-files
+* azure
+** data factory
+*** import data factory to visual studio
+Use "Cloud Explorer" in visual studio.
+http://www.sqlservercentral.com/articles/Azure+Data+Factory/139478/
+https://marketplace.visualstudio.com/items?itemName=MicrosoftCloudExplorer.CloudExplorerforVisualStudio2015#review-details
+https://stackoverflow.com/questions/31586439/missing-azure-components-in-visual-studio-2015-server-explorer
+* powershell
+** write-host
+https://technet.microsoft.com/en-us/library/ee177031.aspx
+* vsts
+** variables
+https://docs.microsoft.com/en-us/vsts/build-release/concepts/definitions/release/variables?tabs=batch#default-variables
