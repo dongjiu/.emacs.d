@@ -102,6 +102,8 @@ https://microsoft.sharepoint.com/teams/BingAds/_layouts/OneNote.aspx?id=%2Fteams
 GME permission:
 https://microsoft.sharepoint.com/teams/BingAds/_layouts/OneNote.aspx?id=%2Fteams%2FBingAds%2FShared%20Documents%2FTeams%2FUCM%2FWiki%2FUCM%20Wiki&wd=target%28Teams%2FR%2BD%2FHome.one%7C05E49AF3-7CD1-461A-A705-05B80044AE42%2FRequest%20GEM%20permisson%7CA875CE2B-8229-4E1F-9D82-338C102405CF%2F%29
 
+Windows server
+https://ms.portal.azure.com/#resource/subscriptions/98f9acc0-905d-440f-b811-bf498e235114/resourceGroups/donzhu-group/providers/Microsoft.Compute/virtualMachines/donzhuwin/overview
 * Github
 https://github.com/dongjiu/.emacs.d
 https://github.com/dongjiu/tools4win
