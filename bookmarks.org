@@ -4,6 +4,7 @@
   :END:
 #+BEGIN_SRC emacs-lisp
 (shell-command "start C:\\Users\\donzhu\\Desktop\\donzhu_work.rdp")
+(shell-command "start C:\\Users\\donzhu\\Desktop\\donzhu_azure.rdp")
 #+END_SRC
 
 * SQL Server Connections
@@ -503,6 +504,9 @@ https://stackoverflow.com/questions/41583929/i-am-getting-an-error-while-connect
 ** vsix
 https://stackoverflow.com/questions/25906944/visual-studio-does-not-install-vsix-files
 * azure
+** remote desktop - audio service is not running
+https://techcommunity.microsoft.com/t5/Compute/Audio-device-not-available-on-MS-Azure-VM/td-p/67770
+
 ** data factory
 *** import data factory to visual studio
 Use "Cloud Explorer" in visual studio.
