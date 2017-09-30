@@ -103,8 +103,6 @@ https://microsoft.sharepoint.com/teams/BingAds/_layouts/OneNote.aspx?id=%2Fteams
 GME permission:
 https://microsoft.sharepoint.com/teams/BingAds/_layouts/OneNote.aspx?id=%2Fteams%2FBingAds%2FShared%20Documents%2FTeams%2FUCM%2FWiki%2FUCM%20Wiki&wd=target%28Teams%2FR%2BD%2FHome.one%7C05E49AF3-7CD1-461A-A705-05B80044AE42%2FRequest%20GEM%20permisson%7CA875CE2B-8229-4E1F-9D82-338C102405CF%2F%29
 
-Windows server
-https://ms.portal.azure.com/#resource/subscriptions/98f9acc0-905d-440f-b811-bf498e235114/resourceGroups/donzhu-group/providers/Microsoft.Compute/virtualMachines/donzhuwin/overview
 * Github
 https://github.com/dongjiu/.emacs.d
 https://github.com/dongjiu/tools4win
@@ -504,6 +502,12 @@ https://stackoverflow.com/questions/41583929/i-am-getting-an-error-while-connect
 ** vsix
 https://stackoverflow.com/questions/25906944/visual-studio-does-not-install-vsix-files
 * azure
+** vm
+https://ms.portal.azure.com/#resource/subscriptions/98f9acc0-905d-440f-b811-bf498e235114/resourceGroups/donzhu-group/providers/Microsoft.Compute/virtualMachines/donzhuwin/overview
+
+dongjiu.southcentralus.cloudapp.azure.com
+
+13.84.174.115
 ** remote desktop - audio service is not running
 https://techcommunity.microsoft.com/t5/Compute/Audio-device-not-available-on-MS-Azure-VM/td-p/67770
 
@@ -519,3 +523,54 @@ https://technet.microsoft.com/en-us/library/ee177031.aspx
 * vsts
 ** variables
 https://docs.microsoft.com/en-us/vsts/build-release/concepts/definitions/release/variables?tabs=batch#default-variables
+* .NET Core
+** doc
+*** core
+https://docs.microsoft.com/en-us/dotnet/core/
+*** CLI
+https://docs.microsoft.com/en-us/dotnet/core/tools/index?tabs=netcore2x
+*** tutorial
+https://docs.microsoft.com/en-us/dotnet/core/tutorials/
+*** deployment
+https://docs.microsoft.com/en-us/dotnet/core/deploying/index
+https://docs.microsoft.com/en-us/aspnet/core/publishing/?tabs=aspnetcore2x
+https://docs.microsoft.com/en-us/dotnet/core/deploying/deploy-with-cli
+*** Kestrel
+https://docs.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel?tabs=aspnetcore2x
+*** bower
+https://docs.microsoft.com/en-us/aspnet/core/client-side/bower
+** project structure
+http://www.tutorialsteacher.com/core/aspnet-core-application-project-structure
+** directory structure of published apps
+https://docs.microsoft.com/en-us/aspnet/core/hosting/directory-structure
+** serving static files
+http://www.tutorialsteacher.com/core/aspnet-core-static-file
+** middleware
+http://www.tutorialsteacher.com/core/aspnet-core-middleware
+** dependency injection
+http://www.tutorialsteacher.com/core/dependency-injection-in-aspnet-core
+** environment
+http://www.tutorialsteacher.com/core/aspnet-core-environment-variable
+https://andrewlock.net/how-to-set-the-hosting-environment-in-asp-net-core/
+
+*** launchSettings.json
+used by Visual Studio
+https://exceptionnotfound.net/working-with-environments-and-launch-settings-in-asp-net-core/
+https://codeopinion.com/environment-variables-asp-net-core/
+
+** Configuration
+appSettings.json
+https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration?tabs=basicconfiguration
+
+** bundle
+https://docs.microsoft.com/en-us/aspnet/core/client-side/bundling-and-minification
+
+* C#
+** expression bodied members (=> in member declarations)
+https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/expression-bodied-members
+
+* CentOS
+** centos version
+https://linuxconfig.org/how-to-check-centos-version
+$ hostnamectl
+$ rpm --query centos-release
