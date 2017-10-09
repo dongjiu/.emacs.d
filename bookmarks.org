@@ -131,6 +131,9 @@ command chcp
 https://stackoverflow.com/questions/1259084/what-encoding-code-page-is-cmd-exe-using
 ** telnet missing
 http://www.xitongcheng.com/jiaocheng/win10_article_17405.html
+** 7z command line example
+https://www.dotnetperls.com/7-zip-examples
+
 * Typescript
 ** backtick '`'
 https://basarat.gitbooks.io/typescript/docs/template-strings.html
@@ -240,6 +243,9 @@ https://emacs.stackexchange.com/questions/3929/make-isearch-skip-folded-content-
 While using isearch you can toggle the search on invisible text with
 M-s i.
 
+** check directory exists
+https://emacs.stackexchange.com/questions/34392/how-to-check-if-a-directory-exists-in-elisp/34394
+file-directory-p
 * .NET
 ** ASP.NET MVC
 *** Specify layout file:
@@ -431,6 +437,8 @@ http://html.com/attributes/input-autocomplete/
 https://stackoverflow.com/questions/5437171/with-javascript-and-ajax-do-i-still-need-the-html-form-tag-and-do-i-still-nee
 ** dl dt dd
 http://www.w3school.com.cn/tags/tag_dl.asp
+** viewport
+https://www.w3schools.com/css/css_rwd_viewport.asp
 * css
 ** centering
 https://www.w3.org/Style/Examples/007/center.en.html
@@ -743,6 +751,12 @@ https://docs.microsoft.com/en-us/aspnet/core/mvc/overview
 * C#
 ** expression bodied members (=> in member declarations)
 https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/expression-bodied-members
+
+* shell
+** execute remote script
+https://stackoverflow.com/questions/305035/how-to-use-ssh-to-run-a-shell-script-on-a-remote-machine
+
+ssh root@MachineB 'bash -s' < local_script.sh
 
 * CentOS
 ** centos version
