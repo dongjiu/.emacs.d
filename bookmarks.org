@@ -127,6 +127,8 @@ https://www.windowscentral.com/how-turn-cortana-and-stop-personal-data-gathering
 ** cmd encoding
 command chcp
 https://stackoverflow.com/questions/1259084/what-encoding-code-page-is-cmd-exe-using
+** telnet missing
+http://www.xitongcheng.com/jiaocheng/win10_article_17405.html
 * Typescript
 ** backtick '`'
 https://basarat.gitbooks.io/typescript/docs/template-strings.html
@@ -240,7 +242,21 @@ M-s i.
 ** ASP.NET MVC
 *** Specify layout file:
 https://stackoverflow.com/questions/5161380/how-do-i-specify-different-layouts-in-the-asp-net-mvc-3-razor-viewstart-file
-<<<<<<< Updated upstream
+*** Controller, Action
+[[https://msdn.microsoft.com/en-us/library/dd410269(v=vs.100).aspx]]
+*** ViewData, ViewBag
+https://stackoverflow.com/questions/4705426/whats-the-difference-between-viewdata-and-viewbag
+*** File
+https://stackoverflow.com/questions/13983190/actionresult-returning-a-stream
+https://stackoverflow.com/questions/8897458/asp-net-download-file-to-client-browser
+https://stackoverflow.com/questions/186062/can-an-asp-net-mvc-controller-return-an-image
+https://stackoverflow.com/questions/20508788/do-i-need-content-type-application-octet-stream-for-file-download
+https://stackoverflow.com/questions/35237863/download-file-using-mvc-core
+
+https://weblogs.asp.net/imranbaloch/custom-actionresult-aspnet5-mvc6
+
+https://stackoverflow.com/questions/12365534/launch-download-in-the-same-tab-without-opening-new-tab-or-window-in-javascript
+
 ** C# Console UTF8
 Console.OutputEncoding = Encoding.UTF8;
 
@@ -255,6 +271,16 @@ https://stackoverflow.com/questions/341175/datetime-parse-and-making-it-work-wit
 https://www.dotnetperls.com/aggregate
 ** MEF
 https://docs.microsoft.com/en-us/dotnet/framework/mef/
+** delete directory
+[[https://msdn.microsoft.com/en-us/library/fxeahc5f(v=vs.110).aspx]]
+Directory.Delete
+** delegate invocation can be simplified
+https://www.andyheathershaw.uk/2016/11/delegate-invocation-can-be-simplified-c/
+** unix time stamp
+https://stackoverflow.com/questions/2883576/how-do-you-convert-epoch-time-in-c
+** download file
+[[https://msdn.microsoft.com/en-us/library/12s31dhy(v=vs.110).aspx]]
+https://stackoverflow.com/questions/8897458/asp-net-download-file-to-client-browser
 * SQL Server
 ** connection string
 server vs data source
@@ -305,6 +331,8 @@ http://www.developer.com/net/asp/article.php/3761486/Working-with-Binary-Large-O
 ** ADO.NET
 *** large value
 [[https://msdn.microsoft.com/en-us/library/a1904w6t(VS.80).aspx]]
+*** sql server
+https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/ado-net-code-examples#sqlclient
 ** Kimball vs Inmon
 http://tdan.com/data-warehouse-design-inmon-versus-kimball/20300
 
@@ -371,6 +399,16 @@ https://stackoverflow.com/questions/5376444/how-do-i-disable-a-href-link-in-java
 
 ** pop up
 https://stackoverflow.com/questions/1328723/how-to-generate-a-simple-popup-using-jquery
+
+** input remeber text
+https://stackoverflow.com/questions/16444496/make-text-input-fields-remember-previously-entered-data
+https://www.labnol.org/software/force-browser-to-remember-passwords/28472/
+http://html.com/attributes/input-autocomplete/
+
+** form ajax
+https://stackoverflow.com/questions/5437171/with-javascript-and-ajax-do-i-still-need-the-html-form-tag-and-do-i-still-nee
+** dl dt dd
+http://www.w3school.com.cn/tags/tag_dl.asp
 * css
 ** centering
 https://www.w3.org/Style/Examples/007/center.en.html
@@ -387,6 +425,25 @@ and overflow: hidden causes its bottom edge to be aligned on the text
 baseline of the parent. As a result the space that is available for
 descenders on the text is essentially doubled.
 
+** anchor remove underline
+https://stackoverflow.com/questions/2041388/how-to-remove-the-underline-for-anchorslinks
+text-decoration: none;
+** <li> remove bullets
+https://stackoverflow.com/questions/18028741/removing-bullets-from-unordered-list-ul
+ul { list-style-type: none; }
+** div takes up all vertical space
+https://stackoverflow.com/questions/12443983/make-a-div-take-up-all-available-vertical-space
+** inline-block unwanted space
+https://stackoverflow.com/questions/5256533/a-space-between-inline-block-list-items
+** table border
+https://stackoverflow.com/questions/7764553/how-do-i-set-table-border-width-with-css
+** table scroll bar
+https://stackoverflow.com/questions/14834198/table-scroll-with-html-and-css
+https://stackoverflow.com/questions/5533636/add-horizontal-scrollbar-to-html-table
+** font
+微软雅黑
+http://www.cnblogs.com/mm2015/p/5919073.html
+
 * life
 ** credit card
 score
@@ -397,8 +454,23 @@ https://club.bankcomm.com/customer/index.htm
 ** jquery
 *** custom events
 https://learn.jquery.com/events/introduction-to-custom-events/
+*** synchronized call
+https://stackoverflow.com/questions/6685249/jquery-performing-synchronous-ajax-requests
+
+function getRemote() {
+    return $.ajax({
+        type: "GET",
+        url: remote_url,
+        async: false
+    }).responseText;
+}
 ** detecting keys
 https://stackoverflow.com/questions/37557990/detecting-combination-keypresses-control-alt-shift
+*** each
+http://www.w3school.com.cn/jquery/traversing_each.asp
+*** hide, show
+https://stackoverflow.com/questions/239207/how-does-jquery-implement-hide-and-show
+display: none
 * openssl
 ** encrypt/decrypt files
 https://stackoverflow.com/questions/16056135/how-to-use-openssl-to-encrypt-decrypt-files
@@ -501,6 +573,8 @@ https://stackoverflow.com/questions/41583929/i-am-getting-an-error-while-connect
 * visual studio
 ** vsix
 https://stackoverflow.com/questions/25906944/visual-studio-does-not-install-vsix-files
+** shortcut
+http://www.dofactory.com/reference/visual-studio-shortcuts
 * azure
 ** vm
 https://ms.portal.azure.com/#resource/subscriptions/98f9acc0-905d-440f-b811-bf498e235114/resourceGroups/donzhu-group/providers/Microsoft.Compute/virtualMachines/donzhuwin/overview
@@ -517,6 +591,14 @@ Use "Cloud Explorer" in visual studio.
 http://www.sqlservercentral.com/articles/Azure+Data+Factory/139478/
 https://marketplace.visualstudio.com/items?itemName=MicrosoftCloudExplorer.CloudExplorerforVisualStudio2015#review-details
 https://stackoverflow.com/questions/31586439/missing-azure-components-in-visual-studio-2015-server-explorer
+
+** ping
+https://superuser.com/questions/611216/cant-ping-8-8-8-8-from-virtual-machine-in-azure
+** centos
+http://52.187.112.52/
+http://dongjiu.southeastasia.cloudapp.azure.com
+https://dongjiu.southeastasia.cloudapp.azure.com
+
 * powershell
 ** write-host
 https://technet.microsoft.com/en-us/library/ee177031.aspx
@@ -524,6 +606,8 @@ https://technet.microsoft.com/en-us/library/ee177031.aspx
 ** variables
 https://docs.microsoft.com/en-us/vsts/build-release/concepts/definitions/release/variables?tabs=batch#default-variables
 * .NET Core
+** download
+https://www.microsoft.com/net/core#windowscmd
 ** doc
 *** core
 https://docs.microsoft.com/en-us/dotnet/core/
@@ -539,6 +623,8 @@ https://docs.microsoft.com/en-us/dotnet/core/deploying/deploy-with-cli
 https://docs.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel?tabs=aspnetcore2x
 *** bower
 https://docs.microsoft.com/en-us/aspnet/core/client-side/bower
+** CLI cheatsheet
+https://carlos.mendible.com/2017/09/21/net-core-cli-and-msbuild-cheat-sheet/
 ** project structure
 http://www.tutorialsteacher.com/core/aspnet-core-application-project-structure
 ** directory structure of published apps
@@ -562,8 +648,73 @@ https://codeopinion.com/environment-variables-asp-net-core/
 appSettings.json
 https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration?tabs=basicconfiguration
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="1.1.2" />
+  </ItemGroup>
+
 ** bundle
 https://docs.microsoft.com/en-us/aspnet/core/client-side/bundling-and-minification
+
+** centos self-contained app
+Failed to load xxx, error: libunwind.so.8: cannot open shared object file: No such file or directory
+Failed to bind to CoreCLR at '/home/ikriv/bin/dnc/libcoreclr.so'
+
+https://docs.microsoft.com/en-us/dotnet/core/linux-prerequisites?tabs=netcore2x
+http://www.ikriv.com/blog/?p=2438
+
+sudo yum update
+sudo yum install libunwind libicu
+
+;; sudo yum install dotnet-sdk-2.0.0
+
+** use nginx
+https://docs.microsoft.com/en-us/aspnet/core/publishing/linuxproduction?tabs=aspnetcore2x
+
+** ASP.NET Core
+https://docs.microsoft.com/en-us/aspnet/core/
+
+*** RenderSection
+https://stackoverflow.com/questions/23327578/what-is-rendersection-in-asp-net-mvc
+** code generation
+https://docs.microsoft.com/en-us/visualstudio/modeling/code-generation-and-t4-text-templates
+
+https://stackoverflow.com/questions/27986147/target-not-running-when-using-beforetargets-build-on-build-server
+
+https://stackoverflow.com/questions/2855713/what-is-the-difference-between-dependsontargets-and-aftertargets
+** msbuild targets reference
+https://msdn.microsoft.com/en-us/library/7z253716.aspx
+https://msdn.microsoft.com/en-us/library/microsoft.build.tasks.aspx
+*** dotnet core csproj
+https://docs.microsoft.com/en-us/dotnet/core/tools/csproj
+*** Message not shown
+https://stackoverflow.com/questions/7557562/how-do-i-get-the-message-msbuild-task-to-shows-up-in-the-visual-studio-project
+https://social.msdn.microsoft.com/Forums/vstudio/en-US/e546ebd5-0fbd-4cda-acc6-2964698031ab/displaying-console-message-with-the-message-command?forum=msbuild
+
+<Message Importance="High" Text="+++ Justin Dearing +++" />
+
+dotnet build -v n
+dotnet build --verbosity normal
+
+*** newline in Message
+https://stackoverflow.com/questions/2459994/is-there-a-way-to-print-a-new-line-when-using-message
+%0a
+*** MSBuild
+https://msdn.microsoft.com/en-us/library/z7f65y0d.aspx
+*** Exec
+https://msdn.microsoft.com/en-us/library/x8zx72cd.aspx
+** https
+https://docs.microsoft.com/en-us/aspnet/core/security/enforcing-ssl
+** WebListener
+https://docs.microsoft.com/en-us/aspnet/core/fundamentals/servers/weblistener
+** password hashing
+https://docs.microsoft.com/en-us/aspnet/core/security/data-protection/introduction
+https://www.nuget.org/packages/Microsoft.AspNetCore.DataProtection/
+https://docs.microsoft.com/en-us/aspnet/core/security/data-protection/consumer-apis/password-hashing
+
+Install-Package Microsoft.AspNetCore.DataProtection -Version 2.0.0 
+
+https://en.wikipedia.org/wiki/PBKDF2
+http://www.c-sharpcorner.com/article/hashing-passwords-in-net-core-with-tips/
 
 * C#
 ** expression bodied members (=> in member declarations)
@@ -574,3 +725,164 @@ https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expr
 https://linuxconfig.org/how-to-check-centos-version
 $ hostnamectl
 $ rpm --query centos-release
+** nginx
+https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-centos-7
+
+http://nginx.org/en/docs/beginners_guide.html
+
+$ sudo systemctl start nginx.service
+$ sudo systemctl status nginx.service
+
+*** log
+https://www.digitalocean.com/community/tutorials/how-to-configure-logging-and-log-rotation-in-nginx-on-an-ubuntu-vps
+/var/log/nginx/access.log
+/var/log/nginx/error.log
+
+*** proxy_pass, permission denied
+https://stackoverflow.com/questions/25235453/nginx-proxy-server-localhost-permission-denied
+$ sudo /usr/sbin/setsebool httpd_can_network_connect true 
+
+** ftp
+https://stackoverflow.com/questions/16727217/how-can-i-access-ftp-to-centos
+
+$ sudo yum install vsftpd
+$ sudo service vsftpd start
+
+check:
+$ netstat -an | grep 21
+$ netstat -an | grep 22
+** file transfer
+http://www.server-world.info/en/note?os=CentOS_7&p=ssh&f=2
+https://stackoverflow.com/questions/29789364/upload-files-to-centos
+
+*** scp
+$ scp ./test.txt cent@www.srv.world:~/ 
+$ scp cent@www.srv.world:/home/cent/test.txt ./test.txt
+
+$ scp app.zip donzhu@dongjiu.southeastasia.cloudapp.azure.com:~/app.zip
+
+folder:
+$ scp -r user@your.server.example.com:/path/to/foo /home/user/Desktop/
+
+$ scp -r donzhu@dongjiu.southeastasia.cloudapp.azure.com:~/nginxconf nginxconf
+
+$ scp -r /c/Users/donzhu/Documents/programming/dongjiu_web/bin/Release/netcoreapp2.0/centos-x64/publish/ donzhu@dongjiu.southeastasia.cloudapp.azure.com:~/dongjiuweb
+
+*** sftp
+$ sftp cent@www.srv.world 
+sftp> 
+# show current directory on remote server
+sftp> pwd
+Remote working directory: /home/cent 
+# show current directory on local server
+sftp> !pwd
+/home/redhat 
+# show files in current directory on FTP server
+sftp> ls -l
+drwxrwxr-x    2 cent     cent            6 Jul 29 21:33 public_html
+-rw-rw-r--    1 cent     cent           10 Jul 28 22:53 test.txt
+# show files in current directory on local server
+sftp> !ls -l
+total 4
+-rw-rw-r-- 1 redhat redhat 10 Jul 29 21:31 test.txt
+# change directory
+sftp> cd public_html
+sftp> pwd
+Remote working directory: /home/cent/public_html 
+# upload a file to remote server
+sftp> put test.txt redhat.txt
+Uploading test.txt to /home/cent/redhat.txt
+test.txt 100% 10 0.0KB/s 00:00
+sftp> ls -l
+drwxrwxr-x    2 cent     cent            6 Jul 29 21:33 public_html
+-rw-rw-r--    1 cent     cent           10 Jul 29 21:39 redhat.txt
+-rw-rw-r--    1 cent     cent           10 Jul 28 22:53 test.txt
+# upload some files to remote server
+sftp> put *.txt
+Uploading test.txt to /home/cent/test.txt
+test.txt 100% 10 0.0KB/s 00:00
+Uploading test2.txt to /home/cent/test2.txt
+test2.txt 100% 0 0.0KB/s 00:00
+sftp> ls -l
+drwxrwxr-x    2 cent     cent            6 Jul 29 21:33 public_html
+-rw-rw-r--    1 cent     cent           10 Jul 29 21:39 redhat.txt
+-rw-rw-r--    1 cent     cent           10 Jul 29 21:45 test.txt
+-rw-rw-r--    1 cent     cent           10 Jul 29 21:46 test2.txt
+# download a file from remote server
+sftp> get test.txt
+Fetching /home/cent/test.txt to test.txt
+/home/cent/test.txt 100% 10 0.0KB/s 00:00 
+# download some files from remote server
+sftp> get *.txt
+Fetching /home/cent/redhat.txt to redhat.txt
+/home/cent/redhat.txt 100% 10 0.0KB/s 00:00
+Fetching /home/cent/test.txt to test.txt
+/home/cent/test.txt 100% 10 0.0KB/s 00:00
+Fetching /home/cent/test2.txt to test2.txt
+/home/cent/test2.txt 100% 10 0.0KB/s 00:00
+# create a directory on remote server
+sftp> mkdir testdir
+sftp> ls -l
+drwxrwxr-x    2 cent     cent            6 Jul 29 21:33 public_html
+-rw-rw-r--    1 cent     cent           10 Jul 29 21:39 redhat.txt
+-rw-rw-r--    1 cent     cent           10 Jul 29 21:45 test.txt
+-rw-rw-r--    1 cent     cent           10 Jul 29 21:46 test2.txt
+drwxrwxr-x    2 cent     cent            6 Jul 29 21:53 testdir
+# delete a directory on remote server
+sftp> rmdir testdir
+rmdir ok, `testdir' removed
+sftp> ls -l
+drwxrwxr-x    2 cent     cent            6 Jul 29 21:33 public_html
+-rw-rw-r--    1 cent     cent           10 Jul 29 21:39 redhat.txt
+-rw-rw-r--    1 cent     cent           10 Jul 29 21:45 test.txt
+-rw-rw-r--    1 cent     cent           10 Jul 29 21:46 test2.txt
+# delete a file on remote server
+sftp> rm test2.txt
+Removing /home/cent/test2.txt
+sftp> ls -l
+drwxrwxr-x    2 cent     cent            6 Jul 29 21:33 public_html
+-rw-rw-r--    1 cent     cent           10 Jul 29 21:39 redhat.txt
+-rw-rw-r--    1 cent     cent           10 Jul 29 21:45 test.txt
+# execute commands with "![command]"
+sftp> !cat /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+...
+...
+redhat:x:1001:1001::/home/redhat:/bin/bash
+# exit
+sftp> quit
+221 Goodbye.
+*** curl
+$ curl ftps://waws-prod-sn1-149.ftp.azurewebsites.windows.net -u dongjiuweb\\donzhu
+
+$ find mydir -type f -exec curl -u xxx:psw --ftp-create-dirs -T {} ftp://192.168.1.158/public/demon_test/{} \;
+** firewall
+https://wiki.centos.org/HowTos/Network/IPTables
+https://www.liquidweb.com/kb/how-to-start-and-enable-firewalld-on-centos-7/
+http://ask.xmodulo.com/open-port-firewall-centos-rhel.html
+
+** https
+http://nginx.org/en/docs/http/configuring_https_servers.html
+
+https://www.digitalocean.com/community/tutorials/how-to-configure-nginx-with-ssl-as-a-reverse-proxy-for-jenkins
+
+https://www.centos.bz/2011/12/nginx-ssl-https-support/
+
+https://stackoverflow.com/questions/9380403/what-does-ssl-ctx-use-privatekey-file-problems-getting-password-error-indica
+
+https://www.cyberciti.biz/faq/linux-unix-nginx-redirect-all-http-to-https/
+https://www.bjornjohansen.no/redirect-to-https-with-nginx
+https://serverfault.com/questions/186896/nginx-redirecting-to-localhost
+** tips
+$ sudo systemctl restart nginx
+$ sudo vi .../error.log
+
+refresh browser: ctrl + F5
+* ping
+** port
+https://serverfault.com/questions/309357/ping-a-specific-port
+nmap -p 80 example.com
+* software engineering
+** release life cycle
+https://en.wikipedia.org/wiki/Software_release_life_cycle
