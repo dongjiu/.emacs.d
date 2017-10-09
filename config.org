@@ -785,6 +785,37 @@ The following interactive function unzips the file at point.
         (message "No file at point."))))
 #+END_SRC
 
+The following function zips a directory.
+#+BEGIN_SRC emacs-lisp
+  (defun z-7z-zip-dir (dir zip-file-name)
+    "Zip DIR."
+    (let ((cmd))
+      (setq dir (expand-file-name dir))
+      (if (file-exists-p z-7z-exe)
+          (progn
+            (setq cmd (format "\"%s\" a -tzip \"%s\" \"%s\""
+                              (z-string-win-style-path z-7z-exe)
+                              (z-string-win-style-path zip-file-name)
+                              (z-string-win-style-path dir)))
+            (message cmd)
+            (async-shell-command cmd))
+        (message "7z.exe not found"))))
+#+END_SRC
+
+This interactive function zips a directory at point.
+#+BEGIN_SRC emacs-lisp
+  (defun z-7z-zip-dir-at-point ()
+    "Zip directory at point."
+    (interactive)
+    (let ((dir (if (string= major-mode "dired-mode")
+                   (dired-copy-filename-as-kill 0)
+                 (thing-at-point 'filename))))
+      (if (file-directory-p dir)
+          (z-7z-zip-dir dir (concat dir ".zip"))
+        (message "No file at point."))))
+#+END_SRC
+
+
 ** Visual studio
 #+BEGIN_SRC emacs-lisp
   (when (eq system-type 'windows-nt)

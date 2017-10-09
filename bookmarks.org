@@ -248,6 +248,9 @@ https://emacs.stackexchange.com/questions/34392/how-to-check-if-a-directory-exis
 file-directory-p
 * .NET
 ** ASP.NET MVC
+*** Bundle
+http://www.tutorialsteacher.com/mvc/scriptbundle-mvc
+
 *** Specify layout file:
 https://stackoverflow.com/questions/5161380/how-do-i-specify-different-layouts-in-the-asp-net-mvc-3-razor-viewstart-file
 *** Controller, Action
@@ -442,9 +445,8 @@ https://www.w3schools.com/css/css_rwd_viewport.asp
 * css
 ** centering
 https://www.w3.org/Style/Examples/007/center.en.html
-=======
-*** Bundle
-http://www.tutorialsteacher.com/mvc/scriptbundle-mvc
+https://stackoverflow.com/questions/7720730/how-to-align-the-absolute-position-to-center
+https://www.sitepoint.com/css-center-position-absolute-div/
 ** overflow: hidden moves text upwards
 https://stackoverflow.com/questions/20566710/overflowhidden-displayinline-block-moves-text-upwards
 
@@ -649,6 +651,7 @@ https://docs.microsoft.com/en-us/dotnet/core/tutorials/
 https://docs.microsoft.com/en-us/dotnet/core/deploying/index
 https://docs.microsoft.com/en-us/aspnet/core/publishing/?tabs=aspnetcore2x
 https://docs.microsoft.com/en-us/dotnet/core/deploying/deploy-with-cli
+$ dotnet publish -c Release -r centos-x64
 *** Kestrel
 https://docs.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel?tabs=aspnetcore2x
 *** bower
@@ -758,6 +761,11 @@ https://stackoverflow.com/questions/305035/how-to-use-ssh-to-run-a-shell-script-
 
 ssh root@MachineB 'bash -s' < local_script.sh
 
+** keep process alive when logging out ssh
+https://askubuntu.com/questions/8653/how-to-keep-processes-running-after-ending-ssh-session
+https://en.wikipedia.org/wiki/Nohup
+nohup
+tmux
 * CentOS
 ** centos version
 https://linuxconfig.org/how-to-check-centos-version
