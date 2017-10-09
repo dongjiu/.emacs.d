@@ -103,6 +103,8 @@ https://microsoft.sharepoint.com/teams/BingAds/_layouts/OneNote.aspx?id=%2Fteams
 GME permission:
 https://microsoft.sharepoint.com/teams/BingAds/_layouts/OneNote.aspx?id=%2Fteams%2FBingAds%2FShared%20Documents%2FTeams%2FUCM%2FWiki%2FUCM%20Wiki&wd=target%28Teams%2FR%2BD%2FHome.one%7C05E49AF3-7CD1-461A-A705-05B80044AE42%2FRequest%20GEM%20permisson%7CA875CE2B-8229-4E1F-9D82-338C102405CF%2F%29
 
+** DRI
+https://icm.ad.msft.net/imp/v3/oncall/current
 * Github
 https://github.com/dongjiu/.emacs.d
 https://github.com/dongjiu/tools4win
@@ -365,6 +367,26 @@ http://www.1keydata.com/datawarehousing/molap-rolap.html
 
 ** collation vs nvarchar
 https://stackoverflow.com/questions/9756769/what-is-the-point-of-collations-for-nvarchar-unicode-columns
+
+set collation
+https://docs.microsoft.com/en-us/sql/relational-databases/collations/set-or-change-the-database-collation
+
+ALTER DATABASE donzhu_db SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+
+ALTER DATABASE donzhu_db
+COLLATE SQL_Latin1_General_CP1_CS_AS;
+
+ALTER DATABASE CURRENT COLLATE SQL_Latin1_General_CP1_CS_AS;
+
+SQL_Latin1_General_CP1_CI_AS
+SQL_Latin1_General_CP1_CS_AS
+
+ALTER COLUMN Name VARCHAR(50)  
+COLLATE SQL_Latin1_General_CP1_CS_AS 
+
+SELECT Name 
+FROM MyTable
+WHERE Name = 'CASE' COLLATE SQL_Latin1_General_CP1_CI_AS -- Use case insensitive coll.
 
 ** sqlpackage.exe
 https://www.mssqltips.com/sqlservertip/4759/sql-server-database-schema-synchronization-via-sqlpackageexe-and-powershell/
@@ -716,6 +738,8 @@ Install-Package Microsoft.AspNetCore.DataProtection -Version 2.0.0
 https://en.wikipedia.org/wiki/PBKDF2
 http://www.c-sharpcorner.com/article/hashing-passwords-in-net-core-with-tips/
 
+** mvc
+https://docs.microsoft.com/en-us/aspnet/core/mvc/overview
 * C#
 ** expression bodied members (=> in member declarations)
 https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/expression-bodied-members
