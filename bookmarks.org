@@ -963,6 +963,9 @@ $ sudo systemctl restart nginx
 $ sudo vi .../error.log
 
 refresh browser: ctrl + F5
+** install git
+http://www.cnblogs.com/yesicoo/p/4873729.html
+$ sudo yum install git
 * ping
 ** port
 https://serverfault.com/questions/309357/ping-a-specific-port
@@ -978,3 +981,28 @@ http://www.amazon.com/
 https://leetcode.com/problemset/algorithms/
 http://www.95598.cn/person/as/index.shtml
 [[https://wx.qq.com/][weixin]]
+* git
+** gitignore syntax
+https://stackoverflow.com/questions/8527597/how-do-i-ignore-files-in-a-directory-in-git
+** push denied
+http://blog.sina.com.cn/s/blog_5dc29fcc01011hvr.html
+http://www.cnblogs.com/abeen/archive/2010/06/17/1759496.html
+
+.gitconfig
+
+[receive]
+    denyCurrentBranch = ignore
+
+** install latest git
+https://stackoverflow.com/questions/21820715/how-to-install-latest-version-of-git-on-centos-6-x-7-x
+$ yum install http://opensource.wandisco.com/centos/6/git/x86_64/wandisco-git-release-6-1.noarch.rpm
+$ yum install git
+
+** bare
+https://stackoverflow.com/questions/7632454/how-do-you-use-git-bare-init-repository
+
+https://stackoverflow.com/questions/8883081/git-how-to-change-a-bare-to-a-shared-repo
+
+https://stackoverflow.com/questions/2199897/how-to-convert-a-normal-git-repository-to-a-bare-one
+
+https://stackoverflow.com/questions/1764380/push-to-a-non-bare-git-repository
