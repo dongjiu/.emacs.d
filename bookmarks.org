@@ -344,6 +344,10 @@ http://www.developer.com/net/asp/article.php/3761486/Working-with-Binary-Large-O
 [[https://msdn.microsoft.com/en-us/library/a1904w6t(VS.80).aspx]]
 *** sql server
 https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/ado-net-code-examples#sqlclient
+*** nvarchar ado.net parameter
+https://stackoverflow.com/questions/21087950/how-to-create-nvarcharmax-sqlparameter-in-c
+*** like ado.net parameter
+https://stackoverflow.com/questions/2589283/how-to-get-like-clause-to-work-in-ado-net-and-sql-server
 ** Kimball vs Inmon
 http://tdan.com/data-warehouse-design-inmon-versus-kimball/20300
 
@@ -496,6 +500,19 @@ function getRemote() {
         async: false
     }).responseText;
 }
+*** each: break loop
+https://stackoverflow.com/questions/1784780/how-to-break-out-of-jquery-each-loop
+return false;
+** jquery ui
+*** Dialog
+http://salman-w.blogspot.jp/2013/05/jquery-ui-dialog-examples.html
+
+api
+https://api.jqueryui.com/dialog/
+
+close
+https://stackoverflow.com/questions/2933826/how-to-close-jquery-dialog-within-the-dialog
+
 ** detecting keys
 https://stackoverflow.com/questions/37557990/detecting-combination-keypresses-control-alt-shift
 *** each
@@ -651,7 +668,9 @@ https://docs.microsoft.com/en-us/dotnet/core/tutorials/
 https://docs.microsoft.com/en-us/dotnet/core/deploying/index
 https://docs.microsoft.com/en-us/aspnet/core/publishing/?tabs=aspnetcore2x
 https://docs.microsoft.com/en-us/dotnet/core/deploying/deploy-with-cli
+
 $ dotnet publish -c Release -r centos-x64
+
 *** Kestrel
 https://docs.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel?tabs=aspnetcore2x
 *** bower
