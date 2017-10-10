@@ -446,6 +446,12 @@ https://stackoverflow.com/questions/5437171/with-javascript-and-ajax-do-i-still-
 http://www.w3school.com.cn/tags/tag_dl.asp
 ** viewport
 https://www.w3schools.com/css/css_rwd_viewport.asp
+** iframe show part of a page
+https://stackoverflow.com/questions/3272071/iframe-to-only-show-a-certain-part-of-the-page
+http://www.dimpost.com/2012/12/iframe-how-to-display-specific-part-of.html
+
+https://stackoverflow.com/questions/8179703/how-to-create-an-iframe-using-jquery-and-display-on-page
+
 * css
 ** centering
 https://www.w3.org/Style/Examples/007/center.en.html
@@ -528,6 +534,8 @@ http://www.czeskis.com/random/openssl-encrypt-file.html
 
 ** message "writing RSA key"
 https://stackoverflow.com/questions/16608154/openssl-how-to-disable-writing-rsa-key-message-in-console
+** expired certificate
+https://stackoverflow.com/questions/5810993/expired-ssl-certificate-and-encryption
 * common knowledge
 ** time zone
 *** abbreviations
@@ -785,6 +793,17 @@ https://askubuntu.com/questions/8653/how-to-keep-processes-running-after-ending-
 https://en.wikipedia.org/wiki/Nohup
 nohup
 tmux
+** auto deploy web app
+#+BEGIN_SRC bash
+#!/usr/bin/env sh
+kill `ps | perl -ne 'print $1 if /(\d+).*dongjiu_web/'` &&
+rm -r publish &&
+unzip publish.zip &&
+cd publish &&
+chmod +x dongjiu_web &&
+nohup ./dongjiu_web &
+#+END_SRC
+
 * CentOS
 ** centos version
 https://linuxconfig.org/how-to-check-centos-version
@@ -824,7 +843,7 @@ https://stackoverflow.com/questions/29789364/upload-files-to-centos
 $ scp ./test.txt cent@www.srv.world:~/ 
 $ scp cent@www.srv.world:/home/cent/test.txt ./test.txt
 
-$ scp app.zip donzhu@dongjiu.southeastasia.cloudapp.azure.com:~/app.zip
+$ scp publish.zip donzhu@dongjiu.southeastasia.cloudapp.azure.com:~/publish.zip
 
 folder:
 $ scp -r user@your.server.example.com:/path/to/foo /home/user/Desktop/
@@ -951,3 +970,11 @@ nmap -p 80 example.com
 * software engineering
 ** release life cycle
 https://en.wikipedia.org/wiki/Software_release_life_cycle
+* others
+http://www.dytt8.net/
+http://ishare.iask.sina.com.cn/
+https://www.amazon.cn/
+http://www.amazon.com/
+https://leetcode.com/problemset/algorithms/
+http://www.95598.cn/person/as/index.shtml
+[[https://wx.qq.com/][weixin]]

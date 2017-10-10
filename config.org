@@ -310,6 +310,7 @@ Use web-mode to edit html files.
   (global-set-key (kbd "C-; r e") 'z-reminder-stop)
   (global-set-key (kbd "C-; r r") 'z-reminder-report)
 #+END_SRC
+
 * Key bindings
 ** Change default key bindings
 #+BEGIN_SRC emacs-lisp

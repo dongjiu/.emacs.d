@@ -81,6 +81,7 @@ sub pull_file {
 sub delete_file {
   my ($dbh, $file_id) = @_;
 
+  remove_all_file_tag($dbh, $file_id);
   delete_file_chunks($dbh, $file_id);
 
   my $sth = $dbh->prepare("delete from [file] where file_id = ?");
@@ -184,6 +185,13 @@ sub remove_file_tag {
   my $sth = $dbh->prepare("delete from file_tag where file_id = ? and tag_code = ?");
   $sth->bind_param(1, $file_id);
   $sth->bind_param(2, $tag_code);
+  $sth->execute;
+}
+
+sub remove_all_file_tag {
+  my ($dbh, $file_id) = @_;
+  my $sth = $dbh->prepare("delete from file_tag where file_id = ?");
+  $sth->bind_param(1, $file_id);
   $sth->execute;
 }
 
