@@ -33,6 +33,13 @@ http://microsoft.ylytbuy.com/cn/myorder.aspx
 http://stcakickoff/Registration
 
 * UCM
+** MS Stackoverflow
+https://stackoverflow.microsoft.com/
+** CloudBuild
+https://www.1eswiki.com/wiki/Main_Page
+
+https://www.1eswiki.com/wiki/CloudBuild_VSTS_Task#Agent_Based_Task_2
+
 ** VSTS
 feature board
 https://msasg.visualstudio.com/Bing_Ads/UCM%20Team/_backlogs/board/Features 
@@ -42,6 +49,18 @@ https://ucmsz.visualstudio.com/MSL/_backlogs/board/Backlog%20items
 
 Business analytics branches:
 https://msasg.visualstudio.com/Bing_Ads/UCM%20Team/_git/UCM-BusinessAnalytics/branches
+
+*** drop.exe
+The VSTS Drop service is one of the Artifact Services being added to
+VSTS to support development workflows. Its main intent is to store,
+manage and make available build outputs. Typically this is output from
+CloudBuild but that is not a requirement. In the end a drop's content
+can come from any build system (Jenkins/Hudson, Mac, on-prem TFS Team
+Build, etc).
+
+https://www.1eswiki.com/wiki/VSTS_Drop
+
+https://1eswiki.com/wiki/Using_VSTS_Drop_in_VSTS_Build
 
 ** SharePoint
 https://microsoft.sharepoint.com/teams/BingAds/Shared%20Documents/Forms/AllItems.aspx?id=%2Fteams%2FBingAds%2FShared%20Documents%2FTeams%2FUCM
@@ -138,6 +157,9 @@ https://www.dotnetperls.com/7-zip-examples
 ** backtick '`'
 https://basarat.gitbooks.io/typescript/docs/template-strings.html
 
+** private in constructor parameter declaration
+https://kendaleiv.com/typescript-constructor-assignment-public-and-private-keywords/
+https://www.stevefenton.co.uk/2013/04/stop-manually-assigning-typescript-constructor-parameters/
 * emacs
 ** os bits
 https://emacs.stackexchange.com/questions/11052/how-to-determine-operating-system-bits-32-vs-64-bit-in-elisp
@@ -219,6 +241,8 @@ https://sourceforge.net/projects/msys2/
 
 ** msys2
 https://sourceforge.net/p/emacsbinw64/wiki/Build%20guideline%20for%20MSYS2-MinGW-w64%20system/
+*** ssh
+https://superuser.com/questions/759407/mingw-msys-ssh-error-could-not-create-directory-home-username-ssh
 ** sytanx highlighting source code to html
 http://ergoemacs.org/emacs/elisp_htmlize.html
 https://www.emacswiki.org/emacs/Htmlize
@@ -292,6 +316,29 @@ https://stackoverflow.com/questions/2883576/how-do-you-convert-epoch-time-in-c
 ** download file
 [[https://msdn.microsoft.com/en-us/library/12s31dhy(v=vs.110).aspx]]
 https://stackoverflow.com/questions/8897458/asp-net-download-file-to-client-browser
+** time
+*** time zone
+https://stackoverflow.com/questions/6239976/how-to-set-a-time-zone-or-a-kind-of-a-datetime-value
+https://stackoverflow.com/questions/7908343/list-of-timezone-ids-for-use-with-findtimezonebyid-in-c/7908482#7908482
+https://stackoverflow.com/questions/9869051/how-to-convert-datetime-in-specific-timezone
+https://www.dotnetperls.com/timezone
+https://stackoverflow.com/questions/5615538/parse-a-date-string-into-a-certain-timezone-supporting-daylight-saving-time
+
+**** TimeZoneNotFoundException
+https://stackoverflow.com/questions/41566395/timezoneinfo-in-net-core-when-hosting-on-unix-nginx
+[[https://msdn.microsoft.com/en-us/library/system.timezonenotfoundexception(v=vs.110).aspx]]
+*** parse
+https://stackoverflow.com/questions/13270429/converting-string-to-datetime-with-offset
+
+https://stackoverflow.com/questions/5366285/parse-string-to-datetime-in-c-sharp
+DateTime dt = DateTime.ParseExact(s, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
+
+https://stackoverflow.com/questions/6375924/when-using-datetime-parseexact-how-do-you-specify-what-the-timezone-is-of-the-g
+DateTime.ParseExact(timeStamp, "yyyyMMdd-HH:mm:ss.fff", System.Globalization.CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal);
+
+*** ToString
+https://stackoverflow.com/questions/18874102/datetime-tostringmm-dd-yyyy-hhmmss-fff-resulted-in-something-like-09-14-2
+[[https://msdn.microsoft.com/en-us/library/zdtaw1bw(v=vs.110).aspx]]
 * SQL Server
 ** connection string
 server vs data source
@@ -407,6 +454,32 @@ https://blogs.msdn.microsoft.com/azuresqldbsupport/2017/01/31/using-sqlpackage-t
 [[https://msdn.microsoft.com/en-us/library/hh550080(v=vs.103).aspx
 
 https://dba.stackexchange.com/questions/53033/sqlpackage-exe-ignoring-blockonpossibledataloss]]
+** query free space
+https://www.mssqltips.com/sqlservertip/1805/different-ways-to-determine-free-space-for-sql-server-databases-and-database-files/
+https://docs.microsoft.com/en-us/sql/t-sql/database-console-commands/dbcc-shrinkfile-transact-sql
+https://www.brentozar.com/blitz/transaction-log-larger-than-data-file/
+https://docs.microsoft.com/en-us/sql/relational-databases/system-stored-procedures/sp-helpfile-transact-sql
+
+https://stackoverflow.com/questions/11325556/how-do-i-find-the-maximum-database-space-and-the-used-database-space-in-sql-azur
+
+exec sp_spaceused
+
+exec sp_helpfile;
+
+SELECT name ,size/128.0 - CAST(FILEPROPERTY(name, 'SpaceUsed') AS int)/128.0 AS AvailableSpaceInMB
+FROM sys.database_files;
+
+
+SELECT SUM(unallocated_extent_page_count) AS [free pages],
+(SUM(unallocated_extent_page_count)*1.0/128) AS [free space in MB]
+FROM sys.dm_db_file_space_usage;
+
+
+SELECT SUM(reserved_page_count)*8.0/1024
+FROM sys.dm_db_partition_stats; 
+** rank
+https://docs.microsoft.com/en-us/sql/t-sql/functions/rank-transact-sql
+
 * Analysis Services
 ** tools
 *** C# process cube:
@@ -426,6 +499,19 @@ https://bpmsbi.wordpress.com/2009/12/10/7-ways-to-process-analysis-services/
 
 Command line tool *ascmd*
 [[https://msdn.microsoft.com/en-us/library/ms365187.aspx?ranMID=24542&ranEAID=TnL5HPStwNw&ranSiteID=TnL5HPStwNw-0r2NmQ83hbeueRZwkIYQ2A&tduid=(26d69e2b0588c7395d50432061afeaab)(256380)(2459594)(TnL5HPStwNw-0r2NmQ83hbeueRZwkIYQ2A)()]]
+** deploy tabular model
+http://mund-consulting.com/Blog/ssas-tabular-model-deployment/
+https://docs.microsoft.com/en-us/sql/analysis-services/multidimensional-models/deploy-model-solutions-with-the-deployment-utility
+
+https://redphoenix.me/2013/01/12/using-powershell-to-deploy-cubes/comment-page-1/
+
+https://msdn.microsoft.com/en-us/library/ms174887.aspx
+
+https://dataonwheels.wordpress.com/2011/06/01/simple-batch-script-to-generate-xmla-and-deploy-ssas-db/
+
+** process
+http://byobi.com/2016/11/processing-an-azure-as-database/
+
 * Reveal JS
 https://github.com/hakimel/reveal.js
 * html
@@ -452,8 +538,17 @@ http://www.dimpost.com/2012/12/iframe-how-to-display-specific-part-of.html
 
 https://stackoverflow.com/questions/8179703/how-to-create-an-iframe-using-jquery-and-display-on-page
 
+** favicon
+https://en.wikipedia.org/wiki/Favicon
+https://stackoverflow.com/questions/1321878/how-to-prevent-favicon-ico-requests
+https://stackoverflow.com/questions/9963584/how-to-add-favicon-ico-in-asp-net-site
+
+** self closing div
+https://stackoverflow.com/questions/7971716/is-it-ok-to-use-a-self-closing-div-tag
+
 * css
 ** centering
+https://www.smashingmagazine.com/2013/08/absolute-horizontal-vertical-centering-css/
 https://www.w3.org/Style/Examples/007/center.en.html
 https://stackoverflow.com/questions/7720730/how-to-align-the-absolute-position-to-center
 https://www.sitepoint.com/css-center-position-absolute-div/
@@ -486,6 +581,13 @@ https://stackoverflow.com/questions/5533636/add-horizontal-scrollbar-to-html-tab
 微软雅黑
 http://www.cnblogs.com/mm2015/p/5919073.html
 
+** reset opacity of child elements
+https://stackoverflow.com/questions/13508877/resetting-the-opacity-of-a-child-element-maple-browser-samsung-tv-app
+** set background alpha (in rgba)
+https://stackoverflow.com/questions/30794997/change-only-alpha-channel-in-background-color
+** custom modal popup
+https://www.w3schools.com/howto/howto_css_modals.asp
+http://inspirationalpixels.com/tutorials/custom-popup-modalz``
 * life
 ** credit card
 score
@@ -509,6 +611,13 @@ function getRemote() {
 *** each: break loop
 https://stackoverflow.com/questions/1784780/how-to-break-out-of-jquery-each-loop
 return false;
+*** event on dynamic added elements
+https://stackoverflow.com/questions/1359018/in-jquery-how-to-attach-events-to-dynamic-html-elements
+
+$('body').on('click', 'a.myclass', function() {
+    // do something
+});
+
 ** jquery ui
 *** Dialog
 http://salman-w.blogspot.jp/2013/05/jquery-ui-dialog-examples.html
@@ -526,6 +635,28 @@ http://www.w3school.com.cn/jquery/traversing_each.asp
 *** hide, show
 https://stackoverflow.com/questions/239207/how-does-jquery-implement-hide-and-show
 display: none
+** disable console.log
+https://stackoverflow.com/questions/1215392/how-to-quickly-and-conveniently-disable-all-console-log-statements-in-my-code
+console.log = function () { };
+
+** url
+https://stackoverflow.com/questions/406192/get-current-url-in-javascript
+
+var pathname = window.location.pathname; // Returns path only
+var url      = window.location.href;     // Returns full URL
+** encode url
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
+encodeURIComponent()
+
+** query string
+https://stackoverflow.com/questions/2090551/parse-query-string-in-javascript
+
+** refresh page
+https://stackoverflow.com/questions/3715047/how-to-reload-a-page-using-javascript
+
+window.location.reload(false);
+window.location.reload(true); 
+
 * openssl
 ** encrypt/decrypt files
 https://stackoverflow.com/questions/16056135/how-to-use-openssl-to-encrypt-decrypt-files
@@ -542,6 +673,14 @@ https://stackoverflow.com/questions/5810993/expired-ssl-certificate-and-encrypti
 https://en.wikipedia.org/wiki/List_of_time_zone_abbreviations
 *** ISO 8601
 https://en.wikipedia.org/wiki/ISO_8601
+*** PST
+https://www.timeanddate.com/time/zones/pst
+UTC-8
+Pacific Standard Time
+Pacific Time
+Standard Time
+
+PDT Pacific Daylight Time
 * perl
 ** delete file
 unlink
@@ -572,6 +711,8 @@ https://stackoverflow.com/questions/15064446/convert-unix-timestamp-to-a-readabl
 ** blob
 https://www.experts-exchange.com/questions/26218018/Perl-Win32-ODBC-or-DBI-insert-blob-into-MSSQL-2005.html
 https://stackoverflow.com/questions/3574812/insert-blob-into-ms-sql-db-using-perl-script
+** regex \G
+https://stackoverflow.com/questions/21971701/when-is-g-useful-application-in-a-regex
 * GPG
 ** example
 http://www.spywarewarrior.com/uiuc/gpg/gpg-com-4.htm
@@ -605,6 +746,11 @@ https://www.muzisoft.com/root/93498.html
 ** url escape
 https://www.werockyourweb.com/url-escape-characters/
 * power bi
+https://powerbi.microsoft.com/en-us/guided-learning/
+
+** Export to desktip pbix file
+https://powerbi.microsoft.com/en-us/documentation/powerbi-service-export-to-pbix/
+
 ** azure analysis services
 *** The server parameter must be a valid hostname or HTTP URL.
 Make sure you have the latest Power BI Desktop installed.
@@ -627,6 +773,8 @@ Sign in and choose an Azure Active Directory account (Organizational
 account) which has permissions to your model. Then click Connect.
 
 https://stackoverflow.com/questions/41583929/i-am-getting-an-error-while-connecting-to-azure-ssas-server-in-power-bi-through
+** change connection info
+View -> Advanced Editor
 * visual studio
 ** vsix
 https://stackoverflow.com/questions/25906944/visual-studio-does-not-install-vsix-files
@@ -652,6 +800,8 @@ https://stackoverflow.com/questions/31586439/missing-azure-components-in-visual-
 ** ping
 https://superuser.com/questions/611216/cant-ping-8-8-8-8-from-virtual-machine-in-azure
 ** centos
+ssh donzhu@dongjiu.southeastasia.cloudapp.azure.com
+
 http://52.187.112.52/
 http://dongjiu.southeastasia.cloudapp.azure.com
 https://dongjiu.southeastasia.cloudapp.azure.com
@@ -691,8 +841,10 @@ http://www.tutorialsteacher.com/core/aspnet-core-application-project-structure
 https://docs.microsoft.com/en-us/aspnet/core/hosting/directory-structure
 ** serving static files
 http://www.tutorialsteacher.com/core/aspnet-core-static-file
+https://docs.microsoft.com/en-us/aspnet/core/fundamentals/static-files
 ** middleware
 http://www.tutorialsteacher.com/core/aspnet-core-middleware
+https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware?tabs=aspnetcore2x
 ** dependency injection
 http://www.tutorialsteacher.com/core/dependency-injection-in-aspnet-core
 ** environment
@@ -778,6 +930,20 @@ http://www.c-sharpcorner.com/article/hashing-passwords-in-net-core-with-tips/
 
 ** mvc
 https://docs.microsoft.com/en-us/aspnet/core/mvc/overview
+** Cookie HttpOnly
+https://www.owasp.org/index.php/HttpOnly
+** middleware
+https://docs.microsoft.com/en-us/aspnet/core/fundamentals/middleware?tabs=aspnetcore2x
+
+** asp.net core
+*** route
+https://stormpath.com/blog/routing-in-asp-net-core
+*** session
+https://docs.microsoft.com/en-us/aspnet/core/fundamentals/app-state?tabs=aspnetcore2x
+https://andrewlock.net/an-introduction-to-session-storage-in-asp-net-core/
+*** middleware
+https://msdn.microsoft.com/en-us/magazine/mt707525.aspx
+
 * C#
 ** expression bodied members (=> in member declarations)
 https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/expression-bodied-members
@@ -804,6 +970,15 @@ chmod +x dongjiu_web &&
 nohup ./dongjiu_web &
 #+END_SRC
 
+** nohup file
+https://stackoverflow.com/questions/4549489/can-i-change-the-name-of-nohup-out
+
+$ nohup some_command &> nohup2.out&
+and voila.
+
+Older syntax for Bash version < 4:
+$ nohup some_command > nohup2.out 2>&1&
+
 * CentOS
 ** centos version
 https://linuxconfig.org/how-to-check-centos-version
@@ -826,6 +1001,8 @@ https://www.digitalocean.com/community/tutorials/how-to-configure-logging-and-lo
 https://stackoverflow.com/questions/25235453/nginx-proxy-server-localhost-permission-denied
 $ sudo /usr/sbin/setsebool httpd_can_network_connect true 
 
+*** proxy
+https://www.nginx.com/resources/admin-guide/reverse-proxy/
 ** ftp
 https://stackoverflow.com/questions/16727217/how-can-i-access-ftp-to-centos
 
@@ -843,12 +1020,14 @@ https://stackoverflow.com/questions/29789364/upload-files-to-centos
 $ scp ./test.txt cent@www.srv.world:~/ 
 $ scp cent@www.srv.world:/home/cent/test.txt ./test.txt
 
-$ scp publish.zip donzhu@dongjiu.southeastasia.cloudapp.azure.com:~/publish.zip
+$ scp ~/publish.zip donzhu@dongjiu.southeastasia.cloudapp.azure.com:~/publish.zip
+$ scp /c/Users/donzhu/repos/dongjiu_webapp/dongjiu_web/bin/Release/netcoreapp2.0/centos-x64/publish.zip donzhu@dongjiu.southeastasia.cloudapp.azure.com:~/publish.zip
 
 folder:
 $ scp -r user@your.server.example.com:/path/to/foo /home/user/Desktop/
 
 $ scp -r donzhu@dongjiu.southeastasia.cloudapp.azure.com:~/nginxconf nginxconf
+$ scp -r donzhu@dongjiu.southeastasia.cloudapp.azure.com:/etc/nginx/nginx.conf nginx.conf
 
 $ scp -r /c/Users/donzhu/Documents/programming/dongjiu_web/bin/Release/netcoreapp2.0/centos-x64/publish/ donzhu@dongjiu.southeastasia.cloudapp.azure.com:~/dongjiuweb
 
@@ -963,6 +1142,8 @@ $ sudo systemctl restart nginx
 $ sudo vi .../error.log
 
 refresh browser: ctrl + F5
+** show ssd/hdd
+https://unix.stackexchange.com/questions/65595/how-to-know-if-a-disk-is-an-ssd-or-an-hdd
 * ping
 ** port
 https://serverfault.com/questions/309357/ping-a-specific-port
@@ -970,6 +1151,12 @@ nmap -p 80 example.com
 * software engineering
 ** release life cycle
 https://en.wikipedia.org/wiki/Software_release_life_cycle
+* game theory
+Algorithmic Game Theory, Lecture 1 (Introduction)
+https://www.youtube.com/watch?v=TM_QFmQU_VA
+* idioms
+** The devil is in the detail
+https://en.wikipedia.org/wiki/The_devil_is_in_the_detail
 * others
 http://www.dytt8.net/
 http://ishare.iask.sina.com.cn/
@@ -978,3 +1165,14 @@ http://www.amazon.com/
 https://leetcode.com/problemset/algorithms/
 http://www.95598.cn/person/as/index.shtml
 [[https://wx.qq.com/][weixin]]
+
+** Download youtube videos
+https://clipgrab.org/faqs/howto-download-youtube-video
+Use ClipGrab
+* math
+** analysis
+https://www.youtube.com/playlist?list=PLgH1cBogcOIqvorsb4vq6ErlU4fNZZmu0
+
+* english
+** coursera
+https://www.coursera.org/browse/language-learning/learning-english?languages=en
