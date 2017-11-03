@@ -70,6 +70,11 @@
   (interactive "sWord: ")
   (browse-url (concat "http://cn.bing.com/dict/search?q=" (z-url-escape word))))
 
+(defun z-cambridge-dict (&optional word)
+  "Search WORD in cambridge dict."
+  (interactive "sWord: ")
+  (browse-url (concat "https://dictionary.cambridge.org/dictionary/english/" (z-url-escape word))))
+
 (defun z-bing-search-text (text)
   "Search TEXT in bing search."
   (browse-url (concat "https://www.bing.com/search?q=" (z-url-escape text))))

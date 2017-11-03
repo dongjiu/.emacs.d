@@ -19,9 +19,22 @@ http://www.linguee.fr/francais-anglais/search?source=auto&query=
 ** family day
 http://suzhoufamilyday/home.html
 ** hr
+*** hrweb
+http://hrweb/Pages/default.aspx
+*** onboarding
+https://microsoft.sharepoint.com/teams/Onboarding_Portal/Onboarding_Package/SitePages/Home.aspx
 *** payslip
 https://portal0012.globalview.adp.com/gvolution/home/msft
 
+收入证明：
+http://hrweb/INFO/HRwebLetterVerify/Pages/verifyemp.aspx
+*** credit card
+https://microsoft.sharepoint.com/teams/ProcureWeb/Pages/CorporateCardApplicationProcess.aspx
+[[https://microsoft.sharepoint.com/teams/Purchasing/Travel/CorporateCard/GlobalCorporateCard/GlobalCorporateCardApplications/Documents/CMB%20Personal%20Application%20Form%20(1107).pdf]]
+
+company phone no
+https://www.microsoft.com/zh-cn/ard/AboutUs/contactus.asxp
+https://www.microsoft.com/zh-cn/ard/AboutUs/
 ** ms keys
 https://mskeys.microsoft.com/
 ** visual studio subscription
@@ -33,6 +46,8 @@ http://microsoft.ylytbuy.com/cn/myorder.aspx
 http://stcakickoff/Registration
 
 * UCM
+** app link
+https://ucm.bingads.microsoft.com/
 ** MS Stackoverflow
 https://stackoverflow.microsoft.com/
 ** CloudBuild
@@ -317,13 +332,15 @@ https://stackoverflow.com/questions/2883576/how-do-you-convert-epoch-time-in-c
 [[https://msdn.microsoft.com/en-us/library/12s31dhy(v=vs.110).aspx]]
 https://stackoverflow.com/questions/8897458/asp-net-download-file-to-client-browser
 ** time
+*** ticks
+[[https://msdn.microsoft.com/en-us/library/system.datetime.ticks(v=vs.110).aspx]]
 *** time zone
 https://stackoverflow.com/questions/6239976/how-to-set-a-time-zone-or-a-kind-of-a-datetime-value
 https://stackoverflow.com/questions/7908343/list-of-timezone-ids-for-use-with-findtimezonebyid-in-c/7908482#7908482
 https://stackoverflow.com/questions/9869051/how-to-convert-datetime-in-specific-timezone
 https://www.dotnetperls.com/timezone
 https://stackoverflow.com/questions/5615538/parse-a-date-string-into-a-certain-timezone-supporting-daylight-saving-time
-
+https://msdn.microsoft.com/en-us/library/ms973825.aspx
 **** TimeZoneNotFoundException
 https://stackoverflow.com/questions/41566395/timezoneinfo-in-net-core-when-hosting-on-unix-nginx
 [[https://msdn.microsoft.com/en-us/library/system.timezonenotfoundexception(v=vs.110).aspx]]
@@ -479,6 +496,25 @@ SELECT SUM(reserved_page_count)*8.0/1024
 FROM sys.dm_db_partition_stats; 
 ** rank
 https://docs.microsoft.com/en-us/sql/t-sql/functions/rank-transact-sql
+** auto increment id
+https://stackoverflow.com/questions/10991894/auto-increment-primary-key-in-sql-server-management-studio-2012
+
+ALTER TABLE [yourTable] DROP COLUMN ID 
+ALTER TABLE [yourTable] ADD ID INT IDENTITY(1,1)
+
+CREATE TABLE (
+  ID_column INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+  ...
+);
+
+*** meta data
+SELECT OBJECT_NAME(id), name, IsIdentity=COLUMNPROPERTY(id, name, 'IsIdentity') 
+FROM syscolumns
+WHERE OBJECT_NAME(id) = 'req_log'
+
+select columnproperty(object_id(table_name), column_name, 'IsIdentity'), *
+from information_schema.columns
+where table_name = 'req_log'
 
 * Analysis Services
 ** tools
@@ -594,6 +630,8 @@ score
 https://club.bankcomm.com/customer/index.htm
 >>>>>>> Stashed changes
 
+** time zone converter
+http://www.thetimezoneconverter.com/
 * javascript
 ** jquery
 *** custom events
@@ -656,6 +694,9 @@ https://stackoverflow.com/questions/3715047/how-to-reload-a-page-using-javascrip
 
 window.location.reload(false);
 window.location.reload(true); 
+
+** confirm popup
+https://www.w3schools.com/js/js_popup.asp
 
 * openssl
 ** encrypt/decrypt files
@@ -1178,9 +1219,7 @@ Use ClipGrab
 https://www.youtube.com/playlist?list=PLgH1cBogcOIqvorsb4vq6ErlU4fNZZmu0
 
 * english
-** coursera
-https://www.coursera.org/browse/language-learning/learning-english?languages=en
-=======
+https://dictionary.cambridge.org/dictionary/english/
 * git
 ** gitignore syntax
 https://stackoverflow.com/questions/8527597/how-do-i-ignore-files-in-a-directory-in-git
