@@ -44,7 +44,8 @@ https://my.visualstudio.com/subscriptions
 http://microsoft.ylytbuy.com/cn/myorder.aspx
 ** kick off
 http://stcakickoff/Registration
-
+** expense
+http://msexpense2
 * UCM
 ** app link
 https://ucm.bingads.microsoft.com/
@@ -139,6 +140,13 @@ https://microsoft.sharepoint.com/teams/BingAds/_layouts/OneNote.aspx?id=%2Fteams
 
 ** DRI
 https://icm.ad.msft.net/imp/v3/oncall/current
+** Business analytics
+*** Release definition
+https://msasg.visualstudio.com/Bing_Ads/_release?definitionId=185&_a=releases
+
+** A+P note
+https://microsoft-my.sharepoint.com/:o:/r/personal/zhama_microsoft_com1/_layouts/15/WopiFrame.aspx?sourcedoc=%7B6fec202a-99af-4a28-b80e-2ca9718558aa%7D&action=default&slrid=140c2b9e-7071-0000-5fbb-4c0c670a3716
+
 * Github
 https://github.com/dongjiu/.emacs.d
 https://github.com/dongjiu/tools4win
@@ -356,6 +364,15 @@ DateTime.ParseExact(timeStamp, "yyyyMMdd-HH:mm:ss.fff", System.Globalization.Cul
 *** ToString
 https://stackoverflow.com/questions/18874102/datetime-tostringmm-dd-yyyy-hhmmss-fff-resulted-in-something-like-09-14-2
 [[https://msdn.microsoft.com/en-us/library/zdtaw1bw(v=vs.110).aspx]]
+** msbuild
+*** reuse properties
+https://stackoverflow.com/questions/9400744/reusable-propertygroup-elements-in-a-csproj-file
+
+*** condition
+https://msdn.microsoft.com/en-us/library/7szfhaft.aspx
+
+*** replace file text
+https://stackoverflow.com/questions/7837644/how-to-replace-string-in-file-using-msbuild
 * SQL Server
 ** connection string
 server vs data source
@@ -412,6 +429,37 @@ https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/ado-net-code-examp
 https://stackoverflow.com/questions/21087950/how-to-create-nvarcharmax-sqlparameter-in-c
 *** like ado.net parameter
 https://stackoverflow.com/questions/2589283/how-to-get-like-clause-to-work-in-ado-net-and-sql-server
+*** user defined type
+https://docs.microsoft.com/en-us/sql/relational-databases/clr-integration-database-objects-user-defined-types/accessing-user-defined-types-in-ado-net
+
+https://stackoverflow.com/questions/25870904/create-a-user-defined-table-type-in-c-sharp-to-use-in-sql-server-stored-procedur
+
+Simplest option is to create a DataTable in C# code and pass it as a
+parameter to your procedure. Assuming that you have created a User
+Defined Table Type as:
+
+CREATE TYPE [dbo].[userdefinedtabletype] AS TABLE(
+    [ID] [varchar](255) NULL,
+    [Name] [varchar](255) NULL
+)
+
+then in your C# code you would do:
+
+DataTable dt = new DataTable();
+dt.Columns.Add("ID", typeof (string));
+dt.Columns.Add("Name", typeof (string));
+//populate your Datatable
+
+SqlParameter param = new SqlParameter("@userdefinedtabletypeparameter", SqlDbType.Structured)
+{
+    TypeName = "dbo.userdefinedtabletype",
+    Value = dt
+};
+sqlComm.Parameters.Add(param);
+
+Remember to specify SqlDbType.Structured as the type of parameter and
+specify the name you have used in creating your UDT.
+
 ** Kimball vs Inmon
 http://tdan.com/data-warehouse-design-inmon-versus-kimball/20300
 
@@ -516,6 +564,21 @@ select columnproperty(object_id(table_name), column_name, 'IsIdentity'), *
 from information_schema.columns
 where table_name = 'req_log'
 
+** Lock request time out period exceeded
+https://stackoverflow.com/questions/8258710/how-to-solve-sql-server-error-1222-i-e-unlock-a-sql-server-table
+** t-sql transaction
+https://docs.microsoft.com/en-us/sql/t-sql/language-elements/transactions-transact-sql
+
+** RAISEERROR
+https://docs.microsoft.com/en-us/sql/t-sql/language-elements/raiserror-transact-sql
+
+
+New applications should use throw instead:
+https://docs.microsoft.com/en-us/sql/t-sql/language-elements/throw-transact-sql
+
+** Table-valued parameters
+[[https://technet.microsoft.com/en-us/library/bb510489(v=sql.110).aspx]]
+
 * Analysis Services
 ** tools
 *** C# process cube:
@@ -545,8 +608,15 @@ https://msdn.microsoft.com/en-us/library/ms174887.aspx
 
 https://dataonwheels.wordpress.com/2011/06/01/simple-batch-script-to-generate-xmla-and-deploy-ssas-db/
 
+https://theblobfarm.wordpress.com/2014/12/13/deploying-tabular-models/
+
+https://docs.microsoft.com/en-us/sql/analysis-services/multidimensional-models/deployment-script-files-input-used-to-create-deployment-script
+https://docs.microsoft.com/en-us/sql/analysis-services/instances/connection-string-properties-analysis-services
 ** process
 http://byobi.com/2016/11/processing-an-azure-as-database/
+
+** powershell
+https://www.mssqltips.com/sqlservertip/3415/powershell-commands-for-sql-server-analysis-services-tabular-mode/
 
 * Reveal JS
 https://github.com/hakimel/reveal.js
@@ -581,6 +651,10 @@ https://stackoverflow.com/questions/9963584/how-to-add-favicon-ico-in-asp-net-si
 
 ** self closing div
 https://stackoverflow.com/questions/7971716/is-it-ok-to-use-a-self-closing-div-tag
+
+** escape
+https://stackoverflow.com/questions/419718/html-code-for-an-apostrophe
+&#39;  (single quote)
 
 * css
 ** centering
@@ -632,6 +706,8 @@ https://club.bankcomm.com/customer/index.htm
 
 ** time zone converter
 http://www.thetimezoneconverter.com/
+** pwc address and phone number
+https://www.pwc.com/gx/en/about/office-locations/china.htmlv
 * javascript
 ** jquery
 *** custom events
@@ -850,6 +926,15 @@ https://dongjiu.southeastasia.cloudapp.azure.com
 * powershell
 ** write-host
 https://technet.microsoft.com/en-us/library/ee177031.aspx
+** Invoke-ASCmd
+Invoke-ASCmd: The term 'Invoke-ASCmd' is not recognized as the name of a cmdlet, function, script file, or operable program.
+
+Install sql server module
+https://www.powershellgallery.com/packages/SqlServer/21.0.17099
+
+> Install-Module -Name SqlServer -RequiredVersion 21.0.17099
+Run as Administrator
+
 * vsts
 ** variables
 https://docs.microsoft.com/en-us/vsts/build-release/concepts/definitions/release/variables?tabs=batch#default-variables
@@ -988,6 +1073,18 @@ https://msdn.microsoft.com/en-us/magazine/mt707525.aspx
 * C#
 ** expression bodied members (=> in member declarations)
 https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/expression-bodied-members
+
+* pfx
+http://www.cnblogs.com/fire777/archive/2010/01/05/1639530.html
+
+1、创建一个自我签署的X.509证书（.cer）和一个.pvk私钥文件，用到makecert工具，命令如下： 
+makecert -r -n "CN= test " -b 01/01/2017 -e 01/01/2027 -sv test.pvk test.cer 
+按提示设置私钥密码（也可以不使用密码）即可在当前目录生成相关文件 
+2、利用X.509证书（.cer）创建发行者证书 (.spc)，用到cert2spc工具，命令如下： 
+cert2spc test.cer test.spc 
+3、从.pvk和.spc格式转换成.pfx格式，用到pvk2pfx工具，命令如下： 
+pvk2pfx -pvk test.pvk -spc test.spc -pfx test.pfx
+按提示操作可导出.pfx证书，若第1步设置了私钥密码，此处需要输入验证 
 
 * shell
 ** execute remote script
@@ -1246,3 +1343,36 @@ https://stackoverflow.com/questions/2199897/how-to-convert-a-normal-git-reposito
 
 https://stackoverflow.com/questions/1764380/push-to-a-non-bare-git-repository
 >>>>>>> 484f68cba7334cde768e8e34da106eb7a603030b
+* design
+** The Zen of Python
+Beautiful is better than ugly.
+Explicit is better than implicit.
+Simple is better than complex.
+Complex is better than complicated.
+Flat is better than nested.
+Sparse is better than dense.
+Readability counts.
+Special cases aren't special enough to break the rules.
+Although practicality beats purity.
+Errors should never pass silently.
+Unless explicitly silenced.
+In the face of ambiguity, refuse the temptation to guess.
+There should be one-- and preferably only one --obvious way to do it.
+Although that way may not be obvious at first unless you're Dutch.
+Now is better than never.
+Although never is often better than right now.
+If the implementation is hard to explain, it's a bad idea.
+If the implementation is easy to explain, it may be a good idea.
+Namespaces are one honking great idea -- let's do more of those!
+
+https://www.python.org/dev/peps/pep-0020/
+* tutorial
+** SQL Server
+https://www.tutorialspoint.com/ms_sql_server/
+** T-SQL
+https://www.tutorialspoint.com/t_sql/index.htm
+
+* outlook
+** insert html using vba macro
+http://nasri.messarra.com/outlook-vba-code-for-html-email/
+https://www.outlook-apps.com/insert-html-to-outlook-emails/
