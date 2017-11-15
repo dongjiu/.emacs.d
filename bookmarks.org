@@ -378,6 +378,34 @@ https://msdn.microsoft.com/en-us/library/7szfhaft.aspx
 
 *** replace file text
 https://stackoverflow.com/questions/7837644/how-to-replace-string-in-file-using-msbuild
+** JSON
+https://www.mutelight.org/using-the-little-known-built-in-net-json-parser
+
+string filename = args[0];
+byte[] buffer = File.ReadAllBytes(filename);
+XmlReader reader = 
+    JsonReaderWriterFactory
+        .CreateJsonReader(buffer, new XmlDictionaryReaderQuotas());
+
+XElement root = XElement.Load(reader);
+
+// The fields we'd like to extract
+XElement form = root.XPathSelectElement("//form");
+XElement status = root.XPathSelectElement("//status");
+XElement type = root.XPathSelectElement("//type");
+
+// Field set
+IEnumerable<XElement> fields = root.XPathSelectElements("//fields/*");
+
+{
+    "form": 13, 
+    "status": "NEW", 
+    "type": "FORM", 
+    "fields": {
+        "field": { "key": 50, "value": 1 } 
+    }
+}
+
 * SQL Server
 ** connection string
 server vs data source
@@ -1403,3 +1431,8 @@ End Sub
 ** always pop up
 File -> Options -> Mail
 Check 'Open replies and forwards in a new window'
+** vba tutorial
+https://www.tutorialspoint.com/vba/vba_overview.htm
+* email
+** qq
+http://mail.qq.com
