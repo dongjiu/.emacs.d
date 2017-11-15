@@ -16,6 +16,8 @@ http://symbolhound.com/
 http://www.linguee.fr/francais-anglais/search?source=auto&query=
 
 * MS
+** dongfangfuli
+http://microsoft.dongfangfuli.com/
 ** family day
 http://suzhoufamilyday/home.html
 ** hr
@@ -656,6 +658,8 @@ https://stackoverflow.com/questions/7971716/is-it-ok-to-use-a-self-closing-div-t
 https://stackoverflow.com/questions/419718/html-code-for-an-apostrophe
 &#39;  (single quote)
 
+** svg html scale
+https://stackoverflow.com/questions/19484707/how-can-i-make-an-svg-scale-with-its-parent-container
 * css
 ** centering
 https://www.smashingmagazine.com/2013/08/absolute-horizontal-vertical-centering-css/
@@ -702,12 +706,14 @@ http://inspirationalpixels.com/tutorials/custom-popup-modalz``
 ** credit card
 score
 https://club.bankcomm.com/customer/index.htm
->>>>>>> Stashed changes
 
 ** time zone converter
 http://www.thetimezoneconverter.com/
 ** pwc address and phone number
 https://www.pwc.com/gx/en/about/office-locations/china.htmlv
+
+** chinese vegetables
+http://thewoksoflife.com/chinese-vegetables-asian-leafy-greens/
 * javascript
 ** jquery
 *** custom events
@@ -1168,6 +1174,7 @@ $ scp -r donzhu@dongjiu.southeastasia.cloudapp.azure.com:~/nginxconf nginxconf
 $ scp -r donzhu@dongjiu.southeastasia.cloudapp.azure.com:/etc/nginx/nginx.conf nginx.conf
 
 $ scp -r /c/Users/donzhu/Documents/programming/dongjiu_web/bin/Release/netcoreapp2.0/centos-x64/publish/ donzhu@dongjiu.southeastasia.cloudapp.azure.com:~/dongjiuweb
+$ scp -r /c/msys64/home/donzhu/repos/dongjiu_webapp/dongjiu_web/bin/Release/netcoreapp2.0/centos-x64/publish.zip donzhu@dongjiu.southeastasia.cloudapp.azure.com:~/dongjiuweb
 
 *** sftp
 $ sftp cent@www.srv.world 
@@ -1306,7 +1313,6 @@ http://www.amazon.com/
 https://leetcode.com/problemset/algorithms/
 http://www.95598.cn/person/as/index.shtml
 [[https://wx.qq.com/][weixin]]
-<<<<<<< HEAD
 
 ** Download youtube videos
 https://clipgrab.org/faqs/howto-download-youtube-video
@@ -1317,6 +1323,9 @@ https://www.youtube.com/playlist?list=PLgH1cBogcOIqvorsb4vq6ErlU4fNZZmu0
 
 * english
 https://dictionary.cambridge.org/dictionary/english/
+** coursera
+https://www.coursera.org/browse/language-learning/learning-english?languages=en
+
 * git
 ** gitignore syntax
 https://stackoverflow.com/questions/8527597/how-do-i-ignore-files-in-a-directory-in-git
@@ -1342,7 +1351,6 @@ https://stackoverflow.com/questions/8883081/git-how-to-change-a-bare-to-a-shared
 https://stackoverflow.com/questions/2199897/how-to-convert-a-normal-git-repository-to-a-bare-one
 
 https://stackoverflow.com/questions/1764380/push-to-a-non-bare-git-repository
->>>>>>> 484f68cba7334cde768e8e34da106eb7a603030b
 * design
 ** The Zen of Python
 Beautiful is better than ugly.
