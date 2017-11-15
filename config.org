@@ -400,6 +400,17 @@ bookmarks for URL, files and directories.
                     (interactive)
                     (find-file-other-window "~/.emacs.d/bookmarks.org")))
 #+END_SRC
+** Email
+Key binding for opening the /email.html/ file that will be inserted into
+outlook.
+#+BEGIN_SRC emacs-lisp
+    (global-set-key (kbd "C-; m")
+                    (lambda ()
+                      (interactive)
+                      (find-file-other-window "~/.emacs.d/email.html")
+                      (search-forward "<body>")
+                      (search-forward ">")))
+#+END_SRC
 * Abbreviations
 ** Minor modes
 *** z-shell-mode

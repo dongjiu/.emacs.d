@@ -67,7 +67,10 @@ https://ucmsz.visualstudio.com/MSL/_backlogs/board/Backlog%20items
 
 Business analytics branches:
 https://msasg.visualstudio.com/Bing_Ads/UCM%20Team/_git/UCM-BusinessAnalytics/branches
-
+UCM:
+https://msasg.visualstudio.com/Bing_Ads/UCM%20Team/_git/UCM/branches
+UCMB:
+https://msasg.visualstudio.com/Bing_Ads/UCM%20Team/_git/UCMB/branches
 *** drop.exe
 The VSTS Drop service is one of the Artifact Services being added to
 VSTS to support development workflows. Its main intent is to store,
@@ -581,6 +584,8 @@ https://docs.microsoft.com/en-us/sql/t-sql/language-elements/throw-transact-sql
 ** Table-valued parameters
 [[https://technet.microsoft.com/en-us/library/bb510489(v=sql.110).aspx]]
 
+** merge
+https://www.red-gate.com/simple-talk/sql/learn-sql-server/the-merge-statement-in-sql-server-2008/
 * Analysis Services
 ** tools
 *** C# process cube:
@@ -1384,3 +1389,17 @@ https://www.tutorialspoint.com/t_sql/index.htm
 ** insert html using vba macro
 http://nasri.messarra.com/outlook-vba-code-for-html-email/
 https://www.outlook-apps.com/insert-html-to-outlook-emails/
+
+Sub InsertHtml()
+    Dim insp As Inspector
+    Set insp = ActiveInspector
+    If insp.IsWordMail Then
+        Dim wordDoc As Word.Document
+        Set wordDoc = insp.WordEditor
+        Dim FileToOpen As String
+        wordDoc.Application.Selection.InsertFile "C:\Users\donzhu\AppData\Roaming\.emacs.d\email.html", , False, False, False
+    End If
+End Sub
+** always pop up
+File -> Options -> Mail
+Check 'Open replies and forwards in a new window'
