@@ -23,6 +23,8 @@ http://suzhoufamilyday/home.html
 ** hr
 *** hrweb
 http://hrweb/Pages/default.aspx
+*** vacation
+http://msvacation/
 *** onboarding
 https://microsoft.sharepoint.com/teams/Onboarding_Portal/Onboarding_Package/SitePages/Home.aspx
 *** payslip
@@ -180,6 +182,13 @@ https://stackoverflow.com/questions/1259084/what-encoding-code-page-is-cmd-exe-u
 http://www.xitongcheng.com/jiaocheng/win10_article_17405.html
 ** 7z command line example
 https://www.dotnetperls.com/7-zip-examples
+
+* OneNote
+** My note
+https://microsoft-my.sharepoint.com/personal/donzhu_microsoft_com/_layouts/OneNote.aspx?id=%2Fpersonal%2Fdonzhu_microsoft_com%2FDocuments%2FDongjiu%20%40%20Microsoft&wd=target%28UCM%20Business%20Analytics.one%7CED868031-16A9-412A-B66D-9692C005A8DF%2F%29
+onenote:https://microsoft-my.sharepoint.com/personal/donzhu_microsoft_com/Documents/Dongjiu%20@%20Microsoft/UCM%20Business%20Analytics.one#section-id={ED868031-16A9-412A-B66D-9692C005A8DF}&end
+** Background color
+https://support.office.com/en-us/article/Change-the-background-color-of-a-page-55365B14-076C-494F-9775-7CB3FE521E19
 
 * Typescript
 ** backtick '`'
@@ -516,6 +525,19 @@ http://blog-mstechnology.blogspot.jp/2010/11/pupose-of-ampersand-character-in-md
 http://www.olapcube.com/mdxhelp/MembersTuplesSets.htm
 ** DAX
 http://www.sqlservercentral.com/articles/DAX/92740/
+
+*** format date
+https://msdn.microsoft.com/en-us/library/ee634924.aspx
+
+*** caculate function
+https://msdn.microsoft.com/en-us/library/ee634825.aspx
+
+*** summarize function
+https://msdn.microsoft.com/en-us/library/gg492171.aspx
+
+*** many to many relationship
+http://www.decisivedata.net/blog/many-to-many-relationships-in-dax
+
 ** ADOMD.NET
 *** CellSet
 https://docs.microsoft.com/en-us/sql/analysis-services/multidimensional-models-adomd-net-client/retrieving-data-using-the-cellset
@@ -614,6 +636,31 @@ https://docs.microsoft.com/en-us/sql/t-sql/language-elements/throw-transact-sql
 
 ** merge
 https://www.red-gate.com/simple-talk/sql/learn-sql-server/the-merge-statement-in-sql-server-2008/
+** cursor
+https://www.mssqltips.com/sqlservertip/1599/sql-server-cursor-example/
+** temp table
+*** if exists
+https://stackoverflow.com/questions/7259285/drop-a-temporary-table-if-it-exists
+
+From SQL Server 2016 you can just use
+    DROP TABLE IF EXISTS ##CLIENTS_KEYWORD
+
+On previous versions you can use
+
+IF OBJECT_ID('tempdb..##CLIENTS_KEYWORD') IS NOT NULL
+    /*Then it exists*/
+    DROP TABLE ##CLIENTS_KEYWORD
+
+    CREATE TABLE ##CLIENTS_KEYWORD (client_id INT) 
+
+You could also consider truncating the table instead rather than dropping and recreating.
+    IF OBJECT_ID('tempdb..##CLIENTS_KEYWORD') IS NOT NULL
+        TRUNCATE TABLE ##CLIENTS_KEYWORD
+    ELSE
+        CREATE TABLE ##CLIENTS_KEYWORD (client_id INT) 
+*** don't show message
+SET NOCOUNT ON
+SET NOCOUNT OFF
 * Analysis Services
 ** tools
 *** C# process cube:
@@ -931,6 +978,9 @@ account) which has permissions to your model. Then click Connect.
 https://stackoverflow.com/questions/41583929/i-am-getting-an-error-while-connecting-to-azure-ssas-server-in-power-bi-through
 ** change connection info
 View -> Advanced Editor
+** row level security
+https://docs.microsoft.com/en-us/power-bi/desktop-rls
+https://docs.microsoft.com/en-us/power-bi/service-admin-rls
 * visual studio
 ** vsix
 https://stackoverflow.com/questions/25906944/visual-studio-does-not-install-vsix-files

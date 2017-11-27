@@ -205,6 +205,11 @@ Substitute y-or-n-p for yes-or-no-p.
   (defalias 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
 
+** init mode for scratch buffer
+#+BEGIN_SRC emacs-lisp
+  (setq initial-major-mode 'org-mode)
+#+END_SRC
+
 * Programming
 ** c
 #+BEGIN_SRC emacs-lisp
