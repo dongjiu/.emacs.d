@@ -1487,3 +1487,13 @@ https://www.tutorialspoint.com/vba/vba_overview.htm
 * email
 ** qq
 http://mail.qq.com
+* uncateg
+http://www.windowsdevcenter.com/pub/a/dotnet/2004/02/09/connpool.html
+https://msdn.microsoft.com/en-us/library/8xx3tyca(v=vs.71).aspx
+connection id
+session id
+sys.dm_exec_sessions
+master.dbo.sysprocesses
+
+https://blogs.msdn.microsoft.com/sqldev/2010/03/23/connection-pooling-for-analysis-services-datasource-in-reporting-services/
+http://prologika.com/adomd-net-connection-pooling/
