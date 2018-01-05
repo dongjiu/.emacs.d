@@ -1,28 +1,36 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Email</title>
-    <style>
-        #signature {
-            color: gray;
-        }
-        .result {
-            color: green;
-        }
-        .at {
-            color: blue;
-        }
-        .important {
-            background-color: yellow;
-        }
-    </style>
-</head>
-<body>
-    
-    <hr align="left" style="width: 100px" />
-    <div id="signature" >
-        <div>Thanks</div>
-        <div>Dongjiu</div>
-    </div>
-</body>
+    <head>
+        <title>Email</title>
+        <style>
+            body {
+                font-family: Calibri, sans-serif;
+                font-size: 12pt;
+                color: black;
+            }
+            #signature {
+                color: gray;
+            }
+            .result {
+                color: green;
+            }
+            .at {
+                color: blue;
+            }
+            .important {
+                background-color: yellow;
+            }
+        </style>
+    </head>
+    <body>
+        <div>Hi Team,</div>
+        <div>I have uploaded db scripts to the repo and added a SQL Server Unit Testing project. Please review the <a href="https://msasg.visualstudio.com/Bing_Ads/UCM%20Team/_git/UCM-StagingArea/pullrequest/491518?_a=files">PR</a>.</div>
+        <div>For the data factories, I think it's easier to just import the whole project from Azure than adding delta changes to the existing project. I will do the importing next week since there are some errors in it. <span class="at">@Xiaoyu</span>, please take a look into the errors in the ADF for SA publisher next week. It looks that the errors are caused by the schema name changes.</div>
+
+        <hr align="left" style="width: 100px" />
+        <div id="signature" >
+            <div>Thanks</div>
+            <div>Dongjiu</div>
+        </div>
+    </body>
 </html>

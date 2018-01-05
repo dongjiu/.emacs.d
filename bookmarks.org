@@ -4,7 +4,6 @@
   :END:
 #+BEGIN_SRC emacs-lisp
 (shell-command "start C:\\Users\\donzhu\\Desktop\\donzhu_work.rdp")
-(shell-command "start C:\\Users\\donzhu\\Desktop\\donzhu_azure.rdp")
 #+END_SRC
 
 * SQL Server Connections
@@ -50,9 +49,26 @@ http://microsoft.ylytbuy.com/cn/myorder.aspx
 http://stcakickoff/Registration
 ** expense
 http://msexpense2
+** fescovip
+http://www.fescovip.com/
+MS_donzhu
 * UCM
 ** app link
 https://ucm.bingads.microsoft.com/
+** SharePoint
+UCM
+https://microsoft.sharepoint.com/teams/BingAds/Shared%20Documents/Forms/AllItems.aspx?FolderCTID=0x012000DB0D4D3A7B1C3244B815B8464A835A9F&id=%2Fteams%2FBingAds%2FShared%20Documents%2FTeams%2FUCM
+
+Business Analytics
+https://microsoft.sharepoint.com/:f:/t/BingAds/EuouWJ1ppCBJiF0OVjRaSDUBXkJTML8SHMci_cy5oP_3Kw?e=8e1ac661c0e64203a484925440009020
+
+
+[[https://microsoft.sharepoint.com/teams/UCM/Shared Documents]]
+
+** onenote
+https://microsoft.sharepoint.com/teams/BingAds/_layouts/OneNote.aspx?id=%2Fteams%2FBingAds%2FShared%20Documents%2FTeams%2FUCM%2FWiki%2FUCM%20Wiki&wd=target%28Teams%2FAccount%20Management%2FUCM%20Business%20Analytics.one%7CA8897CF7-A035-4082-99E2-E64431910A89%2FNotification%20Service%7C4A478DB3-6C63-4AA4-A60E-D05FA6E4743E%2F%29
+onenote:https://microsoft.sharepoint.com/teams/BingAds/Shared%20Documents/Teams/UCM/Wiki/UCM%20Wiki/Teams/Account%20Management/UCM%20Business%20Analytics.one#Notification%20Service&section-id={A8897CF7-A035-4082-99E2-E64431910A89}&page-id={4A478DB3-6C63-4AA4-A60E-D05FA6E4743E}&end
+
 ** MS Stackoverflow
 https://stackoverflow.microsoft.com/
 ** CloudBuild
@@ -73,6 +89,9 @@ UCM:
 https://msasg.visualstudio.com/Bing_Ads/UCM%20Team/_git/UCM/branches
 UCMB:
 https://msasg.visualstudio.com/Bing_Ads/UCM%20Team/_git/UCMB/branches
+Staging Area:
+https://msasg.visualstudio.com/Bing_Ads/UCM%20Team/_git/UCM-StagingArea/branches
+
 *** drop.exe
 The VSTS Drop service is one of the Artifact Services being added to
 VSTS to support development workflows. Its main intent is to store,
@@ -175,7 +194,20 @@ Your DOS command 2> nul
 ** disable cortana
 https://www.pcworld.com/article/2949759/windows/killing-cortana-how-to-disable-windows-10s-info-hungry-digital-assistant.html
 https://www.windowscentral.com/how-turn-cortana-and-stop-personal-data-gathering-windows-10
-** cmd encoding
+** cmd
+*** stdin input
+https://stackoverflow.com/questions/10824178/how-do-you-redirect-standard-input-to-a-file-in-the-windows-command-line
+*** copy con
+https://www.computerhope.com/jargon/c/copycon.htm
+
+Copy con is an MS-DOS and Windows command line command that allows the
+creation of a file through the command line. To use this command type
+copy con followed by the name of the file you want to create as shown
+below.
+
+copy con myfile.txt
+
+*** cmd encoding
 command chcp
 https://stackoverflow.com/questions/1259084/what-encoding-code-page-is-cmd-exe-using
 ** telnet missing
@@ -183,6 +215,8 @@ http://www.xitongcheng.com/jiaocheng/win10_article_17405.html
 ** 7z command line example
 https://www.dotnetperls.com/7-zip-examples
 
+** xps
+https://www.wikihow.com/Open-XPS-Files
 * OneNote
 ** My note
 https://microsoft-my.sharepoint.com/personal/donzhu_microsoft_com/_layouts/OneNote.aspx?id=%2Fpersonal%2Fdonzhu_microsoft_com%2FDocuments%2FDongjiu%20%40%20Microsoft&wd=target%28UCM%20Business%20Analytics.one%7CED868031-16A9-412A-B66D-9692C005A8DF%2F%29
@@ -329,6 +363,10 @@ https://weblogs.asp.net/imranbaloch/custom-actionresult-aspnet5-mvc6
 
 https://stackoverflow.com/questions/12365534/launch-download-in-the-same-tab-without-opening-new-tab-or-window-in-javascript
 
+** Web API
+*** return JSON rather than XML
+https://stackoverflow.com/questions/9847564/how-do-i-get-asp-net-web-api-to-return-json-instead-of-xml-using-chrome
+
 ** C# Console UTF8
 Console.OutputEncoding = Encoding.UTF8;
 
@@ -415,7 +453,66 @@ IEnumerable<XElement> fields = root.XPathSelectElements("//fields/*");
     }
 }
 
+https://stackoverflow.com/questions/9301878/whats-the-difference-between-datacontractjsonserializer-and-javascriptserialize
+
+*** Write
+using (FileStream outStream = File.Open(filePath, FileMode.Create))
+            {
+                using (XmlDictionaryWriter writer = JsonReaderWriterFactory.CreateJsonWriter(outStream))
+                {
+                    writer.WriteStartElement("root");
+                    writer.WriteAttributeString("type", "object");
+                    writer.WriteStartElement("publishedReports");
+                    writer.WriteAttributeString("type", "array");
+                    foreach (PublishSpec spec in reportHashes.Values)
+                    {
+                        writer.WriteStartElement("item");
+                        writer.WriteAttributeString("type", "object");
+
+                        writer.WriteElementString("workspaceGroupId", spec.workspaceGroupId);
+                        writer.WriteElementString("file", spec.fileName);
+                        writer.WriteElementString("publishName", spec.publishName);
+                        writer.WriteElementString("fileCheckSum", spec.fileChecksum);
+
+                        writer.WriteEndElement();
+                    }
+                    writer.WriteEndElement();
+                    writer.WriteEndElement();
+                }
+            }
+https://docs.microsoft.com/en-us/dotnet/framework/wcf/feature-details/mapping-between-json-and-xml
+https://stackoverflow.com/questions/40213787/avoid-item-type-node-from-creating-in-json-to-xml-converter-in-c-sharp
+
+
+** WebRequest vs HttpWebRequest
+https://stackoverflow.com/questions/896253/c-sharp-httpwebrequest-vs-webrequest
+** target framework
+https://softwareengineering.stackexchange.com/questions/235003/why-do-projects-opt-to-stay-on-an-older-version-of-the-net-framework
+** md5 checksum
+https://stackoverflow.com/questions/10520048/calculate-md5-checksum-for-a-file
+
+ static string FileHash(string filePath)
+        {
+            using (var md5 = MD5.Create())
+            {
+                using (var stream = File.OpenRead(filePath))
+                {
+                    var hash = md5.ComputeHash(stream);
+                    return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+                }
+            }
+        }
+** xml bom
+https://stackoverflow.com/questions/67959/net-xml-serialization-gotchas
+
+** reuse HttpClient
+https://stackoverflow.com/questions/22560971/what-is-the-overhead-of-creating-a-new-httpclient-per-call-in-a-webapi-client
+https://blog.jayway.com/2012/03/13/httpclient-makes-get-and-post-very-simple/
+* xml
+** xpath
+https://msdn.microsoft.com/en-us/library/ms256086%28v=vs.110%29.aspx?f=255&MSPPError=-2147217396
 * SQL Server
+** dbo = Database owner
 ** connection string
 server vs data source
 https://stackoverflow.com/questions/15025055/server-vs-data-source-in-connection-string
@@ -501,12 +598,17 @@ sqlComm.Parameters.Add(param);
 
 Remember to specify SqlDbType.Structured as the type of parameter and
 specify the name you have used in creating your UDT.
-
+*** column names
+https://stackoverflow.com/questions/4246242/ado-net-columns-names
+*** stored procedure
+https://stackoverflow.com/questions/9267078/when-executing-a-stored-procedure-what-is-the-benefit-of-using-commandtype-stor
 ** Kimball vs Inmon
 http://tdan.com/data-warehouse-design-inmon-versus-kimball/20300
 
 ** tabular model
 https://www.mssqltips.com/sqlservertip/2821/getting-started-with-tabular-model-in-sql-server-2012--part-1/
+*** calculated table
+https://docs.microsoft.com/en-us/sql/analysis-services/tabular-models/create-a-calculated-table-ssas-tabular
 ** MDX
 *** and/or
 http://www.sqlblogspot.com/2013/10/mdx-where-clause-slicer-axis-andor.html
@@ -529,16 +631,106 @@ http://www.sqlservercentral.com/articles/DAX/92740/
 *** format date
 https://msdn.microsoft.com/en-us/library/ee634924.aspx
 
-*** caculate function
-https://msdn.microsoft.com/en-us/library/ee634825.aspx
+*** join
+https://www.sqlbi.com/articles/from-sql-to-dax-joining-tables/
 
-*** summarize function
-https://msdn.microsoft.com/en-us/library/gg492171.aspx
-
+*** in and exists
+https://www.sqlbi.com/articles/from-sql-to-dax-in-and-exists/
 *** many to many relationship
 http://www.decisivedata.net/blog/many-to-many-relationships-in-dax
+https://gbrueckl.wordpress.com/2012/05/08/resolving-many-to-many-relationships-leveraging-dax-cross-table-filtering/
+https://www.sqlbi.com/articles/optimize-many-to-many-calculation-in-dax-with-summarize-and-cross-table-filtering/
+https://powerpivotpro.com/2012/11/a-mystifying-and-awesome-solution-for-many-2-many/
+*** multiple relationship
+https://exceleratorbi.com.au/multiple-relationships-between-tables-in-dax/
+*** relate tables without using relationshisp
+http://sqlblog.com/blogs/marco_russo/archive/2010/02/09/how-to-relate-tables-in-dax-without-using-relationships.aspx
+*** row context and filter context
+https://www.sqlbi.com/articles/row-context-and-filter-context-in-dax/
+
+you can control the filter context and its propagation using DAX
+functions such as CALCULATE, CALCULATETABLE, ALL, VALUES, FILTER,
+USERELATIONSHIP, and CROSSFILTER.
+
+*** RELATED
+Returns a related value from another table.
+
+RELATED(<column>)
+
+https://msdn.microsoft.com/en-us/library/ee634202.aspx
+*** SUMX
+Returns the sum of an expression evaluated for each row in a table.
+
+SUMX(<table>, <expression>)
+
+https://msdn.microsoft.com/en-us/library/ee634959.aspx
+*** CALCULATE
+Evaluates an expression in a context that is modified by the specified filters.
+
+CALCULATE(<expression>,<filter1>,<filter2>…)
+
+https://msdn.microsoft.com/en-us/library/ee634825.aspx
+*** CALCULATETABLE
+Evaluates a table expression in a context modified by the given filters.
+
+CALCULATETABLE(<expression>,<filter1>,<filter2>,…)  
+
+*** ALL
+Returns all the rows in a table, or all the values in a column,
+ignoring any filters that might have been applied. This function is
+useful for clearing filters and creating calculations on all the rows
+in a table.
+
+ALL( {<table> | <column>[, <column>[, <column>[,…]]]} )
+
+https://msdn.microsoft.com/en-us/library/ee634802.aspx
+
+*** FILTER
+Returns a table that represents a subset of another table or expression.
+
+FILTER(<table>,<filter>)
+
+https://msdn.microsoft.com/en-us/library/ee634966.aspx
+
+*** GENERATE
+Returns a table with the Cartesian product between each row in table1
+and the table that results from evaluating table2 in the context of
+the current row from table1.
+
+GENERATE(<table1>, <table2>)  
+https://msdn.microsoft.com/en-us/library/gg492196.aspx
+
+*** VALUES
+Returns a one-column table that contains the distinct values from the
+specified table or column. In other words, duplicate values are
+removed and only unique values are returned.
+
+VALUES(<TableNameOrColumnName>)
+
+This function cannot be used to return values into a cell or column on
+a worksheet; rather, you use it as an intermediate function, nested in
+a formula, to get a list of distinct values that can be counted, or
+used to filter or sum other values.
+
+*** LOOKUPVALUE
+Returns the value in result_columnName for the row that meets all
+criteria specified by search_columnName and search_value.
+
+LOOKUPVALUE( <result_columnName>, <search_columnName>, <search_value>[, <search_columnName>, <search_value>]…)  
+
+=LOOKUPVALUE(Product[SafetyStockLevel], [ProductName], " Mountain-400-W Silver, 46")  
+
+*** CONTAINS
+Returns true if values for all referred columns exist, or are
+contained, in those columns; otherwise, the function returns false.
+
+CONTAINS(<table>, <columnName>, <value>[, <columnName>, <value>]…)  
+
+=CONTAINS(InternetSales, [ProductKey], 214, [CustomerKey], 11185)  
 
 ** ADOMD.NET
+*** example
+https://www.sqlbi.com/articles/execute-dax-queries-through-ole-db-and-adomd-net/
 *** CellSet
 https://docs.microsoft.com/en-us/sql/analysis-services/multidimensional-models-adomd-net-client/retrieving-data-using-the-cellset
 
@@ -646,6 +838,7 @@ From SQL Server 2016 you can just use
     DROP TABLE IF EXISTS ##CLIENTS_KEYWORD
 
 On previous versions you can use
+IF OBJECT_ID('tempdb.dbo.#CLIENTS_KEYWORD') IS NOT NULL
 
 IF OBJECT_ID('tempdb..##CLIENTS_KEYWORD') IS NOT NULL
     /*Then it exists*/
@@ -661,6 +854,80 @@ You could also consider truncating the table instead rather than dropping and re
 *** don't show message
 SET NOCOUNT ON
 SET NOCOUNT OFF
+** drop if exists
+https://stackoverflow.com/questions/7887011/how-to-drop-a-table-if-it-exists-in-sql-server
+** count overflow
+Arithmetic overflow error converting expression to data type int.
+use count_big(*)
+
+https://stackoverflow.com/questions/5643641/sql-count-overflow
+** trigger C#
+https://msdn.microsoft.com/en-us/library/938d9dz2.aspx?f=255&MSPPError=-2147217396
+https://msdn.microsoft.com/en-us/library/ms131094.aspx?f=255&MSPPError=-2147217396
+https://stackoverflow.com/questions/5983599/can-sql-server-send-a-web-request
+http://rusanu.com/2010/03/26/using-tables-as-queues/
+https://msdn.microsoft.com/en-GB/library/bb522893%28v=sql.105%29.aspx?f=255&MSPPError=-2147217396
+https://gavindraper.com/2012/06/03/sql-server-service-broker-explained/
+https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/detecting-changes-with-sqldependency
+https://www.codeproject.com/Articles/12335/Using-SqlDependency-for-data-change-events
+https://dzone.com/articles/receive-notifications-with-new-values-when-table-r
+[[http://geekswithblogs.net/michaelstephenson/archive/2012/08/12/150399.aspx][Service Bus vs RabbitMQ]]
+http://ayvazyan.net/2015/01/service-broker-in-a-nutshell/
+http://rusanu.com/2006/06/17/the-mysterious-notification/
+
+https://stackoverflow.com/questions/7588572/what-are-the-limitations-of-sqldependency
+** transaction example
+https://stackoverflow.com/questions/10153648/correct-use-of-transactions-in-sql-server-2008
+#+BEGIN_SRC sql
+BEGIN TRANSACTION [Tran1]
+
+BEGIN TRY
+
+INSERT INTO [Test].[dbo].[T1]
+  ([Title], [AVG])
+VALUES ('Tidd130', 130), ('Tidd230', 230)
+
+UPDATE [Test].[dbo].[T1]
+  SET [Title] = N'az2' ,[AVG] = 1
+WHERE [dbo].[T1].[Title] = N'az'
+
+
+COMMIT TRANSACTION [Tran1]
+
+END TRY
+BEGIN CATCH
+  ROLLBACK TRANSACTION [Tran1]
+END CATCH  
+
+GO
+#+END_SRC
+
+** output clause
+http://www.sqlservercentral.com/articles/T-SQL/156604/
+
+** rename columns
+
+EXEC sp_rename 'event_notification.sent_dtm', 'start_dtm', 'COLUMN'
+
+** index on subset of rows
+filtered index
+
+#+BEGIN_SRC sql
+CREATE NONCLUSTERED INDEX FIBillOfMaterialsWithEndDate  
+    ON Production.BillOfMaterials (ComponentID, StartDate)  
+    WHERE EndDate IS NOT NULL ;
+#+END_SRC
+
+** create table as select * from xxx
+SELECT col1, col2 INTO #a -- <<== creates temporary table
+FROM tablename
+
+select top 0 AccountId, StartDate, EndDate
+into #account_time_range
+from UcmStaging.LinkedCustomerTimeline
+
+** data dependent routing (DDR)
+https://technet.microsoft.com/en-us/library/cc966448.aspx
 * Analysis Services
 ** tools
 *** C# process cube:
@@ -934,6 +1201,7 @@ https://www.masteringemacs.org/article/keeping-secrets-in-emacs-gnupg-auth-sourc
 https://nakkaya.com/2009/11/19/keeping-secrets-with-emacs-and-gpg/
 ** emacs prompts untrusted key
 https://superuser.com/questions/366035/how-can-i-disable-prompt-about-trust-when-encrypting-file-with-gpg-in-emacs
+
 * markdown
 ** strikethrough
 https://webapps.stackexchange.com/questions/14986/strikethrough-with-github-markdown
@@ -950,7 +1218,8 @@ https://www.muzisoft.com/root/93498.html
 https://www.werockyourweb.com/url-escape-characters/
 * power bi
 https://powerbi.microsoft.com/en-us/guided-learning/
-
+** concepts
+https://docs.microsoft.com/en-us/power-bi/service-basic-concepts
 ** Export to desktip pbix file
 https://powerbi.microsoft.com/en-us/documentation/powerbi-service-export-to-pbix/
 
@@ -981,6 +1250,9 @@ View -> Advanced Editor
 ** row level security
 https://docs.microsoft.com/en-us/power-bi/desktop-rls
 https://docs.microsoft.com/en-us/power-bi/service-admin-rls
+** custom functions
+http://radacad.com/custom-functions-made-easy-in-power-bi-desktop
+
 * visual studio
 ** vsix
 https://stackoverflow.com/questions/25906944/visual-studio-does-not-install-vsix-files
@@ -1003,6 +1275,13 @@ http://www.sqlservercentral.com/articles/Azure+Data+Factory/139478/
 https://marketplace.visualstudio.com/items?itemName=MicrosoftCloudExplorer.CloudExplorerforVisualStudio2015#review-details
 https://stackoverflow.com/questions/31586439/missing-azure-components-in-visual-studio-2015-server-explorer
 
+*** custom activity
+https://docs.microsoft.com/en-us/azure/data-factory/transform-data-using-dotnet-custom-activity
+*** start pipeline in C#
+http://eatcodelive.com/2016/02/24/starting-an-azure-data-factory-pipeline-from-c-net/
+
+*** schedule
+https://docs.microsoft.com/en-us/azure/data-factory/v1/data-factory-scheduling-and-execution
 ** ping
 https://superuser.com/questions/611216/cant-ping-8-8-8-8-from-virtual-machine-in-azure
 ** centos
@@ -1012,6 +1291,8 @@ http://52.187.112.52/
 http://dongjiu.southeastasia.cloudapp.azure.com
 https://dongjiu.southeastasia.cloudapp.azure.com
 
+** Service Fabric
+https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-overview-microservices
 * powershell
 ** write-host
 https://technet.microsoft.com/en-us/library/ee177031.aspx
@@ -1163,6 +1444,8 @@ https://msdn.microsoft.com/en-us/magazine/mt707525.aspx
 ** expression bodied members (=> in member declarations)
 https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/expression-bodied-members
 
+** guid
+https://stackoverflow.com/questions/17408572/is-microsofts-guid-generator-cryptographically-secure
 * pfx
 http://www.cnblogs.com/fire777/archive/2010/01/05/1639530.html
 
@@ -1483,6 +1766,28 @@ File -> Options -> Mail
 Check 'Open replies and forwards in a new window'
 ** vba tutorial
 https://www.tutorialspoint.com/vba/vba_overview.htm
+** msg file format
+[[https://msdn.microsoft.com/en-us/library/cc463912(v=exchg.80).aspx]]
+** C# API for reading msg files
+https://stackoverflow.com/questions/26633082/read-outlook-msg-file
+
+https://www.nuget.org/packages/MSGReader/
+
+https://stackoverflow.com/questions/2340179/parse-msg-file-using-c-sharp
+** Send email
+https://stackoverflow.com/questions/6244694/send-smtp-email-using-system-net-mail-via-exchange-online-office-365
 * email
 ** qq
 http://mail.qq.com
+* UML
+** use cases
+http://www.agilemodeling.com/artifacts/useCaseDiagram.htm
+* Google
+** google map cannot add account
+Install GoogleLoginService.apk
+* visa status
+https://ceac.state.gov/CEACStatTracker/Status.aspx
+AA007E57R8
+* jmeter
+** loop through csv
+https://stackoverflow.com/questions/7755384/jmeter-loop-through-all-values-in-csv
