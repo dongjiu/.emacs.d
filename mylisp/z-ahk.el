@@ -2,8 +2,10 @@
 (setq z-ahk-script (expand-file-name "~/.emacs.d/ahk/init.ahk"))
 (unless (cl-remove-if-not 'identity
 						  (mapcar (lambda (pid)
-									(string-match "AutoHotKey" (cdr (assoc 'comm (process-attributes pid)))))
-								  (list-system-processes)))
+                                    (let ((command-name (cdr (assoc 'comm (process-attributes pid)))))
+									  (and command-name
+                                           (string-match "AutoHotKey" command-name))))
+						          (list-system-processes)))
   (when (and (file-exists-p z-ahk-exe)
 			 (file-exists-p z-ahk-script))
 	(w32-shell-execute "open" z-ahk-exe z-ahk-script)))

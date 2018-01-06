@@ -343,6 +343,9 @@ https://emacs.stackexchange.com/questions/34392/how-to-check-if-a-directory-exis
 file-directory-p
 * .NET
 ** ASP.NET MVC
+*** intro
+https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/introduction/getting-started
+https://docs.microsoft.com/en-us/aspnet/web-api/overview/getting-started-with-aspnet-web-api/tutorial-your-first-web-api
 *** Bundle
 http://www.tutorialsteacher.com/mvc/scriptbundle-mvc
 
@@ -602,6 +605,27 @@ specify the name you have used in creating your UDT.
 https://stackoverflow.com/questions/4246242/ado-net-columns-names
 *** stored procedure
 https://stackoverflow.com/questions/9267078/when-executing-a-stored-procedure-what-is-the-benefit-of-using-commandtype-stor
+
+https://stackoverflow.com/questions/4561323/executing-a-stored-procedure-using-a-dbconnection
+
+DbCommand command = new SqlCommand();
+command.CommandType = System.Data.CommandType.StoredProcedure;
+command.CommandText = "<your stored proc>";
+command.Connection = dbConnection;
+
+SqlParameter param1 = new SqlParameter("<your parameter>", MyVar);
+command.Parameters.Add(param1);
+//[...]
+
+SqlParameter returnValue = new SqlParameter("ReturnValue", User);
+returnValue.Direction = System.Data.ParameterDirection.ReturnValue;
+command.Parameters.Add(returnValue);
+
+command.Connection.Open();
+command.ExecuteNonQuery();
+int result = (int)command.Parameters["ReturnValue"].Value;
+command.Connection.Close();
+
 ** Kimball vs Inmon
 http://tdan.com/data-warehouse-design-inmon-versus-kimball/20300
 
