@@ -1210,6 +1210,7 @@ http://jf.189.cn/selfcenter/order.aspx
 * life
 ** electric charge
 http://www.95598.cn/person/index.shtml
+
 * hack
 ** note3 n9009 root
 https://www.muzisoft.com/root/93498.html
@@ -1791,3 +1792,13 @@ AA007E57R8
 * jmeter
 ** loop through csv
 https://stackoverflow.com/questions/7755384/jmeter-loop-through-all-values-in-csv
+* uncateg
+http://www.windowsdevcenter.com/pub/a/dotnet/2004/02/09/connpool.html
+https://msdn.microsoft.com/en-us/library/8xx3tyca(v=vs.71).aspx
+connection id
+session id
+sys.dm_exec_sessions
+master.dbo.sysprocesses
+
+https://blogs.msdn.microsoft.com/sqldev/2010/03/23/connection-pooling-for-analysis-services-datasource-in-reporting-services/
+http://prologika.com/adomd-net-connection-pooling/
