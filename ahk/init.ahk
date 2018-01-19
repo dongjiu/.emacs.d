@@ -61,3 +61,7 @@ OpenBookmarksInEmacs()
     Send, ^{;}
     Send, b
 }
+
+
+^!o::
+Run C:\Users\donzhu\Desktop\bookmark_page_onenote.url
