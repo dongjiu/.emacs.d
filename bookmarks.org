@@ -1665,6 +1665,8 @@ https://dongjiu.southeastasia.cloudapp.azure.com
 
 ** Service Fabric
 https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-overview-microservices
+** app service
+https://dongjiu.azurewebsites.net/
 * powershell
 ** write-host
 https://technet.microsoft.com/en-us/library/ee177031.aspx
@@ -1811,7 +1813,9 @@ https://docs.microsoft.com/en-us/aspnet/core/fundamentals/app-state?tabs=aspnetc
 https://andrewlock.net/an-introduction-to-session-storage-in-asp-net-core/
 *** middleware
 https://msdn.microsoft.com/en-us/magazine/mt707525.aspx
-
+** runtime identifier
+https://docs.microsoft.com/en-us/dotnet/core/rid-catalog
+https://docs.microsoft.com/en-us/dotnet/core/deploying/deploy-with-cli
 * C#
 ** expression bodied members (=> in member declarations)
 https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/expression-bodied-members

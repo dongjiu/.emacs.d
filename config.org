@@ -204,6 +204,20 @@ Disable underscore to subscript.
   (setq org-export-with-sub-superscripts nil)
 #+END_SRC
 
+Enable babel for perl and python.
+#+BEGIN_SRC emacs-lisp
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (perl . t)
+     (python . t)))
+#+END_SRC
+
+Redisplay inline images after executing babel code blocks.
+#+BEGIN_SRC emacs-lisp
+(add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
+#+END_SRC
+
 ** yes or no
 Substitute y-or-n-p for yes-or-no-p.
 #+BEGIN_SRC emacs-lisp
@@ -865,8 +879,9 @@ Convert path in region to standard Windows path.
 
 ** Watch Skype directory
 #+BEGIN_SRC emacs-lisp
-  (save-excursion
-    (z-watch-skype-dir))
+(when (string= (system-name) "DONZHU-WORK")
+    (save-excursion
+      (z-watch-skype-dir)))
 #+END_SRC
 
 * COMMENT Unused config that may be useful in the future
