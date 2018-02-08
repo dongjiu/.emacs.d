@@ -217,6 +217,9 @@ https://www.dotnetperls.com/7-zip-examples
 
 ** xps
 https://www.wikihow.com/Open-XPS-Files
+** service
+https://stackoverflow.com/questions/3582108/create-windows-service-from-executable
+
 * OneNote
 ** My note
 https://microsoft-my.sharepoint.com/personal/donzhu_microsoft_com/_layouts/OneNote.aspx?id=%2Fpersonal%2Fdonzhu_microsoft_com%2FDocuments%2FDongjiu%20%40%20Microsoft&wd=target%28UCM%20Business%20Analytics.one%7CED868031-16A9-412A-B66D-9692C005A8DF%2F%29
@@ -341,6 +344,31 @@ M-s i.
 ** check directory exists
 https://emacs.stackexchange.com/questions/34392/how-to-check-if-a-directory-exists-in-elisp/34394
 file-directory-p
+** cron job
+https://stackoverflow.com/questions/3841459/how-to-periodically-run-a-task-within-emacs
+** file system wather
+https://www.gnu.org/software/emacs/manual/html_node/elisp/File-Notifications.html
+** no org-babel-execute function for xxx
+https://emacs.stackexchange.com/questions/17673/no-org-babel-execute-function-for-c-and-no-org-babel-execute-function-for-c
+
+#+BEGIN_SRC emacs-lisp
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (perl . t)
+     (python . t)))
+#+END_SRC
+
+** org display inline images
+M-: org-display-inline-images
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
+#+END_SRC
+
+** prompt when evaluating code in org babel
+https://orgmode.org/manual/Code-evaluation-security.html
+
 * .NET
 ** ASP.NET MVC
 *** intro
@@ -587,6 +615,50 @@ https://stackoverflow.com/questions/67959/net-xml-serialization-gotchas
 ** reuse HttpClient
 https://stackoverflow.com/questions/22560971/what-is-the-overhead-of-creating-a-new-httpclient-per-call-in-a-webapi-client
 https://blog.jayway.com/2012/03/13/httpclient-makes-get-and-post-very-simple/
+** FileSystemWatcher
+https://msdn.microsoft.com/en-us/library/system.io.filesystemwatcher(v=vs.110).aspx
+https://stackoverflow.com/questions/3336637/net-filesystemwatcher-was-it-a-file-or-a-directory
+https://stackoverflow.com/questions/15017506/using-filesystemwatcher-to-monitor-a-directory
+
+https://stackoverflow.com/questions/1764809/filesystemwatcher-changed-event-is-raised-twice
+https://blogs.msdn.microsoft.com/oldnewthing/20140507-00/?p=1053/
+https://weblogs.asp.net/ashben/31773
+
+** external command
+https://stackoverflow.com/questions/878632/best-way-to-call-external-program-in-c-sharp-and-parse-output
+
+using System;
+using System.Diagnostics;
+
+public class RedirectingProcessOutput
+{
+    public static void Main()
+    {
+        Process p = new Process();
+        p.StartInfo.FileName = "cmd.exe";
+        p.StartInfo.Arguments = "/c dir *.cs";
+        p.StartInfo.UseShellExecute = false;
+        p.StartInfo.RedirectStandardOutput = true;
+        p.Start();
+
+        string output = p.StandardOutput.ReadToEnd();
+        p.WaitForExit();
+
+        Console.WriteLine("Output:");
+        Console.WriteLine(output);    
+    }
+}
+
+https://stackoverflow.com/questions/17321289/use-process-start-with-parameters-and-spaces-in-path
+
+** expring dictionary
+https://msdn.microsoft.com/en-us/library/system.runtime.caching.memorycache.aspx
+
+System.Runtime.Caching.MemoryCache
+
+https://stackoverflow.com/questions/7251535/what-are-the-compelling-reasons-to-use-a-memorycache-over-a-plain-old-dictionary
+
+https://stackoverflow.com/questions/12595911/memory-cache-or-concurrent-dictionary
 * xml
 ** xpath
 https://msdn.microsoft.com/en-us/library/ms256086%28v=vs.110%29.aspx?f=255&MSPPError=-2147217396
@@ -709,7 +781,179 @@ http://tdan.com/data-warehouse-design-inmon-versus-kimball/20300
 https://www.mssqltips.com/sqlservertip/2821/getting-started-with-tabular-model-in-sql-server-2012--part-1/
 *** calculated table
 https://docs.microsoft.com/en-us/sql/analysis-services/tabular-models/create-a-calculated-table-ssas-tabular
+*** query during processing
+http://www.jamesserra.com/archive/2011/06/can-you-query-a-ssas-cube-while-it-is-processing/
+*** integrated workspace
+http://sqlblog.com/blogs/marco_russo/archive/2011/07/20/change-default-workspace-and-deployment-server-in-tabular-ssas-denali-ctp3.aspx
+https://blogs.msdn.microsoft.com/analysisservices/2016/09/20/introducing-integrated-workspace-mode-for-sql-server-data-tools-for-analysis-services-tabular-projects-ssdt-tabular/
+
+https://docs.microsoft.com/en-us/sql/analysis-services/tabular-models/workspace-database-ssas-tabular
+*** change workspace database
+https://saysmymind.wordpress.com/2012/11/23/changing-workspace-database-name-in-ssas-2012-tabular/
+
+modify file /xxx.bim_donzhu.settings/
+*** DMVs (dynamic management views)
+https://www.mssqltips.com/sqlservertip/3006/sql-server-2012-analysis-services-ssas-dmvs/
+http://www.sqlservergeeks.com/sql-server-select-star-from-cube/
+
+DMV reference
+https://docs.microsoft.com/en-us/sql/analysis-services/instances/use-dynamic-management-views-dmvs-to-monitor-analysis-services#bkmk_ref
+
+In MDX query window:
+
+SELECT * FROM $SYSTEM.DBSCHEMA_TABLES WHERE TABLE_SCHEMA = '$SYSTEM'
+
+
+get a list of cubes in a particular database:
+SELECT 
+[CATALOG_NAME] AS SSAS_Database_Name,
+[CUBE_NAME] AS Cube_or_Perspective_Name,
+[CUBE_CAPTION] AS Cube_or_Perspective_Caption,
+[CUBE_TYPE] AS Cube_Type,
+[BASE_CUBE_NAME] AS Base_Cube
+FROM 
+$SYSTEM.MDSCHEMA_CUBES
+WHERE
+CUBE_SOURCE=1
+ORDER BY CUBE_NAME
+
+
+get dimensions
+
+SELECT 
+[CATALOG_NAME] AS SSAS_Database_Name,
+[CUBE_NAME] AS Cube_or_Perspective_Name,
+[DIMENSION_NAME] AS Dimension_Name,
+[DIMENSION_UNIQUE_NAME] AS Dimension_Real_Name,
+[DIMENSION_CAPTION] AS Dimension_Caption,
+[DIMENSION_IS_VISIBLE] AS Dimension_Visible
+FROM 
+$SYSTEM.MDSCHEMA_DIMENSIONS
+ORDER BY DIMENSION_NAME
+
+
+measure group:
+SELECT 
+[CATALOG_NAME] AS SSAS_Database_Name,
+[CUBE_NAME] AS Cube_or_Perspective_Name,
+[MEASUREGROUP_NAME] AS MeasureGroup_Name,
+[DIMENSION_UNIQUE_NAME] AS Dimension_Real_Name,
+[DIMENSION_IS_VISIBLE] AS Dimension_Visible,
+[DIMENSION_GRANULARITY] AS Dimension_Granularity
+FROM 
+$SYSTEM.MDSCHEMA_MEASUREGROUP_DIMENSIONS
+ORDER BY 
+[DIMENSION_UNIQUE_NAME]
+
+
+measures:
+SELECT
+[CATALOG_NAME] AS SSAS_Database_Name,
+[CUBE_NAME] AS Cube_or_Perspective_Name,
+[MEASUREGROUP_NAME] AS MeasureGroup_Name,
+[MEASURE_NAME] AS Measure_Name,
+[MEASURE_Caption] AS Measure_Caption,
+[MEASURE_IS_VISIBLE] AS Dimension_Visible,
+[MEASURE_AGGREGATOR] AS Measure_Aggregator,
+[DEFAULT_FORMAT_STRING] AS [Format_String],
+[EXPRESSION] AS Calculated_Measure_Expression
+FROM
+$SYSTEM.MDSCHEMA_MEASURES
+ORDER BY
+[MEASURE_NAME]
+
+session, last command
+SELECT
+[SESSION_COMMAND_COUNT],
+[SESSION_CONNECTION_ID],
+[SESSION_CPU_TIME_MS],
+[SESSION_CURRENT_DATABASE],
+[SESSION_ELAPSED_TIME_MS],
+[SESSION_ID],
+[SESSION_IDLE_TIME_MS],
+[SESSION_LAST_COMMAND],
+[SESSION_LAST_COMMAND_CPU_TIME_MS],
+[SESSION_LAST_COMMAND_ELAPSED_TIME_MS],
+[SESSION_LAST_COMMAND_END_TIME],
+[SESSION_LAST_COMMAND_START_TIME],
+[SESSION_PROPERTIES],
+[SESSION_READ_KB],
+[SESSION_READS],
+[SESSION_SPID],
+[SESSION_START_TIME],
+[SESSION_STATUS],
+[SESSION_USED_MEMORY],
+[SESSION_USER_NAME],
+[SESSION_WRITE_KB],
+[SESSION_WRITES]
+FROM 
+$SYSTEM.DISCOVER_SESSIONS
+
+SELECT
+ *
+ FROM
+$SYSTEM.DISCOVER_COMMANDS
+
+memory usage:
+select * from $system.Discover_memoryusage
+select * from $system.Discover_object_memory_usage
+
+SELECT 
+*
+FROM SYSTEMRESTRICTSCHEMA
+($SYSTEM.discover_partition_stat,
+ DATABASE_NAME = 'devucmbusinessanalyticscube',
+ CUBE_NAME = 'UcmBusinessAnalyticsCube_donzhu',
+ MEASURE_GROUP_NAME = 'Account Performance',
+ PARTITION_NAME = 'Fy2018H1')
+
+https://bennyaustin.wordpress.com/2011/03/01/ssas-dmv-queries-cube-metadata/
+
+check model size
+https://social.msdn.microsoft.com/Forums/windows/en-US/d1ddcc40-506e-4c91-9d66-d44aac438605/how-to-find-ssas-tabular-model-size?forum=sqlanalysisservices
+*** parallel
+Tabular can process tables in parallel, but partitions within the one table have to be processed serially.
+*** last process time
+https://www.sqlbi.com/articles/last-process-date-in-ssas-tabular/
+
+Per table
+https://gist.github.com/dgosbell/8f4e2a6aa022a6fdd288
+*** synchronize
+https://technet.microsoft.com/en-us/library/ms174928(v=sql.110).aspx
+https://docs.microsoft.com/en-us/sql/analysis-services/tabular-models-scripting-language-commands/synchronize-command-tmsl
+
+**** SynchronizeSecurity
+https://technet.microsoft.com/en-us/library/ms187118(v=sql.110).aspx
+
+SkipMembership
+Include security definitions, but exclude membership information, during a Synchronize command.
+
+CopyAll
+Include security definitions and membership information during a Synchronize command.
+
+IgnoreSecurity
+Exclude security definitions during a Synchronize command.
+
+*** deployment
+http://byobi.com/2017/11/methods-for-deploying-to-azure-analysis-services/
+**** process add
+https://www.sqlbi.com/articles/incremental-processing-in-tabular-using-process-add/
+
+https://www.sqlbi.com/articles/using-process-add-in-tabular-models/
+**** deployment properties
+https://docs.microsoft.com/en-us/sql/analysis-services/tabular-models/tabular-model-solution-deployment-ssas-tabular
+**** delta change
+https://social.msdn.microsoft.com/Forums/sqlserver/en-US/8f3461fe-ed96-4454-8102-b8b663c84b34/microsoftanalysisservicesdeploymentexe-generating-delta-xmla-script?forum=sqlanalysisservices
+*** backup
+.abf backup file.
+
+*** AMO
+https://docs.microsoft.com/en-us/sql/analysis-services/tabular-model-programming-compatibility-level-1200/introduction-to-the-tabular-object-model-tom-in-analysis-services-amo
+https://technet.microsoft.com/en-us/library/bb522603(v=sql.110).aspx
+*** direct query vs in memory
+https://insightsquest.com/2016/07/05/ssas-tabular-2016-direct-query-vs-in-memory/
 ** MDX
+https://docs.microsoft.com/en-us/sql/analysis-services/multidimensional-models/mdx/mdx-query-the-basic-query
 *** and/or
 http://www.sqlblogspot.com/2013/10/mdx-where-clause-slicer-axis-andor.html
 *** more than two axes
@@ -840,6 +1084,22 @@ https://blog.crossjoin.co.uk/2015/06/01/using-selectcolumns-to-alias-columns-in-
 *** generate vs addcolumns
 https://www.sqlbi.com/articles/using-generate-and-row-instead-of-addcolumns-in-dax/
 
+** TMSL (Tabular Model Scripting Language)
+https://docs.microsoft.com/en-us/sql/analysis-services/tabular-model-scripting-language-tmsl-reference
+
+https://docs.microsoft.com/en-us/sql/analysis-services/tabular-models-scripting-language-objects/tmsl-reference-tabular-objects
+https://docs.microsoft.com/en-us/sql/analysis-services/tabular-models-scripting-language-commands/tmsl-reference-commands
+
+How to execute TMSL?
+- XMLA window in Management Studio
+- invoke-ascmd via AMO PowerShell (Invoke-ASCmd cmdlet)
+- Analysis Services Execute DDL Task in SSIS.
+
+** XMLA
+*** query database
+http://geekswithblogs.net/darrengosbell/archive/2006/08/06/XMLA_DatabasesAndCubes.aspx
+*** process add
+http://www.artisconsulting.com/blogs/greggalloway/2007/4/20/processadd-examples
 ** ADOMD.NET
 *** example
 https://www.sqlbi.com/articles/execute-dax-queries-through-ole-db-and-adomd-net/
@@ -1159,7 +1419,7 @@ https://stackoverflow.com/questions/13508877/resetting-the-opacity-of-a-child-el
 https://stackoverflow.com/questions/30794997/change-only-alpha-channel-in-background-color
 ** custom modal popup
 https://www.w3schools.com/howto/howto_css_modals.asp
-http://inspirationalpixels.com/tutorials/custom-popup-modalz``
+http://inspirationalpixels.com/tutorials/custom-popup-modalz``n
 * life
 ** credit card
 score

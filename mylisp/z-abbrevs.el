@@ -904,7 +904,31 @@
   _
   "\n#+END_SRC\n")
 
+(define-skeleton z-org-insert-perl-code
+  "Insert perl code."
+  nil
+  "#+BEGIN_SRC perl\n"
+  _
+  "\n#+END_SRC\n")
+
+(define-skeleton z-org-insert-python-code
+  "Insert python code."
+  nil
+  "#+BEGIN_SRC python\n"
+  _
+  "\n#+END_SRC\n")
+
+(define-skeleton z-org-insert-sql-code
+  "Insert SQL code."
+  nil
+  "#+BEGIN_SRC sql\n"
+  _
+  "\n#+END_SRC\n")
+
 (define-abbrev-table 'org-mode-abbrev-table
   '(
 	("zel" "" z-org-insert-el-code)
+	("zpl" "" z-org-insert-perl-code)
+	("zpy" "" z-org-insert-python-code)
+	("zsql" "" z-org-insert-sql-code)
 	))

@@ -20,27 +20,13 @@
             .important {
                 background-color: yellow;
             }
+            .error {
+                color: red;
+            }
         </style>
     </head>
     <body>
-        <div>Take care, Roberto.</div>
-        <div>My update:</div>
-        <ol>
-            <li>
-                I have finished the ADF deployment tasks in SI. I found a potential risk with the ADF task. <br/>
-                As shown in the log, the task clears all pipelines, data sets and linked services at first, and then deploys them one by one. The upside is that it can be used for deletion. But there is a serious downside. If some step fails, subsequent steps will fail. For example, if a linked service fails to deploy, the data factory will end up with no datasets and no pipelines. <br/>
-
-                In my first attempt, I specified the wrong key vault key, the first linked service failed, and the data factory became empty except for a linked service with error.
-                I am not sure about the chance of deployment failure in the real world. Do you think we shall add the ADF deployment task to PROD?
-            </li>
-            <li>
-                For the seasonality feature, I found a way to slice measures by prior-year dates. Processing the cube in visual studio is very slow for some tables. Has our dev database been downgraded?<br/>
-                I managed to process the monthly revenue and quota tables and added some measures for testing. My understanding is that we need to <i>'shift'</i> the measures by one year in the report, as shown below.<br/>
-
-                Since we don't have much historic data, I added a measure to shift one month to experiment. Is that what we want? If so, could you give me the full list of <b>measures</b> to add and their expected <b>names</b>? We already have measures for 'Previous Year', so I can't think out the appropriate names.<br/>
-                You can check out my branch: <i>dev/donzhu/seasonality</i>.
-            </li>
-        </ol>
+        <div>Hi Roberto,</div>
 
         <hr align="left" style="width: 100px" />
         <div id="signature" >

@@ -62,3 +62,15 @@
   "Set environment variables for cl.exe."
   (setenv "LIB" "C:\\Program Files\\Microsoft Visual Studio 14.0\\VC\\lib")
   (setenv "INCLUDE" "C:\\Program Files\\Microsoft Visual Studio 14.0\\VC\\include;C:\\Program Files\\Windows Kits\\10\\Include\\10.0.15063.0\\ucrt;C:\\Program Files\\Windows Kits\\10\\Include\\10.0.15063.0\\um"))
+
+(defun z-watch-skype-dir ()
+  "Start a buffer to call SkypeDirectoryWatcher."
+  (let* ((buf-name "*Skype Directory Watcher*")
+         (buf (get-buffer buf-name)))
+    (if buf
+        (switch-to-buffer buf)
+      (progn
+        (switch-to-buffer buf-name)
+        (shell (current-buffer))
+        (insert "C:\\Users\\donzhu\\source\\repos\\SkypeDirectoryWatcher\\SkypeDirectoryWatcher\\bin\\Debug\\SkypeDirectoryWatcher.exe")
+        (comint-send-input)))))

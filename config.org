@@ -199,6 +199,11 @@ The following config hides the markup elements
   (setq org-hide-emphasis-markers t)
 #+END_SRC
 
+Disable underscore to subscript.
+#+BEGIN_SRC emacs-lisp
+  (setq org-export-with-sub-superscripts nil)
+#+END_SRC
+
 ** yes or no
 Substitute y-or-n-p for yes-or-no-p.
 #+BEGIN_SRC emacs-lisp
@@ -856,6 +861,12 @@ Convert path in region to standard Windows path.
     (let ((file (buffer-substring-no-properties (region-beginning) (region-end))))
       (delete-region (region-beginning) (region-end))
       (insert (z-string-win-style-path file))))
+#+END_SRC
+
+** Watch Skype directory
+#+BEGIN_SRC emacs-lisp
+  (save-excursion
+    (z-watch-skype-dir))
 #+END_SRC
 
 * COMMENT Unused config that may be useful in the future
