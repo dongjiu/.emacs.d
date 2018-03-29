@@ -220,6 +220,9 @@ https://www.wikihow.com/Open-XPS-Files
 ** service
 https://stackoverflow.com/questions/3582108/create-windows-service-from-executable
 
+** Everything search always on top
+View->On Top
+https://www.voidtools.com/forum/viewtopic.php?t=2820
 * OneNote
 ** My note
 https://microsoft-my.sharepoint.com/personal/donzhu_microsoft_com/_layouts/OneNote.aspx?id=%2Fpersonal%2Fdonzhu_microsoft_com%2FDocuments%2FDongjiu%20%40%20Microsoft&wd=target%28UCM%20Business%20Analytics.one%7CED868031-16A9-412A-B66D-9692C005A8DF%2F%29

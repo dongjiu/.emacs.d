@@ -273,35 +273,28 @@ Substitute y-or-n-p for yes-or-no-p.
 (add-to-list 'auto-mode-alist '("\\.t?\\'" . cperl-mode))
 #+END_SRC
 ** json
-*z-node-exe* points to the node executable.
-#+BEGIN_SRC emacs-lisp
-(setq z-node-exe "D:/CorextCache/Node.js.with.uv.pipe.name.fixed.6.9.1/node.exe")
-#+END_SRC
-
 The following function can be used to beautify json in region. *node*
 is required for this function to work.
 #+BEGIN_SRC emacs-lisp
   (defun z-node-beautify-json ()
     "Beautify JSON in region."
     (interactive)
-    (if (file-exists-p z-node-exe)
-        (let ((file)
-              (json (buffer-substring-no-properties (region-beginning) (region-end)))
-              (cmd))
-          (with-temp-buffer
-            (find-file "~/.emacs.d/tmp.json")
-            (erase-buffer)
-            (insert json)
-            (save-buffer)
-            (setq file (buffer-file-name))
-            (kill-buffer))
-          (setq cmd (concat (replace-regexp-in-string "/" "\\\\" z-node-exe) " "
-                            (replace-regexp-in-string "/" "\\\\" (expand-file-name "~/.emacs.d/javascript/beautify_json.js ")) " "
-                            (replace-regexp-in-string "/" "\\\\" file)))
-          (setq json (shell-command-to-string cmd))
-          (delete-region (region-beginning) (region-end))
-          (insert json))
-      (message "Cannot find node executable file")))
+    (let ((file)
+          (json (buffer-substring-no-properties (region-beginning) (region-end)))
+          (cmd))
+      (with-temp-buffer
+        (find-file "~/.emacs.d/tmp.json")
+        (erase-buffer)
+        (insert json)
+        (save-buffer)
+        (setq file (buffer-file-name))
+        (kill-buffer))
+      (setq cmd (concat "node.exe "
+                        (replace-regexp-in-string "/" "\\\\" (expand-file-name "~/.emacs.d/javascript/beautify_json.js ")) " "
+                        (replace-regexp-in-string "/" "\\\\" file)))
+      (setq json (shell-command-to-string cmd))
+      (delete-region (region-beginning) (region-end))
+      (insert json)))
 #+END_SRC
 
 ** html
