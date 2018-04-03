@@ -68,7 +68,7 @@
 (defun z-bing-dict (&optional word)
   "Search WORD in bing dict."
   (interactive "sWord: ")
-  (browse-url (concat "http://cn.bing.com/dict/search?q=" (z-url-escape word))))
+  (browse-url (concat "http://cn.bing.com/dict/search?mkt=zh-cn&q=" (z-url-escape word))))
 
 (defun z-cambridge-dict (&optional word)
   "Search WORD in cambridge dict."
