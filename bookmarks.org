@@ -230,13 +230,6 @@ onenote:https://microsoft-my.sharepoint.com/personal/donzhu_microsoft_com/Docume
 ** Background color
 https://support.office.com/en-us/article/Change-the-background-color-of-a-page-55365B14-076C-494F-9775-7CB3FE521E19
 
-* Typescript
-** backtick '`'
-https://basarat.gitbooks.io/typescript/docs/template-strings.html
-
-** private in constructor parameter declaration
-https://kendaleiv.com/typescript-constructor-assignment-public-and-private-keywords/
-https://www.stevefenton.co.uk/2013/04/stop-manually-assigning-typescript-constructor-parameters/
 * emacs
 ** os bits
 https://emacs.stackexchange.com/questions/11052/how-to-determine-operating-system-bits-32-vs-64-bit-in-elisp
