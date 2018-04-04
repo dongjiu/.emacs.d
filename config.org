@@ -415,7 +415,9 @@ bookmarks for URL, files and directories.
   (global-set-key (kbd "C-; b")
                   (lambda ()
                     (interactive)
-                    (find-file-other-window "~/.emacs.d/bookmarks.org")))
+                    (find-file-other-window
+                     (concat (getenv "OneDrive")
+                             "\\bookmarks.org"))))
 #+END_SRC
 ** Email
 Key binding for opening the /email.html/ file that will be inserted into
