@@ -405,6 +405,11 @@ Otherwise, do nothing."
 		  ((eq system-type 'darwin)
 		   (shell-command "open " file)))))
 
+(defun z-ecd ()
+  "Explore current directory."
+  (interactive)
+  (z-open default-directory))
+
 (defun z-reload-file ()
   "Reload current file."
   (interactive)
