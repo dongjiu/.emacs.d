@@ -408,6 +408,14 @@ Use "C-; C-f" to go to the next appropriate point in the buffer.
   (global-set-key (kbd "C-; C-; s") 'z-goto-scratch)
 #+END_SRC
 
+*** Go to OneDrive directory
+#+BEGIN_SRC emacs-lisp
+  (defun z-onedrive-dir ()
+    "Go to OneDrive directory."
+    (interactive)
+    (dired-at-point (getenv "OneDrive")))
+#+END_SRC
+
 ** Bookmarks
 Key binding for opening the /bookmarks.org/ file that is used save
 bookmarks for URL, files and directories.
