@@ -15,6 +15,12 @@ directory and save it in the *z-home* variable.
     (setq z-home (getenv "USERPROFILE")))
 #+END_SRC
 
+On Linux, use HOME environment variable.
+#+BEGIN_SRC emacs-lisp
+  (when (eq system-type 'gnu/linux)
+    (setq z-home (getenv "HOME")))
+#+END_SRC
+
 ** System bits
 On windows, use the "/wmic os get osarchitecture/" command to determine
 whether the system is 32-bit or 64-bit.
@@ -105,9 +111,13 @@ Light theme:
     (set-face-attribute 'vertical-border nil :foreground "gray"))
 #+END_SRC
 
-Enable light theme:
+Choose theme based on system:
 #+BEGIN_SRC emacs-lisp
-  (z-light-theme)
+  (defun z-set-theme ()
+    (when (eq system-type 'windows-nt)
+      (z-light-theme))
+    (when (eq system-type 'gnu/linux)
+      (load-theme 'dracula)))
 #+END_SRC
 
 * Customization
@@ -170,10 +180,15 @@ Use vc-ediff instead of vc-diff in vc-mode.
 ** Init buffer
 When emacs is started, open eshell in the user directory.
 #+BEGIN_SRC emacs-lisp
-  (setq initial-buffer-choice
-        (lambda ()
-          (setq default-directory (expand-file-name z-home))
-          (eshell)))
+  (defun z-open-init-buffer ()
+    (setq default-directory (expand-file-name z-home))
+    (eshell))
+  
+  (setq initial-buffer-choice 'z-open-init-buffer)
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (z-open-init-buffer)
+              (z-set-theme)))
 #+END_SRC
 
 ** Tab
@@ -229,6 +244,13 @@ Substitute y-or-n-p for yes-or-no-p.
   (setq initial-major-mode 'org-mode)
 #+END_SRC
 
+* unset key bindings
+By default, 'C-o' is used to call (open-line). I use it as a prefix
+for most custom functions.
+#+BEGIN_SRC emacs-lisp
+  (global-unset-key "\C-o")
+#+END_SRC
+
 * Programming
 ** c
 #+BEGIN_SRC emacs-lisp
@@ -254,7 +276,7 @@ Substitute y-or-n-p for yes-or-no-p.
               (if (assoc 'inexpr-class c-offsets-alist)
                   (c-set-offset 'inexpr-class 0))
               (hs-minor-mode)
-              (local-set-key (kbd "C-; C-; C-h") 'z-csharp-hide-methods)))
+              (local-set-key (kbd "C-o C-o C-h") 'z-csharp-hide-methods)))
 #+END_SRC
 
 ** java
@@ -323,9 +345,9 @@ Use web-mode to edit html files.
 #+BEGIN_SRC emacs-lisp
   (load-file "~/.emacs.d/mylisp/z-reminder.el")
   (z-reminder-start t)
-  (global-set-key (kbd "C-; r s") 'z-reminder-start)
-  (global-set-key (kbd "C-; r e") 'z-reminder-stop)
-  (global-set-key (kbd "C-; r r") 'z-reminder-report)
+  (global-set-key (kbd "C-o r s") 'z-reminder-start)
+  (global-set-key (kbd "C-o r e") 'z-reminder-stop)
+  (global-set-key (kbd "C-o r r") 'z-reminder-report)
 #+END_SRC
 
 * Key bindings
@@ -365,27 +387,27 @@ Here is the key binding for it.
   (global-set-key (kbd "C-x C-h") 'z-run-eshell)
 #+END_SRC
 
-** "C-;" prefix
-"C-;" is used as prefix to avoid conflicts with builtin key bindings.
+** "C-o" prefix
+"C-o" is used as prefix to avoid conflicts with builtin key bindings.
 #+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "C-; t") 'display-time-world)
-  (global-set-key (kbd "C-; i") 'imenu)
-  (global-set-key (kbd "C-; p") 'z-goto-match-paren)
-  (global-set-key (kbd "C-; g") 'rgrep)
-  (global-set-key (kbd "C-; f") 'find-dired)
-  (global-set-key (kbd "C-; w") 'ffap-copy-string-as-kill)
-  (global-set-key (kbd "C-; C-; y") 'z-dup-line)
-  (global-set-key (kbd "C-; C-; i") 'z-inc-num)
-  (global-set-key (kbd "C-; d d") 'z-bing-dict-search-word)
-  (global-set-key (kbd "C-; d r") 'z-bing-dict-search-region)
-  (global-set-key (kbd "C-; d l") 'z-bing-dict-search-line)
-  (global-set-key (kbd "C-; s l") 'z-bing-search-line)
-  (global-set-key (kbd "C-; s r") 'z-bing-search-region)
-  (global-set-key (kbd "C-; o c") 'org-capture)
+  (global-set-key (kbd "C-o t") 'display-time-world)
+  (global-set-key (kbd "C-o i") 'imenu)
+  (global-set-key (kbd "C-o p") 'z-goto-match-paren)
+  (global-set-key (kbd "C-o g") 'rgrep)
+  (global-set-key (kbd "C-o f") 'find-dired)
+  (global-set-key (kbd "C-o w") 'ffap-copy-string-as-kill)
+  (global-set-key (kbd "C-o C-o y") 'z-dup-line)
+  (global-set-key (kbd "C-o C-o i") 'z-inc-num)
+  (global-set-key (kbd "C-o d d") 'z-bing-dict-search-word)
+  (global-set-key (kbd "C-o d r") 'z-bing-dict-search-region)
+  (global-set-key (kbd "C-o d l") 'z-bing-dict-search-line)
+  (global-set-key (kbd "C-o s l") 'z-bing-search-line)
+  (global-set-key (kbd "C-o s r") 'z-bing-search-region)
+  (global-set-key (kbd "C-o o c") 'org-capture)
 #+END_SRC
 
 *** Go to next appropriate point
-Use "C-; C-f" to go to the next appropriate point in the buffer.
+Use "C-o C-f" to go to the next appropriate point in the buffer.
 #+BEGIN_SRC emacs-lisp
   (defun z-next-appropriate-point ()
     "Go to the next appropriate point based on the context."
@@ -395,7 +417,7 @@ Use "C-; C-f" to go to the next appropriate point in the buffer.
       (search-forward "=\"" nil t))
      (t forward-char)))
 
-  (global-set-key (kbd "C-; C-f") 'z-next-appropriate-point)
+  (global-set-key (kbd "C-o C-f") 'z-next-appropriate-point)
 #+END_SRC
 
 *** Go to scratch buffer
@@ -405,7 +427,7 @@ Use "C-; C-f" to go to the next appropriate point in the buffer.
     (interactive)
     (switch-to-buffer "*scratch*"))
 
-  (global-set-key (kbd "C-; C-; s") 'z-goto-scratch)
+  (global-set-key (kbd "C-o C-o s") 'z-goto-scratch)
 #+END_SRC
 
 *** Go to OneDrive directory
@@ -420,7 +442,7 @@ Use "C-; C-f" to go to the next appropriate point in the buffer.
 Key binding for opening the /bookmarks.org/ file that is used save
 bookmarks for URL, files and directories.
 #+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "C-; b")
+  (global-set-key (kbd "C-o b")
                   (lambda ()
                     (interactive)
                     (find-file-other-window
@@ -431,7 +453,7 @@ bookmarks for URL, files and directories.
 Key binding for opening the /email.html/ file that will be inserted into
 outlook.
 #+BEGIN_SRC emacs-lisp
-    (global-set-key (kbd "C-; m")
+    (global-set-key (kbd "C-o m")
                     (lambda ()
                       (interactive)
                       (find-file-other-window "~/.emacs.d/email.html")
@@ -858,7 +880,7 @@ This interactive function zips a directory at point.
 ** Visual studio
 #+BEGIN_SRC emacs-lisp
   (when (eq system-type 'windows-nt)
-    (global-set-key (kbd "C-; C-o C-v") 'z-open-file-at-point-in-vs))
+    (global-set-key (kbd "C-o C-o C-v") 'z-open-file-at-point-in-vs))
 #+END_SRC
 
 ** SSMS
@@ -904,7 +926,7 @@ Convert path in region to standard Windows path.
 ;;(add-to-list 'load-path "~/.emacs.d/snippets")
 ;;(require 'yasnippet)
 ;;(yas-global-mode 1)
-;;(global-set-key (kbd "C-; TAB") 'yas-expand)
+;;(global-set-key (kbd "C-o TAB") 'yas-expand)
 
 ;; web-mode
 ;;(require 'web-mode)
