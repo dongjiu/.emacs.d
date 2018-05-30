@@ -1,0 +1,642 @@
+* installation
+** pip
+$ python -m pip install --upgrade pip
+** numpy
+$ pip3 install numpy
+** scipy
+$ pip3 install scipy
+** sklearn
+$ pip3 install -U scikit-learn
+** matplotlib
+$ pip3 install matplotlib
+** pandas
+$ pip3 install pandas
+
+ImportError: Install xlrd >= 0.9.0 for Excel support
+$ pip3 install xlrd
+** SQLAlchemy
+$ pip3 install SQLAlchemy==1.2.0
+
+https://pypi.org/project/SQLAlchemy/1.2.0/
+** tensorflow
+$ pip3 install tensorflow-gpu
+** fancyimpute
+https://pypi.org/project/fancyimpute/
+$ pip3 install fancyimpute
+* install python 3 in centos
+https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-local-programming-environment-on-centos-7
+
+1. make sure yum is up to date
+sudo yum -y update
+
+2. install yum-utils
+sudo yum -y install yum-utils
+
+3. install CentOS development tools
+sudo yum -y groupinstall development
+
+4. install IUS
+We would like to install the most current upstream stable release of
+Python 3, we will need to install IUS, which stands for Inline with
+Upstream Stable. A community project, IUS provides Red Hat Package
+Manager (RPM) packages for some newer versions of select software.
+
+sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
+
+5. install python
+sudo yum -y install python36u
+
+6. check installation
+python3.6 -V
+
+7. install pip
+sudo yum -y install python36u-pip
+
+8. use pip to install packages
+sudo pip3.6 install package_name
+
+sudo pip3.6 install --upgrade pip
+
+* Loading data
+scikit-learn comes with some common datasets we can quickly load.
+** load_digits
+load_digits contains 1797 observations from images of handwritten
+digits. It is a good dataset for teaching image classification.
+
+#+BEGIN_SRC python
+  from sklearn import datasets
+
+  # Load digits dataset
+  digits = datasets.load_digits()
+
+  # Create features matrix
+  features = digits.data
+
+  # Create target vector
+  target = digits.target
+
+  # View first observations
+  return(features[0])
+#+END_SRC
+
+#+RESULTS:
+
+** load_boston
+load_boston contains 503 observations on Boston housing prices. It is
+a good dataset for exploring regression algorithms.
+** load_iris
+load_iris contains 150 observations on the measurements of Iris
+flowers. It is a good dataset for exploring classification algorithms.
+
+** simulated dataset
+scikit-learn offers many methods for creating simulated data.
+
+When we want a dataset designed to be used with linear regression,
+make_regression is a good choice.
+
+#+BEGIN_SRC python
+    from sklearn.datasets import make_regression
+
+    # Generate features matrix, target vector, and the true coefficients
+    features, target, coefficients = make_regression(n_samples = 100,
+                                                     n_features = 3,
+                                                     n_informative = 3,
+                                                     n_targets = 1,
+                                                     noise = 0.0,
+                                                     coef = True,
+                                                     random_state = 1)
+    return (
+        'Feature Matrix\n{}\nTarget Matrix\n{}'.format(features[:3], target[:3]))
+#+END_SRC
+
+#+RESULTS:
+: Feature Matrix
+: [[ 1.29322588 -0.61736206 -0.11044703]
+:  [-2.793085    0.36633201  1.93752881]
+:  [ 0.80186103 -0.18656977  0.0465673 ]]
+: Target Matrix
+: [-10.37865986  25.5124503   19.67705609]
+
+
+If we are interested in creating a simulated dataset for
+classification, we can use make_classification:
+
+#+BEGIN_SRC python
+  from sklearn.datasets import make_classification
+
+  features, target = make_classification(n_samples = 100,
+                                         n_features = 3,
+                                         n_informative = 3,
+                                         n_redundant = 0,
+                                         n_classes = 2,
+                                         weights = [.25, .75],
+                                         random_state = 1)
+  return('Feature Matrix\n{}\nTarget Vector\n{}'.format(features[:3], target[:3]))
+#+END_SRC
+
+#+RESULTS:
+: Feature Matrix
+: [[ 1.06354768 -1.42632219  1.02163151]
+:  [ 0.23156977  1.49535261  0.33251578]
+:  [ 0.15972951  0.83533515 -0.40869554]]
+: Target Vector
+: [1 0 0]
+
+If we want a dataset designed to work well with clustering techniques,
+scikit-learn offers make_blobs.
+
+#+BEGIN_SRC python
+  from sklearn.datasets import make_blobs
+  import matplotlib.pyplot as plt
+
+  features, target = make_blobs(n_samples = 100,
+                                n_features = 2,
+                                centers = 3,
+                                cluster_std = 0.5,
+                                shuffle = True,
+                                random_state = 1)
+
+  plt.scatter(features[:, 0], features[:, 1], c=target)
+  plt.show()
+
+  return('Feature Matrix\n{}\nTarget Vector\n{}'.format(features[:3], target[:3]))
+#+END_SRC
+
+#+RESULTS:
+: Feature Matrix
+: [[ -1.22685609   3.25572052]
+:  [ -9.57463218  -4.38310652]
+:  [-10.71976941  -4.20558148]]
+: Target Vector
+: [0 1 1]
+
+
+In make_regression and make_classification, n_informative determines
+the number of features that are used to generate the target vector. If
+n_informative is less than the total number of features (n_features),
+the resulting dataset will have redundant features that can be
+identified through feature selection techniques.
+
+In addition, make_classification contains a *weights* parameter that
+allows us to simulate datasets with imbalanced classes.
+
+For make_blobs, the *centers* parameter determines the number of
+clusters generated. Using the matplotlib visualization library, we can
+visualize the clusters generated by make_blobs.
+
+** Loading a CSV File
+Use the pandas library's read_csv to load a local or hosted CSV file.
+[[http://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html][read_csv spec]]
+
+#+BEGIN_SRC python
+  import pandas as pd
+
+  #url = 'https://tinyurl.com/simulated_data'
+  #dataframe = pd.read_csv(url)
+  dataframe = pd.read_csv('data\\test.csv')
+
+  return (dataframe.head(2))
+#+END_SRC
+
+#+RESULTS:
+: integer              datetime   category
+: 0        5   2018-01-01 00:00:00          0
+: 1        3   2018-01-02 00:01:00          1
+
+** Loading an Excel file
+Use the pandas library's read_excel.
+
+#+BEGIN_SRC python
+  import pandas as pd
+
+  dataframe = pd.read_excel('data/test.xlsx', sheetname=0)
+
+  return(dataframe.head(3))
+#+END_SRC
+
+#+RESULTS:
+: emp_id first_name last_name onboard_date
+: 0       1        Jim     Green   2012-09-01
+: 1       2       Tony    Parker   2013-06-12
+: 2       3        Tim    Duncan   2011-09-23
+
+** Loading a JSON File
+Use pandas's read_json.
+[[https://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_json.html][read_json spec]]
+#+BEGIN_SRC python
+  import pandas as pd
+
+  dataframe = pd.read_json('data\\test.json', orient='index')
+  return(dataframe.head(2))
+#+END_SRC
+
+#+RESULTS:
+: col 1 col 2
+: row 1     a     b
+: row 2     c     d
+
+** Querying a SQL Database
+#+BEGIN_SRC python
+  import pandas as pd
+  from sqlalchemy import create_engine
+
+  database_connection = create_engine('sqlite:///data/test.db')
+  dataframe = pd.read_sql_query('SELECT * FROM person', database_connection)
+
+  return (dataframe.head(2))
+#+END_SRC
+
+#+RESULTS:
+: id first_name last_name
+: 0   1        Tim    Duncan
+: 1   2       Tony    Parker
+
+* Data Wrangling
+** Use DataFrame
+#+BEGIN_SRC python
+  import pandas as pd
+
+  dataframe = pd.DataFrame()
+  dataframe['Name'] = ['Jacky Jackson', 'Steven Stevenson']
+  dataframe['Age'] = [38,25]
+  dataframe['Driver'] = [True, False]
+
+  # Append row
+  new_person = pd.Series(['Molly Mooney', 40, True], index=['Name', 'Age', 'Driver'])
+  dataframe = dataframe.append(new_person, ignore_index=True)
+
+  return ('Head\n{}\nshape=\n{}\ndescribe:\n{}\niloc:\n{}'.format(
+      dataframe.head(2),
+      dataframe.shape,
+      dataframe.describe(),
+      dataframe.iloc[:2]))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+Head
+               Name  Age  Driver
+0     Jacky Jackson   38    True
+1  Steven Stevenson   25   False
+shape=
+(3, 3)
+describe:
+             Age
+count   3.000000
+mean   34.333333
+std     8.144528
+min    25.000000
+25%    31.500000
+50%    38.000000
+75%    39.000000
+max    40.000000
+iloc:
+               Name  Age  Driver
+0     Jacky Jackson   38    True
+1  Steven Stevenson   25   False
+#+end_example
+
+* Handling Numerical Data
+** Rescaling a feature
+#+BEGIN_SRC python
+  import numpy as np
+  from sklearn import preprocessing
+
+  feature = np.array([[-500.5],[-100.1],[0],[100.1],[900.9]])
+
+  minmax_scale = preprocessing.MinMaxScaler(feature_range=(0,1))
+  scaled_feature = minmax_scale.fit_transform(feature)
+  return (scaled_feature)
+#+END_SRC
+
+#+RESULTS:
+|          0 |
+| 0.28571429 |
+| 0.35714286 |
+| 0.42857143 |
+|          1 |
+** Standardizing a Feature
+#+BEGIN_SRC python
+  import numpy as np
+  from sklearn import preprocessing
+
+  x = np.array([[-1000.1],[-200.2],[500.5],[600.6],[9000.9]])
+  scaler = preprocessing.StandardScaler()
+  standardized = scaler.fit_transform(x)
+
+  robust_scaler = preprocessing.RobustScaler()
+  robust = robust_scaler.fit_transform(x)
+
+  return ('std:\n{}\nrobust:\n{}'.format(standardized, robust))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+std:
+[[-0.76058269]
+ [-0.54177196]
+ [-0.35009716]
+ [-0.32271504]
+ [ 1.97516685]]
+robust:
+[[-1.87387612]
+ [-0.875     ]
+ [ 0.        ]
+ [ 0.125     ]
+ [10.61488511]]
+#+end_example
+** Normalizing Observations
+#+BEGIN_SRC python
+  import numpy as np
+  from sklearn.preprocessing import Normalizer
+
+  # Create feature matrix
+  features = np.array([[0.5, 0.5],
+                       [1.1, 3.4],
+                       [1.5, 20.2],
+                       [1.63, 34.4],
+                       [10.9, 3.3]])
+
+  # Create normalizer
+  normalizer = Normalizer(norm="l2")
+
+  # Transform feature matrix
+  return (normalizer.transform(features))
+#+END_SRC
+
+#+RESULTS:
+| 0.70710678 | 0.70710678 |
+| 0.30782029 | 0.95144452 |
+| 0.07405353 | 0.99725427 |
+| 0.04733062 | 0.99887928 |
+| 0.95709822 | 0.28976368 |
+** Transforming Features
+#+BEGIN_SRC python
+  import numpy as np
+  from sklearn.preprocessing import FunctionTransformer
+
+  features = np.array([[2,3],[2,3],[2,3]])
+
+  def add_ten(x):
+      return x+10
+
+  ten_transformer = FunctionTransformer(add_ten)
+
+  return ten_transformer.transform(features)
+#+END_SRC
+
+#+RESULTS:
+| 12 | 13 |
+| 12 | 13 |
+| 12 | 13 |
+** Detecting Outliers
+#+BEGIN_SRC python
+  import numpy as np
+  from sklearn.covariance import EllipticEnvelope
+  from sklearn.datasets import make_blobs
+
+  # Create simulated data
+  features, _ = make_blobs(n_samples = 10,
+                           n_features = 2,
+                           centers = 1,
+                           random_state = 1)
+
+  # Replace the first observation's values with extreme values
+  features[0,0] = 10000
+  features[0,1] = 10000
+
+  # Create detector
+  outlier_detector = EllipticEnvelope(contamination=.1)
+
+  # Fit detector
+  outlier_detector.fit(features)
+
+  # Predict outliers
+  return outlier_detector.predict(features)
+#+END_SRC
+
+#+RESULTS:
+| -1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
+
+A major limitation of this approach is the need to specify a
+/contamination/ parameter, which is the proportion of observations that
+are outliers - a value that we don't know.
+
+If we expect our data to have few outliers, we can set /contamination/
+to something small.
+** Interquartile range (IQR)
+#+BEGIN_SRC python
+  import numpy as np
+  from sklearn.covariance import EllipticEnvelope
+  from sklearn.datasets import make_blobs
+
+  # Create simulated data
+  features, _ = make_blobs(n_samples = 10,
+                           n_features = 2,
+                           centers = 1,
+                           random_state = 1)
+
+  # Replace the first observation's values with extreme values
+  features[0,0] = 10000
+  features[0,1] = 10000
+
+  # Create one feature
+  feature = features[:,0]
+
+  # Create a function to return index of outliers
+  def indicies_of_outliers(x):
+      q1, q3 = np.percentile(x, [25, 75])
+      iqr = q3 - q1
+      lower_bound = q1 - (iqr * 1.5)
+      upper_bound = q3 + (iqr * 1.5)
+      return np.where((x > upper_bound) | (x < lower_bound))
+
+  # Run function
+  return indicies_of_outliers(feature)
+#+END_SRC
+
+#+RESULTS:
+| array | ((0) dtype=int32) |
+** Handling Outliers
+*** Drop them
+#+BEGIN_SRC python
+import pandas as pd
+
+# Create DataFrame
+houses = pd.DataFrame()
+houses['Price'] = [534433, 392333, 293222, 4322032]
+houses['Bathrooms'] = [2, 3.5, 2, 116]
+houses['Square_Feet'] = [1500, 2500, 1500, 48000]
+
+# Filter observations
+return houses[houses['Bathrooms'] < 20]
+#+END_SRC
+
+#+RESULTS:
+: Price  Bathrooms  Square_Feet
+: 0  534433        2.0         1500
+: 1  392333        3.5         2500
+: 2  293222        2.0         1500
+
+*** Mark
+#+BEGIN_SRC python
+import pandas as pd
+import numpy as np
+
+# Create DataFrame
+houses = pd.DataFrame()
+houses['Price'] = [534433, 392333, 293222, 4322032]
+houses['Bathrooms'] = [2, 3.5, 2, 116]
+houses['Square_Feet'] = [1500, 2500, 1500, 48000]
+houses["Outlier"] = np.where(houses["Bathrooms"] < 20, 0, 1)
+return houses
+#+END_SRC
+
+#+RESULTS:
+: Price  Bathrooms  Square_Feet  Outlier
+: 0   534433        2.0         1500        0
+: 1   392333        3.5         2500        0
+: 2   293222        2.0         1500        0
+: 3  4322032      116.0        48000        1
+
+*** Transform the feature to dampen the effect of the outlier
+#+BEGIN_SRC python
+import pandas as pd
+import numpy as np
+
+# Create DataFrame
+houses = pd.DataFrame()
+houses['Price'] = [534433, 392333, 293222, 4322032]
+houses['Bathrooms'] = [2, 3.5, 2, 116]
+houses['Square_Feet'] = [1500, 2500, 1500, 48000]
+houses['Log_Of_Square_Feet'] = [np.log(x) for x in houses["Square_Feet"]]
+
+return houses
+#+END_SRC
+
+#+RESULTS:
+: Price  Bathrooms  Square_Feet  Log_Of_Square_Feet
+: 0   534433        2.0         1500            7.313220
+: 1   392333        3.5         2500            7.824046
+: 2   293222        2.0         1500            7.313220
+: 3  4322032      116.0        48000           10.778956
+
+** Discretizating Features
+*** Binarize the feature
+#+BEGIN_SRC python
+  import numpy as np
+  from sklearn.preprocessing import Binarizer
+
+  # Create feature
+  age = np.array([[6],
+                  [12],
+                  [20],
+                  [36],
+                  [65]])
+
+  # Create binarizer
+  binarizer = Binarizer(18)
+
+  # Transform feature
+  return binarizer.fit_transform(age)
+#+END_SRC
+
+#+RESULTS:
+| 0 |
+| 0 |
+| 1 |
+| 1 |
+| 1 |
+*** Multiple thresholds
+#+BEGIN_SRC python
+  import numpy as np
+  from sklearn.preprocessing import Binarizer
+
+  # Create feature
+  age = np.array([[6],
+                  [12],
+                  [20],
+                  [36],
+                  [65]])
+
+  # Create binarizer
+  return np.digitize(age, bins=[20,30,64], right=True)
+#+END_SRC
+
+#+RESULTS:
+| 0 |
+| 0 |
+| 0 |
+| 2 |
+| 3 |
+** Grouping Observations Using Clustering
+#+BEGIN_SRC python
+  import pandas as pd
+  from sklearn.datasets import make_blobs
+  from sklearn.cluster import KMeans
+
+  features, _ = make_blobs(n_samples = 50,
+                           n_features = 2,
+                           centers = 3,
+                           random_state = 1)
+
+  dataframe = pd.DataFrame(features, columns=["feature_1", "feature_2"])
+  clusterer = KMeans(3, random_state=0)
+  clusterer.fit(features)
+
+  dataframe["group"] = clusterer.predict(features)
+
+  return dataframe.head(5)
+#+END_SRC
+
+#+RESULTS:
+: feature_1  feature_2  group
+: 0  -9.877554  -3.336145      0
+: 1  -7.287210  -8.353986      2
+: 2  -6.943061  -7.023744      2
+: 3  -7.440167  -8.791959      2
+: 4  -6.641388  -8.075888      2
+** Predict missing values using k-nearest neighbors (KNN)
+#+BEGIN_SRC python
+import numpy as np
+from fancyimpute import KNN
+from sklearn.preprocessing import StandardScaler
+from sklearn.datasets import make_blobs
+
+# Make a simulated feature matrix
+features, _ = make_blobs(n_samples = 1000,
+                         n_features = 2,
+                         random_state = 1)
+
+# Standardize the features
+scaler = StandardScaler()
+standardized_features = scaler.fit_transform(features)
+
+# Replace the first feature's first value with a missing value
+true_value = standardized_features[0,0]
+standardized_features[0,0] = np.nan
+
+# Predict the missing values in the feature matrix
+features_knn_imputed = KNN(k=5, verbose=0).complete(standardized_features)
+
+# Compare true and imputed values
+print("True Value:", true_value)
+print("Imputed Value:", features_knn_imputed[0,0])
+#+END_SRC
+
+#+RESULTS:
+* tensorflow
+** error
+ImportError: Could not find 'cudart64_90.dll'. TensorFlow requires
+that this DLL be installed in a directory that is named in your %PATH%
+environment variable. Download and install CUDA 9.0 from this URL:
+https://developer.nvidia.com/cuda-toolkit
+** validate installation
+#+BEGIN_SRC python
+import tensorflow as tf
+hello = tf.constant('Hello, TensorFlow!')
+sess = tf.Session()
+return sess.run(hello)
+#+END_SRC
+
+#+RESULTS:
