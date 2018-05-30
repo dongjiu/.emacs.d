@@ -19,10 +19,59 @@ $ pip install SQLAlchemy==1.2.0
 
 https://pypi.org/project/SQLAlchemy/1.2.0/
 ** tensorflow
+$ pip install tensorflow
 $ pip install tensorflow-gpu
+
+*** error
+ImportError: Could not find 'cudart64_90.dll'. TensorFlow requires
+that this DLL be installed in a directory that is named in your %PATH%
+environment variable. Download and install CUDA 9.0 from this URL:
+https://developer.nvidia.com/cuda-toolkit
+*** validate installation
+#+BEGIN_SRC python
+import tensorflow as tf
+hello = tf.constant('Hello, TensorFlow!')
+sess = tf.Session()
+return sess.run(hello)
+#+END_SRC
+
+#+RESULTS:
+: b'Hello, TensorFlow!'
+
 ** fancyimpute
 https://pypi.org/project/fancyimpute/
 $ pip install fancyimpute
+*** Troubleshooting
+**** gcc failed
+$ sudo yum -y install python36u-devel
+
+**** Failed building wheel for osqp. RuntimeError: CMake must be installed to build OSQP
+$ sudo yum -y install cmake
+
+update cmake:
+$ cat /etc/*release
+$ yum info cmake
+$ sudo yum remove cmake -y
+$ wget https://cmake.org/files/v3.6/cmake-3.6.2.tar.gz
+$ tar -zxvf cmake-3.6.2.tar.gz
+$ cd cmake-3.6.2
+$ sudo ./bootstrap --prefix=/usr
+$ sudo make
+$ sudo make install
+$ cmake --version
+
+http://jotmynotes.blogspot.com/2016/10/updating-cmake-from-2811-to-362-or.html
+
+**** No such file or directory: 'osqp_sources/build/out/libosqpstatic.a'
+$ git clone https://github.com/oxfordcontrol/osqp
+$ cd osqp
+$ cmake -G "Unix Makefiles"
+$ cmake --build .
+$ sudo cmake --build . --target install
+($ cmake --build . --target uninstall)
+
+http://osqp.readthedocs.io/en/latest/installation/sources.html
+
 * install python 3 in centos
 https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-local-programming-environment-on-centos-7
 
@@ -184,11 +233,12 @@ Use the pandas library's read_csv to load a local or hosted CSV file.
 
 #+BEGIN_SRC python
   import pandas as pd
-
+  import os
+  
   #url = 'https://tinyurl.com/simulated_data'
   #dataframe = pd.read_csv(url)
-  dataframe = pd.read_csv('data\\test.csv')
-
+  dataframe = pd.read_csv(os.path.join('data', 'test.csv'))
+  
   return (dataframe.head(2))
 #+END_SRC
 
@@ -202,9 +252,10 @@ Use the pandas library's read_excel.
 
 #+BEGIN_SRC python
   import pandas as pd
-
-  dataframe = pd.read_excel('data/test.xlsx', sheetname=0)
-
+  import os
+  
+  dataframe = pd.read_excel(os.path.join('data', 'test.xlsx'), sheetname=0)
+  
   return(dataframe.head(3))
 #+END_SRC
 
@@ -219,8 +270,9 @@ Use pandas's read_json.
 [[https://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_json.html][read_json spec]]
 #+BEGIN_SRC python
   import pandas as pd
+  import os
 
-  dataframe = pd.read_json('data\\test.json', orient='index')
+  dataframe = pd.read_json(os.path.join('data', 'test.json'), orient='index')
   return(dataframe.head(2))
 #+END_SRC
 
@@ -247,6 +299,8 @@ Use pandas's read_json.
 
 * Data Wrangling
 ** Use DataFrame
+[[https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html][pandas.Series]]
+
 #+BEGIN_SRC python
   import pandas as pd
 
@@ -339,6 +393,7 @@ robust:
  [ 0.125     ]
  [10.61488511]]
 #+end_example
+
 ** Normalizing Observations
 #+BEGIN_SRC python
   import numpy as np
@@ -364,6 +419,7 @@ robust:
 | 0.07405353 | 0.99725427 |
 | 0.04733062 | 0.99887928 |
 | 0.95709822 | 0.28976368 |
+
 ** Transforming Features
 #+BEGIN_SRC python
   import numpy as np
@@ -383,6 +439,7 @@ robust:
 | 12 | 13 |
 | 12 | 13 |
 | 12 | 13 |
+
 ** Detecting Outliers
 #+BEGIN_SRC python
   import numpy as np
@@ -412,31 +469,33 @@ robust:
 #+RESULTS:
 | -1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
 
+
 A major limitation of this approach is the need to specify a
 /contamination/ parameter, which is the proportion of observations that
 are outliers - a value that we don't know.
 
 If we expect our data to have few outliers, we can set /contamination/
 to something small.
+
 ** Interquartile range (IQR)
 #+BEGIN_SRC python
   import numpy as np
   from sklearn.covariance import EllipticEnvelope
   from sklearn.datasets import make_blobs
-
+  
   # Create simulated data
   features, _ = make_blobs(n_samples = 10,
                            n_features = 2,
                            centers = 1,
                            random_state = 1)
-
+  
   # Replace the first observation's values with extreme values
   features[0,0] = 10000
   features[0,1] = 10000
-
+  
   # Create one feature
   feature = features[:,0]
-
+  
   # Create a function to return index of outliers
   def indicies_of_outliers(x):
       q1, q3 = np.percentile(x, [25, 75])
@@ -444,13 +503,14 @@ to something small.
       lower_bound = q1 - (iqr * 1.5)
       upper_bound = q3 + (iqr * 1.5)
       return np.where((x > upper_bound) | (x < lower_bound))
-
+  
   # Run function
   return indicies_of_outliers(feature)
 #+END_SRC
 
 #+RESULTS:
-| array | ((0) dtype=int32) |
+| array | ((0)) |
+
 ** Handling Outliers
 *** Drop them
 #+BEGIN_SRC python
@@ -541,6 +601,7 @@ return houses
 | 1 |
 | 1 |
 | 1 |
+
 *** Multiple thresholds
 #+BEGIN_SRC python
   import numpy as np
@@ -563,6 +624,7 @@ return houses
 | 0 |
 | 2 |
 | 3 |
+
 ** Grouping Observations Using Clustering
 #+BEGIN_SRC python
   import pandas as pd
@@ -590,12 +652,14 @@ return houses
 : 2  -6.943061  -7.023744      2
 : 3  -7.440167  -8.791959      2
 : 4  -6.641388  -8.075888      2
-** Predict missing values using k-nearest neighbors (KNN)
+
+** Predict missing values using k-nearest neighbors (KNN) and scikit-learn's Imputer
 #+BEGIN_SRC python
 import numpy as np
 from fancyimpute import KNN
 from sklearn.preprocessing import StandardScaler
 from sklearn.datasets import make_blobs
+from sklearn.preprocessing import Imputer
 
 # Make a simulated feature matrix
 features, _ = make_blobs(n_samples = 1000,
@@ -613,24 +677,224 @@ standardized_features[0,0] = np.nan
 # Predict the missing values in the feature matrix
 features_knn_imputed = KNN(k=5, verbose=0).complete(standardized_features)
 
+mean_imputer = Imputer(strategy="mean", axis=0)
+features_mean_imputed = mean_imputer.fit_transform(standardized_features)
+
 # Compare true and imputed values
-print("True Value:", true_value)
-print("Imputed Value:", features_knn_imputed[0,0])
+return ("True Value:\t{}\nKNN Imputed Value:\t{}\nsklearn Imputed: {}\n".format(true_value, features_knn_imputed[0,0], features_mean_imputed[0,0]))
 #+END_SRC
 
 #+RESULTS:
-* tensorflow
-** error
-ImportError: Could not find 'cudart64_90.dll'. TensorFlow requires
-that this DLL be installed in a directory that is named in your %PATH%
-environment variable. Download and install CUDA 9.0 from this URL:
-https://developer.nvidia.com/cuda-toolkit
-** validate installation
+: True Value:	0.8730186113995938
+: KNN Imputed Value:	1.0955332713113226
+: sklearn Imputed: -0.000873892503901796
+
+scikit-learns' Imputer module typically gets worse results than KNN.
+
+* Handling Categorical Data
+When the classes have no intrisic ordering, numerical values
+erroneously create an ordering that is not present.
+
+The proper way is to create a binary feature for each class in the
+original feature. This is often called *one-hot encoding* (in machine
+learning literature) or *dummying* (in statistical and research
+literature).
+
+In digital circuits, *one-hot* is a group of bits among which the legal
+combinations of values are only those with a single high (1) bit and
+all the others low (0). A similar implementation in which all bits
+are '1' except one '0' is sometimes called *one-cold*.
+
+** Encoding Nominal Categorical Features
 #+BEGIN_SRC python
-import tensorflow as tf
-hello = tf.constant('Hello, TensorFlow!')
-sess = tf.Session()
-return sess.run(hello)
+import numpy as np
+from sklearn.preprocessing import LabelBinarizer, MultiLabelBinarizer
+
+feature = np.array([["Texas"], ["California"], ["Texas"], ["Delaware"], ["Texas"]])
+# create one-hot encoder
+one_hot = LabelBinarizer()
+return one_hot.fit_transform(feature)
 #+END_SRC
 
 #+RESULTS:
+| 0 | 0 | 1 |
+| 1 | 0 | 0 |
+| 0 | 0 | 1 |
+| 0 | 1 | 0 |
+| 0 | 0 | 1 |
+
+Output the classes.
+#+BEGIN_SRC python
+import numpy as np
+from sklearn.preprocessing import LabelBinarizer, MultiLabelBinarizer
+
+feature = np.array([["Texas"], ["California"], ["Texas"], ["Delaware"], ["Texas"]])
+# create one-hot encoder
+one_hot = LabelBinarizer()
+one_hot.fit_transform(feature)
+return one_hot.classes_
+#+END_SRC
+
+#+RESULTS:
+| California | Delaware | Texas |
+
+Reverse the one-hot encoding.
+#+BEGIN_SRC python
+import numpy as np
+from sklearn.preprocessing import LabelBinarizer, MultiLabelBinarizer
+
+feature = np.array([["Texas"], ["California"], ["Texas"], ["Delaware"], ["Texas"]])
+# create one-hot encoder
+one_hot = LabelBinarizer()
+return one_hot.inverse_transform(one_hot.fit_transform(feature))
+#+END_SRC
+
+#+RESULTS:
+| Texas | California | Texas | Delaware | Texas |
+
+
+Use pandas to one-hot encode the feature.
+#+BEGIN_SRC python
+import numpy as np
+import pandas as pd
+feature = np.array([["Texas"], ["California"], ["Texas"], ["Delaware"], ["Texas"]])
+return pd.get_dummies(feature[:,0])
+#+END_SRC
+
+#+RESULTS:
+: California  Delaware  Texas
+: 0           0         0      1
+: 1           1         0      0
+: 2           0         0      1
+: 3           0         1      0
+: 4           0         0      1
+
+Handle situations where each observation lists multiple classes.
+#+BEGIN_SRC python
+  import numpy as np
+  from sklearn.preprocessing import LabelBinarizer, MultiLabelBinarizer
+  
+  feature = [("Texas", "Florida"),
+             ("California", "Alabama"),
+             ("Texas", "Florida"),
+             ("Delaware", "Florida"),
+             ("Texas", "Alabama")]
+  # create one-hot encoder
+  one_hot_multiclass = MultiLabelBinarizer()
+  return "encoded:\n{}\nclasses:\n{}\n".format(one_hot_multiclass.fit_transform(feature), one_hot_multiclass.classes_)
+#+END_SRC
+
+#+RESULTS:
+: encoded:
+: [[0 0 0 1 1]
+:  [1 1 0 0 0]
+:  [0 0 0 1 1]
+:  [0 0 1 1 0]
+:  [1 0 0 0 1]]
+: classes:
+: ['Alabama' 'California' 'Delaware' 'Florida' 'Texas']
+
+It is often recommended that after one-hot encoding a feature, we drop
+one of the one-hot features in the resulting matrix to avoid linear
+dependence.
+
+** Encoding Ordinal Categorical Features
+Often we have a feature with classes that have some kind of natural
+ordering. A famous example is the *Likert scale*: Strongly Agree, Agree,
+Neutral, Disagree, Strongly Disagree
+
+Use pandas DataFrame's *replace* method to transform string labels to
+numerical equivalents.
+
+#+BEGIN_SRC python
+import pandas as pd
+dataframe = pd.DataFrame({"Score": ["Low", "Low", "Medium", "Medium", "High"]})
+scale_mapper = {"Low": 1, "Medium": 2, "High": 3}
+# replace feature values with scale
+return dataframe["Score"].replace(scale_mapper)
+#+END_SRC
+
+#+RESULTS:
+: 0    1
+: 1    1
+: 2    2
+: 3    2
+: 4    3
+: Name: Score, dtype: int64
+
+** Encoding Dictionaries of Features
+Use *DictVectorizer*.
+#+BEGIN_SRC python
+  from sklearn.feature_extraction import DictVectorizer
+  data_dict = [{"Red": 2, "Blue": 4},
+               {"Red": 4, "Blue": 3},
+               {"Red": 1, "Yellow": 2},
+               {"Red": 2, "Yellow": 2}]
+  dict_vectorizer = DictVectorizer(sparse=False)
+  features = dict_vectorizer.fit_transform(data_dict)
+  feature_names = dict_vectorizer.get_feature_names()
+  return "features:\n{}\nnames:\n{}\n".format(features, feature_names)
+#+END_SRC
+
+#+RESULTS:
+: features:
+: [[4. 2. 0.]
+:  [3. 4. 0.]
+:  [0. 1. 2.]
+:  [0. 2. 2.]]
+: names:
+: ['Blue', 'Red', 'Yellow']
+
+** Imputing Missing Class Values
+#+BEGIN_SRC python
+  import numpy as np
+  from sklearn.neighbors import KNeighborsClassifier
+  from sklearn.preprocessing import Imputer
+  
+  X = np.array([[0, 2.10, 1.45],
+                [1, 1.18, 1.33],
+                [0, 1.22, 1.27],
+                [1, -0.21, -1.19]])
+  X_with_nan = np.array([[np.nan, 0.87, 1.31],
+                         [np.nan, -0.67, -0.22]])
+  
+  # Train KNN learner
+  clf = KNeighborsClassifier(3, weights="distance")
+  trained_model = clf.fit(X[:, 1:], X[:,0])
+  
+  # Predict missing values' class
+  imputed_values = trained_model.predict(X_with_nan[:, 1:])
+  
+  # Join column of predicted class with their other features
+  X_with_imputed = np.hstack((imputed_values.reshape(-1,1), X_with_nan[:, 1:]))
+  
+  # Join two feature matrices
+  knc = np.vstack((X_with_imputed, X))
+  
+  # Fill in missing values with the feature's most frequent value
+  X_complete = np.vstack((X_with_nan, X))
+  imputer = Imputer(strategy="most_frequent", axis=0)
+  mfv = imputer.fit_transform(X_complete)
+  
+  return "KNeighborsClassifier:\n{}\nmost frequent values:\n{}\n".format(knc, mfv)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+KNeighborsClassifier:
+[[ 0.    0.87  1.31]
+ [ 1.   -0.67 -0.22]
+ [ 0.    2.1   1.45]
+ [ 1.    1.18  1.33]
+ [ 0.    1.22  1.27]
+ [ 1.   -0.21 -1.19]]
+most frequent values:
+[[ 0.    0.87  1.31]
+ [ 0.   -0.67 -0.22]
+ [ 0.    2.1   1.45]
+ [ 1.    1.18  1.33]
+ [ 0.    1.22  1.27]
+ [ 1.   -0.21 -1.19]]
+#+end_example
+
+** Handling Imbalanced Classes
