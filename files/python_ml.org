@@ -2,27 +2,27 @@
 ** pip
 $ python -m pip install --upgrade pip
 ** numpy
-$ pip3 install numpy
+$ pip install numpy
 ** scipy
-$ pip3 install scipy
+$ pip install scipy
 ** sklearn
-$ pip3 install -U scikit-learn
+$ pip install -U scikit-learn
 ** matplotlib
-$ pip3 install matplotlib
+$ pip install matplotlib
 ** pandas
-$ pip3 install pandas
+$ pip install pandas
 
 ImportError: Install xlrd >= 0.9.0 for Excel support
-$ pip3 install xlrd
+$ pip install xlrd
 ** SQLAlchemy
-$ pip3 install SQLAlchemy==1.2.0
+$ pip install SQLAlchemy==1.2.0
 
 https://pypi.org/project/SQLAlchemy/1.2.0/
 ** tensorflow
-$ pip3 install tensorflow-gpu
+$ pip install tensorflow-gpu
 ** fancyimpute
 https://pypi.org/project/fancyimpute/
-$ pip3 install fancyimpute
+$ pip install fancyimpute
 * install python 3 in centos
 https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-local-programming-environment-on-centos-7
 
@@ -54,8 +54,8 @@ sudo yum -y install python36u-pip
 
 8. use pip to install packages
 sudo pip3.6 install package_name
-
 sudo pip3.6 install --upgrade pip
+sudo pip install package_name
 
 * Loading data
 scikit-learn comes with some common datasets we can quickly load.
@@ -80,6 +80,7 @@ digits. It is a good dataset for teaching image classification.
 #+END_SRC
 
 #+RESULTS:
+| 0 | 0 | 5 | 13 | 9 | 1 | 0 | 0 | 0 | 0 | 13 | 15 | 10 | 15 | 5 | 0 | 0 | 3 | 15 | 2 | 0 | 11 | 8 | 0 | 0 | 4 | 12 | 0 | 0 | 8 | 8 | 0 | 0 | 5 | 8 | 0 | 0 | 9 | 8 | 0 | 0 | 4 | 11 | 0 | 1 | 12 | 7 | 0 | 0 | 2 | 14 | 5 | 10 | 12 | 0 | 0 | 0 | 0 | 6 | 13 | 10 | 0 | 0 | 0 |
 
 ** load_boston
 load_boston contains 503 observations on Boston housing prices. It is
@@ -95,18 +96,18 @@ When we want a dataset designed to be used with linear regression,
 make_regression is a good choice.
 
 #+BEGIN_SRC python
-    from sklearn.datasets import make_regression
-
-    # Generate features matrix, target vector, and the true coefficients
-    features, target, coefficients = make_regression(n_samples = 100,
-                                                     n_features = 3,
-                                                     n_informative = 3,
-                                                     n_targets = 1,
-                                                     noise = 0.0,
-                                                     coef = True,
-                                                     random_state = 1)
-    return (
-        'Feature Matrix\n{}\nTarget Matrix\n{}'.format(features[:3], target[:3]))
+  from sklearn.datasets import make_regression
+  
+  # Generate features matrix, target vector, and the true coefficients
+  features, target, coefficients = make_regression(n_samples = 100,
+                                                   n_features = 3,
+                                                   n_informative = 3,
+                                                   n_targets = 1,
+                                                   noise = 0.0,
+                                                   coef = True,
+                                                   random_state = 1)
+  return (
+      'Feature Matrix\n{}\nTarget Matrix\n{}'.format(features[:3], target[:3]))
 #+END_SRC
 
 #+RESULTS:
@@ -116,7 +117,6 @@ make_regression is a good choice.
 :  [ 0.80186103 -0.18656977  0.0465673 ]]
 : Target Matrix
 : [-10.37865986  25.5124503   19.67705609]
-
 
 If we are interested in creating a simulated dataset for
 classification, we can use make_classification:
@@ -163,12 +163,6 @@ scikit-learn offers make_blobs.
 #+END_SRC
 
 #+RESULTS:
-: Feature Matrix
-: [[ -1.22685609   3.25572052]
-:  [ -9.57463218  -4.38310652]
-:  [-10.71976941  -4.20558148]]
-: Target Vector
-: [0 1 1]
 
 
 In make_regression and make_classification, n_informative determines

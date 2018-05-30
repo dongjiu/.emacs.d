@@ -135,7 +135,7 @@ Specify the time zones for display-time-world to display.
           ("JST-9" "Tokyo")))
 #+END_SRC
 
-The output format is as follows:
+The output format is as follows.
 #+BEGIN_SRC emacs-lisp
   (setq display-time-world-time-format "[%Z][%z]\t%Y-%m-%d %H:%M\t%A\n")
 #+END_SRC
@@ -226,6 +226,11 @@ Enable babel for perl and python.
    '((emacs-lisp . t)
      (perl . t)
      (python . t)))
+#+END_SRC
+
+Use Python 3 by default.
+#+BEGIN_SRC emacs-lisp
+  (setq org-babel-python-command "python3.6")
 #+END_SRC
 
 Redisplay inline images after executing babel code blocks.
