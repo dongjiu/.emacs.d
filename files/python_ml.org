@@ -106,6 +106,8 @@ sudo pip3.6 install package_name
 sudo pip3.6 install --upgrade pip
 sudo pip install package_name
 
+** matplotlib: ModuleNotFoundError: No module named 'tkinter'
+sudo yum install python36u-tkinter
 * Loading data
 scikit-learn comes with some common datasets we can quickly load.
 ** load_digits
@@ -212,6 +214,12 @@ scikit-learn offers make_blobs.
 #+END_SRC
 
 #+RESULTS:
+: Feature Matrix
+: [[ -1.22685609   3.25572052]
+:  [ -9.57463218  -4.38310652]
+:  [-10.71976941  -4.20558148]]
+: Target Vector
+: [0 1 1]
 
 
 In make_regression and make_classification, n_informative determines

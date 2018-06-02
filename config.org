@@ -54,13 +54,12 @@ Add the directories to PATH environment variable and exec-path.
 * Appearance
 ** Font
 #+BEGIN_SRC emacs-lisp
-  (if (eq system-type 'windows-nt)
-      (progn
-        (set-frame-font "Consolas 10" t t)
-        (when (display-graphic-p)
-          (dolist (charset '(kana han symbol cjk-misc bopomofo))
-            (set-fontset-font "fontset-default" 'han '("Microsoft YaHei" . "unicode-bmp")))))
-
+  (when (eq system-type 'windows-nt)
+    (set-frame-font "Consolas 10" t t)
+    (when (display-graphic-p)
+      (dolist (charset '(kana han symbol cjk-misc bopomofo))
+        (set-fontset-font "fontset-default" 'han '("Microsoft YaHei" . "unicode-bmp")))))
+  (when (eq system-type 'darwin)
     (set-frame-font "Monaco 10" t t)
     ;;(set-frame-font "-apple-Songti_SC-medium-normal-normal-*-*-*-*-*-p-0-iso10646-1")
     (when (display-graphic-p)
