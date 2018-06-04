@@ -906,3 +906,129 @@ most frequent values:
 #+end_example
 
 ** Handling Imbalanced Classes
+Many algorithms in scikit-learn offer a prameter to weight classes
+during training to counteract the effect of their imbalance.
+#+BEGIN_SRC python
+  import numpy as np
+  from sklearn.ensemble import RandomForestClassifier
+  from sklearn.datasets import load_iris
+  
+  iris = load_iris()
+  features = iris.data
+  target = iris.target
+  
+  # remove first 40 observations
+  features = features[40:,:]
+  target = target[40:]
+  
+  # create binary target vector indicating if class 0
+  target = np.where((target == 0), 0, 1)
+  
+  # use weights  
+  weights = {0: .9, 1: 0.1}
+  RandomForestClassifier(class_weight=weights)
+  
+  # create weights inversely proportional to class frequencies
+  RandomForestClassifier(class_weight="balanced")
+  
+  # downsample the majority class
+  i_class0 = np.where(target == 0)[0]
+  i_class1 = np.where(target == 1)[0]
+  n_class0 = len(i_class0)
+  n_class1 = len(i_class1)
+  i_class1_downsampled = np.random.choice(i_class1, size=n_class0, replace=False)
+  np.hstack((target[i_class0], target[i_class1_downsampled]))
+  np.vstack((features[i_class0,:], features[i_class1_downsampled,:]))[0:5]
+  
+  # upsample the minority class
+  i_class0_upsampled = np.random.choice(i_class0, size=n_class1, replace=True)
+  np.concatenate((target[i_class0_upsampled], target[i_class1]))
+  np.vstack((features[i_class0_upsampled,:], features[i_class1,:]))[0:5]
+#+END_SRC
+*** downsample the majority class
+#+BEGIN_SRC python
+  import numpy as np
+  from sklearn.datasets import load_iris
+  
+  iris = load_iris()
+  features = iris.data
+  target = iris.target
+  
+  # remove first 40 observations
+  features = features[40:,:]
+  target = target[40:]
+  
+  # create binary target vector indicating if class 0
+  target = np.where((target == 0), 0, 1)
+  
+  # downsample the majority class
+  i_class0 = np.where(target == 0)[0]
+  i_class1 = np.where(target == 1)[0]
+  n_class0 = len(i_class0)
+  n_class1 = len(i_class1)
+  i_class1_downsampled = np.random.choice(i_class1, size=n_class0, replace=False)
+  # join target vector
+  target_vector = np.hstack((target[i_class0], target[i_class1_downsampled]))
+  # join feature matrix
+  feature_matrix = np.vstack((features[i_class0,:], features[i_class1_downsampled,:]))[0:5]
+  
+  return "target vector:\n{}\nfeature matrix:\n{}\n".format(target_vector, feature_matrix)
+#+END_SRC
+
+#+RESULTS:
+: target vector:
+: [0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1]
+: feature matrix:
+: [[5.  3.5 1.3 0.3]
+:  [4.5 2.3 1.3 0.3]
+:  [4.4 3.2 1.3 0.2]
+:  [5.  3.5 1.6 0.6]
+:  [5.1 3.8 1.9 0.4]]
+
+*** upsample the minority class
+#+BEGIN_SRC python
+  import numpy as np
+  from sklearn.datasets import load_iris
+  
+  iris = load_iris()
+  features = iris.data
+  target = iris.target
+  
+  # remove first 40 observations
+  features = features[40:,:]
+  target = target[40:]
+  
+  # create binary target vector indicating if class 0
+  target = np.where((target == 0), 0, 1)
+
+  i_class0 = np.where(target == 0)[0]
+  i_class1 = np.where(target == 1)[0]
+  n_class0 = len(i_class0)
+  n_class1 = len(i_class1)
+  
+  i_class0_upsampled = np.random.choice(i_class0, size=n_class1, replace=True)
+  # join target vector
+  target_vector = np.concatenate((target[i_class0_upsampled], target[i_class1]))
+  # join feature matrix
+  feature_matrix = np.vstack((features[i_class0_upsampled,:], features[i_class1,:]))[0:5]
+  return "target vector:\n{}\nfeature matrix:\n{}\n".format(target_vector, feature_matrix)  
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+  target vector:
+  [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1
+   1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+   1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+   1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]
+  feature matrix:
+  [[4.6 3.2 1.4 0.2]
+   [5.1 3.8 1.6 0.2]
+   [4.4 3.2 1.3 0.2]
+   [5.1 3.8 1.9 0.4]
+   [5.  3.3 1.4 0.2]]
+#+end_example
+
+* Handling Text

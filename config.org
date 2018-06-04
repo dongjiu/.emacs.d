@@ -116,7 +116,9 @@ Choose theme based on system:
     (when (eq system-type 'windows-nt)
       (z-light-theme))
     (when (eq system-type 'gnu/linux)
-      (load-theme 'dracula)))
+      (if (display-graphic-p)
+          (z-light-theme)
+        (load-theme 'dracula))))
 #+END_SRC
 
 * Customization
