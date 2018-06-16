@@ -185,11 +185,12 @@ When emacs is started, open eshell in the user directory.
     (setq default-directory (expand-file-name z-home))
     (eshell))
   
-  (setq initial-buffer-choice 'z-open-init-buffer)
-  (add-hook 'emacs-startup-hook
-            (lambda ()
-              (z-open-init-buffer)
-              (z-set-theme)))
+  (when (= (length command-line-args) 1)
+    (setq initial-buffer-choice 'z-open-init-buffer)
+    (add-hook 'emacs-startup-hook
+              (lambda ()
+                (z-open-init-buffer)
+                (z-set-theme))))
 #+END_SRC
 
 ** Tab

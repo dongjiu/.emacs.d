@@ -72,6 +72,49 @@ $ sudo cmake --build . --target install
 
 http://osqp.readthedocs.io/en/latest/installation/sources.html
 
+** BeautifulSoup
+sudo pip install beautifulsoup4
+*** bs4.FeatureNotFound: Couldn't find a tree builder with the features you requested: lxml. Do you need to install a parser library?
+http://lxml.de/
+sudo pip install lxml
+** nltk
+sudo pip install nltk
+
+*** Resource mpunkt not found.  Please use the NLTK Downloader to obtain the resource:
+#+BEGIN_SRC python
+import nltk
+nltk.download('punkt')
+#+END_SRC
+
+#+RESULTS:
+: None
+
+*** stopwords
+#+BEGIN_SRC python
+import nltk
+nltk.download('stopwords')
+#+END_SRC
+
+#+RESULTS:
+: None
+*** averaged_perceptron_tagger (use pos_tag)
+#+BEGIN_SRC python
+import nltk
+nltk.download('averaged_perceptron_tagger')
+#+END_SRC
+
+#+RESULTS:
+: None
+
+*** brown
+#+BEGIN_SRC python
+import nltk
+nltk.download('brown')
+#+END_SRC
+
+#+RESULTS:
+: None
+
 * install python 3 in centos
 https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-local-programming-environment-on-centos-7
 
@@ -1032,3 +1075,352 @@ during training to counteract the effect of their imbalance.
 #+end_example
 
 * Handling Text
+** Cleaning Text
+Use python's core string operations.
+#+BEGIN_SRC python
+  # Create text
+  text_data = ["   Interrobang. By Aishwarya Henriette     ",
+               "Parking And Going. By Karl Gautier",
+               "    Today Is The night. By Jarek Prakash   "]
+  # Strip whitespaces
+  strip_whitespace = [string.strip() for string in text_data]
+  
+  def capitalizer(string: str) -> str:
+      return string.upper()
+  
+  # Remove periods
+  remove_periods = [capitalizer(string.replace(".","")) for string in strip_whitespace]
+  
+  return remove_periods
+#+END_SRC
+
+#+RESULTS:
+| INTERROBANG BY AISHWARYA HENRIETTE | PARKING AND GOING BY KARL GAUTIER | TODAY IS THE NIGHT BY JAREK PRAKASH |
+
+Regular expressions:
+#+BEGIN_SRC python
+  import re
+  
+  # Create text
+  text_data = ["   Interrobang. By Aishwarya Henriette     ",
+               "Parking And Going. By Karl Gautier",
+               "    Today Is The night. By Jarek Prakash   "]
+  # Strip whitespaces
+  strip_whitespace = [string.strip() for string in text_data]
+  
+  # Remove periods
+  remove_periods = [string.replace(".","") for string in strip_whitespace]
+  
+  def replace_letters_with_X(string: str) -> str:
+      return re.sub(r"[a-zA-Z]", "X", string)
+  
+  replaced = [replace_letters_with_X(string) for string in remove_periods]
+  return replaced
+#+END_SRC
+
+#+RESULTS:
+| XXXXXXXXXXX XX XXXXXXXXX XXXXXXXXX | XXXXXXX XXX XXXXX XX XXXX XXXXXXX | XXXXX XX XXX XXXXX XX XXXXX XXXXXXX |
+
+** Parsing and cleaning HTML
+Use Beautiful Soup's extensive set of options to parse and extract from HTML.
+https://www.crummy.com/software/BeautifulSoup/bs4/doc/>
+#+BEGIN_SRC python
+  from bs4 import BeautifulSoup
+  
+  html = """
+  <div class='full_name'>
+          <span style='font-weight:bold'>Masego</span> Azra
+  </div>
+  """
+  
+  soup = BeautifulSoup(html, "lxml")
+  return soup.find("div", { "class": "full_name" }).text
+#+END_SRC
+
+#+RESULTS:
+: Masego Azra
+
+** Removing punctuation
+Use *translate* with a dictionary of punctuation characters.
+http://python-reference.readthedocs.io/en/latest/docs/str/translate.html
+https://www.tutorialspoint.com/python/dictionary_fromkeys.htm
+#+BEGIN_SRC python
+  import unicodedata
+  import sys
+  
+  text_data = ['Hi!!!! I. Love. This. Song....',
+               '10000% Agree!!!! #LoveIT',
+               'Right?!?!']
+  punctuation = dict.fromkeys(i for i in range(sys.maxunicode)
+                              if unicodedata.category(chr(i)).startswith('P'))
+  
+  translated = [string.translate(punctuation) for string in text_data]
+  
+  return "punctuation:\n{}\ntranslated:\n{}\n".format(punctuation, translated)
+#+END_SRC
+
+#+RESULTS:
+: punctuation:
+: {33: None, 34: None, 35: None, 37: None, 38: None, 39: None, 40: None, 41: None, 42: None, 44: None, 45: None, 46: None, 47: None, 58: None, 59: None, 63: None, 64: None, 91: None, 92: None, 93: None, 95: None, 123: None, 125: None, 161: None, 167: None, 171: None, 182: None, 183: None, 187: None, 191: None, 894: None, 903: None, 1370: None, 1371: None, 1372: None, 1373: None, 1374: None, 1375: None, 1417: None, 1418: None, 1470: None, 1472: None, 1475: None, 1478: None, 1523: None, 1524: None, 1545: None, 1546: None, 1548: None, 1549: None, 1563: None, 1566: None, 1567: None, 1642: None, 1643: None, 1644: None, 1645: None, 1748: None, 1792: None, 1793: None, 1794: None, 1795: None, 1796: None, 1797: None, 1798: None, 1799: None, 1800: None, 1801: None, 1802: None, 1803: None, 1804: None, 1805: None, 2039: None, 2040: None, 2041: None, 2096: None, 2097: None, 2098: None, 2099: None, 2100: None, 2101: None, 2102: None, 2103: None, 2104: None, 2105: None, 2106: None, 2107: None, 2108: None, 2109: None, 2110: None, 2142: None, 2404: None, 2405: None, 2416: None, 2800: None, 3572: None, 3663: None, 3674: None, 3675: None, 3844: None, 3845: None, 3846: None, 3847: None, 3848: None, 3849: None, 3850: None, 3851: None, 3852: None, 3853: None, 3854: None, 3855: None, 3856: None, 3857: None, 3858: None, 3860: None, 3898: None, 3899: None, 3900: None, 3901: None, 3973: None, 4048: None, 4049: None, 4050: None, 4051: None, 4052: None, 4057: None, 4058: None, 4170: None, 4171: None, 4172: None, 4173: None, 4174: None, 4175: None, 4347: None, 4960: None, 4961: None, 4962: None, 4963: None, 4964: None, 4965: None, 4966: None, 4967: None, 4968: None, 5120: None, 5741: None, 5742: None, 5787: None, 5788: None, 5867: None, 5868: None, 5869: None, 5941: None, 5942: None, 6100: None, 6101: None, 6102: None, 6104: None, 6105: None, 6106: None, 6144: None, 6145: None, 6146: None, 6147: None, 6148: None, 6149: None, 6150: None, 6151: None, 6152: None, 6153: None, 6154: None, 6468: None, 6469: None, 6686: None, 6687: None, 6816: None, 6817: None, 6818: None, 6819: None, 6820: None, 6821: None, 6822: None, 6824: None, 6825: None, 6826: None, 6827: None, 6828: None, 6829: None, 7002: None, 7003: None, 7004: None, 7005: None, 7006: None, 7007: None, 7008: None, 7164: None, 7165: None, 7166: None, 7167: None, 7227: None, 7228: None, 7229: None, 7230: None, 7231: None, 7294: None, 7295: None, 7360: None, 7361: None, 7362: None, 7363: None, 7364: None, 7365: None, 7366: None, 7367: None, 7379: None, 8208: None, 8209: None, 8210: None, 8211: None, 8212: None, 8213: None, 8214: None, 8215: None, 8216: None, 8217: None, 8218: None, 8219: None, 8220: None, 8221: None, 8222: None, 8223: None, 8224: None, 8225: None, 8226: None, 8227: None, 8228: None, 8229: None, 8230: None, 8231: None, 8240: None, 8241: None, 8242: None, 8243: None, 8244: None, 8245: None, 8246: None, 8247: None, 8248: None, 8249: None, 8250: None, 8251: None, 8252: None, 8253: None, 8254: None, 8255: None, 8256: None, 8257: None, 8258: None, 8259: None, 8261: None, 8262: None, 8263: None, 8264: None, 8265: None, 8266: None, 8267: None, 8268: None, 8269: None, 8270: None, 8271: None, 8272: None, 8273: None, 8275: None, 8276: None, 8277: None, 8278: None, 8279: None, 8280: None, 8281: None, 8282: None, 8283: None, 8284: None, 8285: None, 8286: None, 8317: None, 8318: None, 8333: None, 8334: None, 8968: None, 8969: None, 8970: None, 8971: None, 9001: None, 9002: None, 10088: None, 10089: None, 10090: None, 10091: None, 10092: None, 10093: None, 10094: None, 10095: None, 10096: None, 10097: None, 10098: None, 10099: None, 10100: None, 10101: None, 10181: None, 10182: None, 10214: None, 10215: None, 10216: None, 10217: None, 10218: None, 10219: None, 10220: None, 10221: None, 10222: None, 10223: None, 10627: None, 10628: None, 10629: None, 10630: None, 10631: None, 10632: None, 10633: None, 10634: None, 10635: None, 10636: None, 10637: None, 10638: None, 10639: None, 10640: None, 10641: None, 10642: None, 10643: None, 10644: None, 10645: None, 10646: None, 10647: None, 10648: None, 10712: None, 10713: None, 10714: None, 10715: None, 10748: None, 10749: None, 11513: None, 11514: None, 11515: None, 11516: None, 11518: None, 11519: None, 11632: None, 11776: None, 11777: None, 11778: None, 11779: None, 11780: None, 11781: None, 11782: None, 11783: None, 11784: None, 11785: None, 11786: None, 11787: None, 11788: None, 11789: None, 11790: None, 11791: None, 11792: None, 11793: None, 11794: None, 11795: None, 11796: None, 11797: None, 11798: None, 11799: None, 11800: None, 11801: None, 11802: None, 11803: None, 11804: None, 11805: None, 11806: None, 11807: None, 11808: None, 11809: None, 11810: None, 11811: None, 11812: None, 11813: None, 11814: None, 11815: None, 11816: None, 11817: None, 11818: None, 11819: None, 11820: None, 11821: None, 11822: None, 11824: None, 11825: None, 11826: None, 11827: None, 11828: None, 11829: None, 11830: None, 11831: None, 11832: None, 11833: None, 11834: None, 11835: None, 11836: None, 11837: None, 11838: None, 11839: None, 11840: None, 11841: None, 11842: None, 11843: None, 11844: None, 12289: None, 12290: None, 12291: None, 12296: None, 12297: None, 12298: None, 12299: None, 12300: None, 12301: None, 12302: None, 12303: None, 12304: None, 12305: None, 12308: None, 12309: None, 12310: None, 12311: None, 12312: None, 12313: None, 12314: None, 12315: None, 12316: None, 12317: None, 12318: None, 12319: None, 12336: None, 12349: None, 12448: None, 12539: None, 42238: None, 42239: None, 42509: None, 42510: None, 42511: None, 42611: None, 42622: None, 42738: None, 42739: None, 42740: None, 42741: None, 42742: None, 42743: None, 43124: None, 43125: None, 43126: None, 43127: None, 43214: None, 43215: None, 43256: None, 43257: None, 43258: None, 43260: None, 43310: None, 43311: None, 43359: None, 43457: None, 43458: None, 43459: None, 43460: None, 43461: None, 43462: None, 43463: None, 43464: None, 43465: None, 43466: None, 43467: None, 43468: None, 43469: None, 43486: None, 43487: None, 43612: None, 43613: None, 43614: None, 43615: None, 43742: None, 43743: None, 43760: None, 43761: None, 44011: None, 64830: None, 64831: None, 65040: None, 65041: None, 65042: None, 65043: None, 65044: None, 65045: None, 65046: None, 65047: None, 65048: None, 65049: None, 65072: None, 65073: None, 65074: None, 65075: None, 65076: None, 65077: None, 65078: None, 65079: None, 65080: None, 65081: None, 65082: None, 65083: None, 65084: None, 65085: None, 65086: None, 65087: None, 65088: None, 65089: None, 65090: None, 65091: None, 65092: None, 65093: None, 65094: None, 65095: None, 65096: None, 65097: None, 65098: None, 65099: None, 65100: None, 65101: None, 65102: None, 65103: None, 65104: None, 65105: None, 65106: None, 65108: None, 65109: None, 65110: None, 65111: None, 65112: None, 65113: None, 65114: None, 65115: None, 65116: None, 65117: None, 65118: None, 65119: None, 65120: None, 65121: None, 65123: None, 65128: None, 65130: None, 65131: None, 65281: None, 65282: None, 65283: None, 65285: None, 65286: None, 65287: None, 65288: None, 65289: None, 65290: None, 65292: None, 65293: None, 65294: None, 65295: None, 65306: None, 65307: None, 65311: None, 65312: None, 65339: None, 65340: None, 65341: None, 65343: None, 65371: None, 65373: None, 65375: None, 65376: None, 65377: None, 65378: None, 65379: None, 65380: None, 65381: None, 65792: None, 65793: None, 65794: None, 66463: None, 66512: None, 66927: None, 67671: None, 67871: None, 67903: None, 68176: None, 68177: None, 68178: None, 68179: None, 68180: None, 68181: None, 68182: None, 68183: None, 68184: None, 68223: None, 68336: None, 68337: None, 68338: None, 68339: None, 68340: None, 68341: None, 68342: None, 68409: None, 68410: None, 68411: None, 68412: None, 68413: None, 68414: None, 68415: None, 68505: None, 68506: None, 68507: None, 68508: None, 69703: None, 69704: None, 69705: None, 69706: None, 69707: None, 69708: None, 69709: None, 69819: None, 69820: None, 69822: None, 69823: None, 69824: None, 69825: None, 69952: None, 69953: None, 69954: None, 69955: None, 70004: None, 70005: None, 70085: None, 70086: None, 70087: None, 70088: None, 70089: None, 70093: None, 70107: None, 70109: None, 70110: None, 70111: None, 70200: None, 70201: None, 70202: None, 70203: None, 70204: None, 70205: None, 70313: None, 70731: None, 70732: None, 70733: None, 70734: None, 70735: None, 70747: None, 70749: None, 70854: None, 71105: None, 71106: None, 71107: None, 71108: None, 71109: None, 71110: None, 71111: None, 71112: None, 71113: None, 71114: None, 71115: None, 71116: None, 71117: None, 71118: None, 71119: None, 71120: None, 71121: None, 71122: None, 71123: None, 71124: None, 71125: None, 71126: None, 71127: None, 71233: None, 71234: None, 71235: None, 71264: None, 71265: None, 71266: None, 71267: None, 71268: None, 71269: None, 71270: None, 71271: None, 71272: None, 71273: None, 71274: None, 71275: None, 71276: None, 71484: None, 71485: None, 71486: None, 72769: None, 72770: None, 72771: None, 72772: None, 72773: None, 72816: None, 72817: None, 74864: None, 74865: None, 74866: None, 74867: None, 74868: None, 92782: None, 92783: None, 92917: None, 92983: None, 92984: None, 92985: None, 92986: None, 92987: None, 92996: None, 113823: None, 121479: None, 121480: None, 121481: None, 121482: None, 121483: None, 125278: None, 125279: None}
+: translated:
+: ['Hi I Love This Song', '10000 Agree LoveIT', 'Right']
+
+** Tokenizing text
+Natural Language Toolkit for Python (NLTK) has a powerful set of text
+manipulation operations, including word tokenizing.
+
+#+BEGIN_SRC python
+  from nltk.tokenize import word_tokenize
+  from nltk.tokenize import sent_tokenize
+  
+  string = "The science of today is the technology of tomorrow. Tomorrow is today."
+  return "words:\n{}\nsentences:\n{}\n".format(word_tokenize(string), sent_tokenize(string))
+#+END_SRC
+
+#+RESULTS:
+: words:
+: ['The', 'science', 'of', 'today', 'is', 'the', 'technology', 'of', 'tomorrow', '.', 'Tomorrow', 'is', 'today', '.']
+: sentences:
+: ['The science of today is the technology of tomorrow.', 'Tomorrow is today.']
+
+** Removing stop words
+#+BEGIN_SRC python
+  from nltk.corpus import stopwords
+  
+  # You will have to download the set of stop words the first time
+  # import nltk
+  # nltk.download('stopwords')
+  
+  tokenzied_words = ['i', 'am', 'going', 'to', 'go', 'to', 'the', 'store', 'and', 'park']
+  stop_words = stopwords.words('english')
+  
+  #remove stop words
+  return [word for word in tokenzied_words if word not in stop_words]
+#+END_SRC
+
+#+RESULTS:
+| going | go | store | park |
+
+Note that NLTK's stopwords assumes the tokenized words are all lowercased.
+
+** Stemming words
+NLTK's PorterStemmer implements the widely used Porter stemming
+algorithm to remove or replace common suffixes to produce the word
+stem.
+#+BEGIN_SRC python
+  from nltk.stem.porter import PorterStemmer
+  
+  tokenzied_words = ['i', 'am', 'humbled', 'by', 'this', 'traditional', 'meeting']
+  porter = PorterStemmer()
+  return [porter.stem(word) for word in tokenzied_words]
+#+END_SRC
+
+#+RESULTS:
+| i | am | humbl | by | thi | tradit | meet |
+
+
+** Tagging parts of speech
+Use NLTK's pre-trained parts-of-speech tagger.
+#+BEGIN_SRC python
+  from nltk import pos_tag
+  from nltk import word_tokenize
+  
+  text_data = "Chris loverd outdoor running"
+  text_tagged = pos_tag(word_tokenize(text_data))
+  return text_tagged
+#+END_SRC
+
+#+RESULTS:
+| Chris   | NNP |
+| loverd  | JJ  |
+| outdoor | NN  |
+| running | VBG |
+
+NLTK uses the Penn Treebank parts for speech tags. Some examples of
+the Penn Treebank tags are.
+| Tag | Part of speech                     |
+|-----+------------------------------------|
+| NNP | Proper noun, singular              |
+| NN  | Noun, singular or mass             |
+| RB  | Adverb                             |
+| VBD | Verb, past tense                   |
+| VBG | Verb, gerund or present participle |
+| JJ  | Adjective                          |
+| PRP | Personal pronoun                   |
+
+#+BEGIN_SRC python
+  from sklearn.preprocessing import MultiLabelBinarizer
+  from nltk import pos_tag
+  from nltk import word_tokenize
+  
+  tweets = ["I am eating a burrito for breakfast",
+            "Political science is an amazing field",
+            "San Francisco is an awesome city"]
+  tagged_tweets = []
+  for tweet in tweets:
+      tweet_tag = pos_tag(word_tokenize(tweet))
+      tagged_tweets.append([tag for word, tag in tweet_tag])
+  
+  one_hot_multi = MultiLabelBinarizer()
+  features = one_hot_multi.fit_transform(tagged_tweets)
+  return "features:\n{}\nclasses:\n{}\n".format(features, one_hot_multi.classes_)
+#+END_SRC
+
+#+RESULTS:
+: features:
+: [[1 1 0 1 0 1 1 1 0]
+:  [1 0 1 1 0 0 0 0 1]
+:  [1 0 1 1 1 0 0 0 1]]
+: classes:
+: ['DT' 'IN' 'JJ' 'NN' 'NNP' 'PRP' 'VBG' 'VBP' 'VBZ']
+
+NLTK also gives us the ability to train our own tagger.
+#+BEGIN_SRC python
+  from nltk.corpus import brown
+  from nltk.tag import UnigramTagger
+  from nltk.tag import BigramTagger
+  from nltk.tag import TrigramTagger
+  
+  sentences = brown.tagged_sents(categories='news')
+  train = sentences[:4000]
+  test = sentences[4000:]
+  
+  # create backoff tagger
+  unigram = UnigramTagger(train)
+  bigram = BigramTagger(train, backoff=unigram)
+  trigram = TrigramTagger(train, backoff=bigram)
+  
+  # show accuracy
+  return trigram.evaluate(test)
+#+END_SRC
+
+#+RESULTS:
+: 0.8174734002697437
+
+** Encoding text as a bag of words
+Create a set of features indicating the number of times an
+observation's text contains a particular word.
+
+#+BEGIN_SRC python
+  import numpy as np
+  from sklearn.feature_extraction.text import CountVectorizer
+  
+  text_data = np.array(['I love Brazil. Brazil!',
+                        'Sweden is best',
+                        'Germany beats both'])
+  # create a bag of words feature matrix
+  count = CountVectorizer()
+  bag_of_words = count.fit_transform(text_data)
+  feature_names = count.get_feature_names()
+  
+  return "bag of words:\n{}\nto array:\n{}\nfeature names:\n{}\nvocabulary:\n{}\n".format(bag_of_words, bag_of_words.toarray(), feature_names, count.vocabulary_)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+bag of words:
+  (0, 3)	2
+  (0, 6)	1
+  (1, 1)	1
+  (1, 5)	1
+  (1, 7)	1
+  (2, 2)	1
+  (2, 0)	1
+  (2, 4)	1
+to array:
+[[0 0 0 2 0 0 1 0]
+ [0 1 0 0 0 1 0 1]
+ [1 0 1 0 1 0 0 0]]
+feature names:
+['beats', 'best', 'both', 'brazil', 'germany', 'is', 'love', 'sweden']
+vocabulary:
+{'love': 6, 'brazil': 3, 'sweden': 7, 'is': 5, 'best': 1, 'germany': 4, 'beats': 0, 'both': 2}
+#+end_example
+
+Useful parameters of CountVectorizer.
+#+BEGIN_SRC python
+# Create feature matrix with arguments
+count_2gram = CountVectorizer(ngram_range=(1,2),
+                              stop_words="english",
+                              vocabulary=['brazil'])
+bag = count_2gram.fit_transform(text_data)
+
+# View feature matrix
+bag.toarray()
+#+END_SRC
+
+** Weighting word importance
+Compare the frequency of the word in a document (a tweet, movie
+review, speech transcript, etc.) with the frequency of the word in all
+other documents using term frequency-inverse document frequency
+(tf-idf).
+
+#+BEGIN_SRC python
+  import numpy as np
+  from sklearn.feature_extraction.text import TfidfVectorizer
+  
+  text_data = np.array(['I love Brazil. Brazil!',
+                        'Sweden is best',
+                        'Germany beats both'])
+  tfidf = TfidfVectorizer()
+  feature_matrix = tfidf.fit_transform(text_data)
+  return "feature matrix:\n{}\nvocabulary:\n{}\n".format(feature_matrix.toarray(), tfidf.vocabulary_)
+#+END_SRC
+
+#+RESULTS:
+: feature matrix:
+: [[0.         0.         0.         0.89442719 0.         0.
+:   0.4472136  0.        ]
+:  [0.         0.57735027 0.         0.         0.         0.57735027
+:   0.         0.57735027]
+:  [0.57735027 0.         0.57735027 0.         0.57735027 0.
+:   0.         0.        ]]
+: vocabulary:
+: {'love': 6, 'brazil': 3, 'sweden': 7, 'is': 5, 'best': 1, 'germany': 4, 'beats': 0, 'both': 2}
+
+The more a word appears in a document, the more likely it is important
+to that document. For example, if the word /economy/ appears frequently,
+it is evidence that the document might be about economics. We call
+this *term frequency (tf)*.
+
+In contrast, if a word appears in many documents, it is likely less
+important to any individual document. For example, if every document
+in some text data contains the word /after/ then it is probably an
+unimportant word. We call this *document frequency (df)*.
+
+By combining these two statistics, we can assign a score to every word
+representing how important that word is in a document. Specifically,
+we multiply *tf* to the inverse of document frequency (*idf*):
+
+tf-idf(t,d)=tf(t,d) x idf(t)
+
+where *t* is a word and *d* is a document. There are a number of
+variations in how *tf* and *idf* are calculated. In scikit-learn, *tf* is
+simply the number of times a word appears in the document and *idf* is
+calculated as:
+
+idf(t)=log[ (1+nd) / (1 + df(d,t))] + 1
+
+where *nd* is the number of documents and *df(d,t)* is term, t's document
+frequency (i.e., number of documents where the term appears).
+
+By default, scikit-learn then normalizes the tf-idf vectors using the
+Euclidean norm (L2 norm). The higher the resulting value, the more
+important the word is to a document.
+
+* Handling dates and times
+** Converting strings to dates
+#+BEGIN_SRC python
+  import numpy as np
+  import pandas as pd
+  
+  date_strings = np.array(['03-04-2018 11:35 PM',
+                           '24-05-2018 12:01 AM',
+                           '08-09-2017 09:09 PM'])
+  dates = [pd.to_datetime(date, format='%d-%m-%Y %I:%M %p') for date in date_strings]
+  return dates
+#+END_SRC
+
+#+RESULTS:
+| Timestamp | (2018-04-03 23:35:00) | Timestamp | (2018-05-24 00:01:00) | Timestamp | (2017-09-08 21:09:00) |
+
