@@ -151,6 +151,9 @@ sudo pip install package_name
 
 ** matplotlib: ModuleNotFoundError: No module named 'tkinter'
 sudo yum install python36u-tkinter
+** opencv
+sudo pip3.6 install opencv-python
+
 * Loading data
 scikit-learn comes with some common datasets we can quickly load.
 ** load_digits
@@ -1424,3 +1427,931 @@ important the word is to a document.
 #+RESULTS:
 | Timestamp | (2018-04-03 23:35:00) | Timestamp | (2018-05-24 00:01:00) | Timestamp | (2017-09-08 21:09:00) |
 
+Handling error.
+#+BEGIN_SRC python
+  import numpy as np
+  import pandas as pd
+  
+  date_strings = np.array(['03-04-2018 11:35 PM',
+                           '24-15-2018 12:01 AM',
+                           '09-2017 09:09 PM'])
+  dates = [pd.to_datetime(date, format='%d-%m-%Y %I:%M %p', errors="coerce") for date in date_strings]
+  return dates
+#+END_SRC
+
+#+RESULTS:
+| Timestamp | (2018-04-03 23:35:00) | NaT | NaT |
+
+** Handling time zones
+#+BEGIN_SRC python
+import pandas as pd
+return pd.Timestamp('2017-05-01 06:00:00', tz='Europe/London')
+#+END_SRC
+
+#+RESULTS:
+: 2017-05-01 06:00:00+01:00
+
+Add a time zone to a previously created datetime.
+#+BEGIN_SRC python
+import pandas as pd
+date = pd.Timestamp('2017-05-01 06:00:00')
+date_in_london = date.tz_localize('Europe/London')
+date_in_abidjan = date_in_london.tz_convert('Africa/Abidjan')
+return "date in London:\n{}\n\ndate in Abidjan:\n{}\n".format(date_in_london, date_in_abidjan)
+#+END_SRC
+
+#+RESULTS:
+: date in London:
+: 2017-05-01 06:00:00+01:00
+: 
+: date in Abidjan:
+: 2017-05-01 05:00:00+00:00
+
+Apply tz_localize and tz_convert to every element using Pandas' Servies object.
+#+BEGIN_SRC python
+import pandas as pd
+dates = pd.Series(pd.date_range('2/2/2002', periods=3, freq='M'))
+return dates.dt.tz_localize('Africa/Abidjan')
+#+END_SRC
+
+#+RESULTS:
+: 0   2002-02-28 00:00:00+00:00
+: 1   2002-03-31 00:00:00+00:00
+: 2   2002-04-30 00:00:00+00:00
+: dtype: datetime64[ns, Africa/Abidjan]
+
+Show all time zone strings.
+#+BEGIN_SRC python
+from pytz import all_timezones
+return all_timezones[0:5]
+#+END_SRC
+
+#+RESULTS:
+| Africa/Abidjan | Africa/Accra | Africa/Addis_Ababa | Africa/Algiers | Africa/Asmara |
+
+
+** Selecting dates and times
+Use boolean conditions.
+#+BEGIN_SRC python
+  import pandas as pd
+  
+  dataframe = pd.DataFrame()
+  dataframe['date'] = pd.date_range('1/1/2001', periods=100000, freq='H')
+  
+  return dataframe[(dataframe['date'] > '2002-1-1 01:00:00') &
+                   (dataframe['date'] <= '2002-1-1 04:00:00')]
+#+END_SRC
+
+#+RESULTS:
+: date
+: 8762 2002-01-01 02:00:00
+: 8763 2002-01-01 03:00:00
+: 8764 2002-01-01 04:00:00
+
+Use index.
+#+BEGIN_SRC python
+  import pandas as pd
+  
+  dataframe = pd.DataFrame()
+  dataframe['date'] = pd.date_range('1/1/2001', periods=100000, freq='H')
+  
+  dataframe = dataframe.set_index(dataframe['date'])
+  return dataframe.loc['2002-1-1 01:00:00':'2002-1-1 04:00:00']
+#+END_SRC
+
+#+RESULTS:
+: date
+: date                                   
+: 2002-01-01 01:00:00 2002-01-01 01:00:00
+: 2002-01-01 02:00:00 2002-01-01 02:00:00
+: 2002-01-01 03:00:00 2002-01-01 03:00:00
+: 2002-01-01 04:00:00 2002-01-01 04:00:00
+
+** Breaking up date data into multiple features
+#+BEGIN_SRC python
+  import pandas as pd
+  
+  dataframe = pd.DataFrame()
+  dataframe['date'] = pd.date_range('1/1/2001', periods=150, freq='W')
+  
+  dataframe['year'] = dataframe['date'].dt.year
+  dataframe['month'] = dataframe['date'].dt.month
+  dataframe['day'] = dataframe['date'].dt.day
+  dataframe['hour'] = dataframe['date'].dt.hour
+  dataframe['minute'] = dataframe['date'].dt.minute
+  
+  return dataframe.head(3)
+#+END_SRC
+
+#+RESULTS:
+: date  year  month  day  hour  minute
+: 0 2001-01-07  2001      1    7     0       0
+: 1 2001-01-14  2001      1   14     0       0
+: 2 2001-01-21  2001      1   21     0       0
+
+** Calculating the difference between dates
+#+BEGIN_SRC python
+  import pandas as pd
+  
+  dataframe = pd.DataFrame()
+  dataframe['Arrived'] = [pd.Timestamp('01-01-2017'), pd.Timestamp('01-04-2017')]
+  dataframe['Left'] = [pd.Timestamp('01-01-2017'), pd.Timestamp('01-06-2017')]
+  
+  diff = dataframe['Left'] - dataframe['Arrived']
+  duration = pd.Series(delta.days for delta in diff)
+  return "diff:\n{}\n\nduration:\n{}\n".format(diff, duration)
+#+END_SRC
+
+#+RESULTS:
+: diff:
+: 0   0 days
+: 1   2 days
+: dtype: timedelta64[ns]
+: 
+: duration:
+: 0    0
+: 1    2
+: dtype: int64
+
+** Days of the week
+#+BEGIN_SRC python
+  import pandas as pd
+  
+  dates = pd.Series(pd.date_range('2/2/2002', periods=3, freq="M"))
+  return "weekday_name:\n{}\n\nweekday:\n{}\n".format(dates.dt.weekday_name, dates.dt.weekday)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+weekday_name:
+0    Thursday
+1      Sunday
+2     Tuesday
+dtype: object
+
+weekday:
+0    3
+1    6
+2    1
+dtype: int64
+#+end_example
+
+** Creating a lagged feature
+#+BEGIN_SRC python
+  import pandas as pd
+  
+  dataframe = pd.DataFrame()
+  dataframe['dates'] = pd.date_range('1/1/2001', periods=5, freq='D')
+  dataframe['stock_price'] = [1.1,2.2,3.3,4.4,5.5]
+  
+  dataframe['previous_days_stock_price'] = dataframe['stock_price'].shift(1)
+  return dataframe
+#+END_SRC
+
+#+RESULTS:
+: dates  stock_price  previous_days_stock_price
+: 0 2001-01-01          1.1                        NaN
+: 1 2001-01-02          2.2                        1.1
+: 2 2001-01-03          3.3                        2.2
+: 3 2001-01-04          4.4                        3.3
+: 4 2001-01-05          5.5                        4.4
+
+** Using rolling time windows
+#+BEGIN_SRC python
+  import pandas as pd
+  
+  time_index = pd.date_range('01/01/2010', periods=5, freq='M')
+  dataframe = pd.DataFrame(index=time_index)
+  dataframe['stock_price'] = [1,2,3,4,5]
+  return dataframe.rolling(window=2).mean()
+#+END_SRC
+
+#+RESULTS:
+: stock_price
+: 2010-01-31          NaN
+: 2010-02-28          1.5
+: 2010-03-31          2.5
+: 2010-04-30          3.5
+: 2010-05-31          4.5
+
+** Handling missing data in time series
+#+BEGIN_SRC python
+  import pandas as pd
+  import numpy as np
+  
+  time_index = pd.date_range('01/01/2010', periods=5, freq='M')
+  dataframe = pd.DataFrame(index=time_index)
+  dataframe['sales'] = [1.0, 2.0, np.nan, np.nan, 5.0]
+  linear = dataframe.interpolate()
+  ff = dataframe.ffill()
+  bf = dataframe.bfill()
+  quadratic = dataframe.interpolate(method="quadratic")
+  advanced = dataframe.interpolate(limit=1, limit_direction='forward')
+  return "linear:\n{}\nforward-filling:\n{}\nback-filling:\n{}\nquadratic:\n{}\nadvanced:\n{}\n".format(linear, ff, bf, quadratic, advanced)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+linear:
+            sales
+2010-01-31    1.0
+2010-02-28    2.0
+2010-03-31    3.0
+2010-04-30    4.0
+2010-05-31    5.0
+forward-filling:
+            sales
+2010-01-31    1.0
+2010-02-28    2.0
+2010-03-31    2.0
+2010-04-30    2.0
+2010-05-31    5.0
+back-filling:
+            sales
+2010-01-31    1.0
+2010-02-28    2.0
+2010-03-31    5.0
+2010-04-30    5.0
+2010-05-31    5.0
+quadratic:
+               sales
+2010-01-31  1.000000
+2010-02-28  2.000000
+2010-03-31  3.059808
+2010-04-30  4.038069
+2010-05-31  5.000000
+advanced:
+            sales
+2010-01-31    1.0
+2010-02-28    2.0
+2010-03-31    3.0
+2010-04-30    NaN
+2010-05-31    5.0
+#+end_example
+
+* Handling images
+** Loading images
+#+BEGIN_SRC python
+  import cv2
+  import numpy as np
+  from matplotlib import pyplot as plt
+  
+  image = cv2.imread('data/myemail.jpg', cv2.IMREAD_GRAYSCALE)
+  plt.imshow(image, cmap="gray"), plt.axis("off")
+  plt.show()
+  return "type: {}\nshape: {}\n".format(type(image), image.shape)
+#+END_SRC
+
+#+RESULTS:
+: type: <class 'numpy.ndarray'>
+: shape: (33, 272)
+
+#+BEGIN_SRC python
+  import cv2
+  import numpy as np
+  from matplotlib import pyplot as plt
+  
+  image = cv2.imread('data/tiger.jpg', cv2.IMREAD_COLOR)
+  # By default OpenCV uses BGR, but matplotlib uses RGB
+  image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+  plt.imshow(image_rgb), plt.axis("off")
+  plt.show()
+  return "first pixel: BGR {}, RGB {}".format(image[0,0], image_rgb[0,0])
+#+END_SRC
+
+#+RESULTS:
+: first pixel: BGR [103 112 121], RGB [121 112 103]
+
+#+BEGIN_SRC python
+  import cv2
+  import numpy as np
+  import os
+  from matplotlib import pyplot as plt
+  
+  image = cv2.imread('data/tiger.jpg', cv2.IMREAD_COLOR)
+  if cv2.imwrite('data/tiger_copy.jpg', image):
+      image2 = cv2.imread('data/tiger_copy.jpg', cv2.IMREAD_COLOR)
+      plt.imshow(image2)
+      plt.show()
+      os.remove('data/tiger_copy.jpg')
+#+END_SRC
+
+#+RESULTS:
+: None
+
+** Resizing image
+#+BEGIN_SRC python
+  import cv2
+  import numpy as np
+  from matplotlib import pyplot as plt
+  
+  image = cv2.imread('data/tiger.jpg', cv2.IMREAD_COLOR)
+  image_100x100 = cv2.resize(image, (100, 100))
+  plt.imshow(image_100x100), plt.axis("off")
+  plt.show()
+  return image_100x100.shape
+#+END_SRC
+
+#+RESULTS:
+| 100 | 100 | 3 |
+
+** Cropping images
+#+BEGIN_SRC python
+  import cv2
+  import numpy as np
+  from matplotlib import pyplot as plt
+  
+  image = cv2.imread('data/tiger.jpg', cv2.IMREAD_COLOR)
+  image_cropped = image[:, :128]
+  plt.imshow(image_cropped), plt.axis("off")
+  plt.show()
+  return image_cropped.shape
+#+END_SRC
+
+#+RESULTS:
+| 471 | 128 | 3 |
+
+** Blurring images
+Blur an image by averaging the values of a 5x5 kernel around each pixel.
+#+BEGIN_SRC python
+  import cv2
+  import numpy as np
+  from matplotlib import pyplot as plt
+  
+  image = cv2.imread('data/tiger.jpg', cv2.IMREAD_COLOR)
+  image_blurry = cv2.blur(image, (5,5))
+  plt.imshow(image_blurry), plt.axis("off")
+  plt.show()
+  return image_blurry.shape
+#+END_SRC
+
+#+RESULTS:
+| 471 | 474 | 3 |
+
+Use a kernel.
+#+BEGIN_SRC python
+  import cv2
+  import numpy as np
+  from matplotlib import pyplot as plt
+  
+  image = cv2.imread('data/tiger.jpg', cv2.IMREAD_COLOR)
+  
+  kernel = np.ones((5,5)) / 25.0
+  image_kernel = cv2.filter2D(image, -1, kernel)
+  
+  plt.imshow(image_kernel), plt.xticks([]), plt.yticks([])
+  plt.show()
+  return kernel
+#+END_SRC
+
+#+RESULTS:
+| 0.04 | 0.04 | 0.04 | 0.04 | 0.04 |
+| 0.04 | 0.04 | 0.04 | 0.04 | 0.04 |
+| 0.04 | 0.04 | 0.04 | 0.04 | 0.04 |
+| 0.04 | 0.04 | 0.04 | 0.04 | 0.04 |
+| 0.04 | 0.04 | 0.04 | 0.04 | 0.04 |
+
+** Sharpening images
+Construct a kernel to highlight the pixel itself.
+#+BEGIN_SRC python
+  import cv2
+  import numpy as np
+  from matplotlib import pyplot as plt
+  
+  image = cv2.imread('data/tiger.jpg', cv2.IMREAD_COLOR)
+  
+  kernel = np.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]])
+  image_sharp = cv2.filter2D(image, -1, kernel)
+  
+  plt.imshow(image_sharp), plt.xticks([]), plt.yticks([])
+  plt.show()
+  return kernel
+#+END_SRC
+
+#+RESULTS:
+|  0 | -1 |  0 |
+| -1 |  5 | -1 |
+|  0 | -1 |  0 |
+
+** Enhancing contrast
+#+BEGIN_SRC python
+  import cv2
+  import numpy as np
+  from matplotlib import pyplot as plt
+  
+  image = cv2.imread('data/tiger.jpg', cv2.IMREAD_COLOR)
+  image_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)  
+  image_enhanced = cv2.equalizeHist(image_gray)
+  
+  plt.imshow(image_enhanced), plt.axis("off")
+  plt.show()
+#+END_SRC
+
+#+RESULTS:
+: None
+
+#+BEGIN_SRC python
+  import cv2
+  import numpy as np
+  from matplotlib import pyplot as plt
+  
+  image = cv2.imread('data/tiger.jpg', cv2.IMREAD_COLOR)
+  # YUV color format
+  # Y is the luminance (brightness) component
+  # U and V are the chrominance (color) components
+  image_yuv = cv2.cvtColor(image, cv2.COLOR_BGR2YUV)
+  image_yuv[:, :, 0] = cv2.equalizeHist(image_yuv[:, :, 0])
+  image_rgb = cv2.cvtColor(image_yuv, cv2.COLOR_YUV2RGB)
+  
+  plt.imshow(image_rgb), plt.axis("off")
+  plt.show()
+#+END_SRC
+
+#+RESULTS:
+: None
+
+** Isolating colors
+#+BEGIN_SRC python
+  import cv2
+  import numpy as np
+  from matplotlib import pyplot as plt
+  
+  image = cv2.imread('data/tiger.jpg', cv2.IMREAD_COLOR)
+  # hue, saturation, value
+  image_hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+  lower_blue = np.array([50,100,50])
+  upper_blue = np.array([130,255,255])
+  
+  mask = cv2.inRange(image_hsv, lower_blue, upper_blue)
+  image_masked = cv2.bitwise_and(image, image, mask=mask)
+  image_rgb = cv2.cvtColor(image_masked, cv2.COLOR_BGR2RGB)
+  
+  plt.imshow(image_rgb), plt.axis("off")
+  plt.show()
+#+END_SRC
+
+#+RESULTS:
+: None
+
+** Binarizing images
+#+BEGIN_SRC python
+  import cv2
+  import numpy as np
+  from matplotlib import pyplot as plt
+  
+  image = cv2.imread('data/myemail.jpg', cv2.IMREAD_GRAYSCALE)
+  
+  max_output_value = 255
+  neighborhood_size = 99
+  subtract_from_mean = 10
+  image_binarized = cv2.adaptiveThreshold(image,
+                                          max_output_value,
+                                          cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+                                          cv2.THRESH_BINARY,
+                                          neighborhood_size,
+                                          subtract_from_mean)
+  plt.imshow(image_binarized, cmap="gray"), plt.axis("off")
+  plt.show()
+#+END_SRC
+
+#+RESULTS:
+: None
+
+** Removing backgrounds
+#+BEGIN_SRC python
+  import cv2
+  import numpy as np
+  from matplotlib import pyplot as plt
+  
+  image_bgr = cv2.imread('data/tiger.jpg')
+  image_rgb = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2RGB)
+  rect = (0, 56, 256, 150)
+  
+  # create initial mask
+  mask = np.zeros(image_rgb.shape[:2], np.uint8)
+  
+  # create temporary arrays used by grabCut
+  bgdModel = np.zeros((1,65), np.float64)
+  fgdModel = np.zeros((1,65), np.float64)
+  
+  cv2.grabCut(image_rgb,
+              mask,
+              rect,
+              bgdModel,
+              fgdModel,
+              5, # number of iterations
+              cv2.GC_INIT_WITH_RECT)
+  
+  # create mask where sure and likely backgrounds set to 0, otherwise 1
+  mask_2 = np.where((mask==2) | (mask==0), 0, 1).astype('uint8')
+  
+  # multiply image with new mask to subtract background
+  image_rgb_nobg = image_rgb * mask_2[:, :, np.newaxis]
+  
+  plt.imshow(image_rgb_nobg), plt.axis("off")
+  plt.show()
+#+END_SRC
+
+#+RESULTS:
+: None
+
+** Detecting edges
+#+BEGIN_SRC python
+  import cv2
+  import numpy as np
+  from matplotlib import pyplot as plt
+  
+  image_gray = cv2.imread('data/myemail.jpg', cv2.IMREAD_GRAYSCALE)
+  median_intensity = np.median(image_gray)
+  lower_threshold = int(max(0, (1.0-0.33)*median_intensity))
+  upper_threshold = int(max(255, (1.0+0.33)*median_intensity))
+
+  # apply canny edge detector
+  image_canny = cv2.Canny(image_gray, lower_threshold, upper_threshold)
+  
+  plt.imshow(image_canny, cmap="gray"), plt.axis("off")
+  plt.show()
+#+END_SRC
+
+#+RESULTS:
+: None
+
+
+
+** Detecting corners
+#+BEGIN_SRC python
+  import cv2
+  import numpy as np
+  from matplotlib import pyplot as plt
+  
+  image_bgr = cv2.imread('data/tiger.jpg')
+  image_gray = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2GRAY)
+  image_gray = np.float32(image_gray)
+  
+  block_size = 2
+  aperture = 29
+  free_parameter = 0.04
+  
+  detector_responses = cv2.cornerHarris(image_gray,
+                                        block_size,
+                                        aperture,
+                                        free_parameter)
+  # large corner markers
+  detector_responses = cv2.dilate(detector_responses, None)
+  
+  # only keep detector responses greater than threshold, mark as white
+  threshold = 0.02
+  image_bgr[detector_responses > threshold * detector_responses.max()] = [255,255,255]
+  image_gray = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2GRAY)
+  
+  plt.imshow(image_gray, cmap="gray"), plt.axis("off")
+  plt.show()
+#+END_SRC
+
+#+RESULTS:
+: None
+
+** Creating features for machine learning
+Use Numpy's *flatten* to convert the multidimensional array containing
+an image's data into a vector containing the observation's values.
+
+#+BEGIN_SRC python
+  import cv2
+  import numpy as np
+  from matplotlib import pyplot as plt
+  
+  image = cv2.imread('data/myemail.jpg', cv2.IMREAD_GRAYSCALE)
+  image_2x5 = cv2.resize(image, (2,5))
+  return image_2x5.flatten()
+#+END_SRC
+
+#+RESULTS:
+| 253 | 255 | 254 | 253 | 205 | 255 | 253 | 111 | 255 | 255 |
+
+** Encoding mean color as a feature
+#+BEGIN_SRC python
+  import cv2
+  import numpy as np
+  from matplotlib import pyplot as plt
+  
+  image_bgr = cv2.imread('data/tiger.jpg')
+  channels = cv2.mean(image_bgr)
+  # rgb
+  observation = np.array([(channels[2], channels[1], channels[0])])
+  return observation
+#+END_SRC
+
+#+RESULTS:
+| 117.31358005 | 106.15488188 | 87.6743261 |
+
+** Encoding color histograms as features
+#+BEGIN_SRC python
+  import cv2
+  import numpy as np
+  from matplotlib import pyplot as plt
+  
+  image_bgr = cv2.imread('data/tiger.jpg')
+  image_rgb = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2RGB)
+  features = []
+  colors = ('r', 'g', 'b')
+  # for each channel, calculate histogram and add to feature value list
+  for i, channel in enumerate(colors):
+      histogram = cv2.calcHist([image_rgb],
+                               [i], # index of channel
+                               None, # no mask
+                               [256], # histogram size
+                               [0, 256]) # range
+      features.extend(histogram)
+      plt.plot(histogram, color=channel)
+      plt.xlim([0,256])
+  plt.show()
+  observation = np.array(features).flatten()
+  return observation[0:5]
+#+END_SRC
+
+#+RESULTS:
+| 482 | 578 | 331 | 692 | 694 |
+
+* Dimensionality reduction using feature extraction
+** PCA
+#+BEGIN_SRC python
+  from sklearn.preprocessing import StandardScaler
+  from sklearn.decomposition import PCA
+  from sklearn import datasets
+  
+  digits = datasets.load_digits()
+  
+  # standardize the feature matrix
+  features = StandardScaler().fit_transform(digits.data)
+  
+  # create a PCA that will retain 99% of variance
+  # whiten=True transforms the values of each principal component
+  # so that they have zero mean and unit variance.
+  pca = PCA(n_components=0.99, whiten=True)
+  
+  # conduct PCA
+  features_pca = pca.fit_transform(features)
+  
+  return "original number of features: {}, reduced number of features: {}\n".format(features.shape[1], features_pca.shape[1])
+#+END_SRC
+
+#+RESULTS:
+: original number of features: 64, reduced number of features: 54
+
+** Reducing features when data is linearly inseparable
+Use an extension of PCA that uses kernels to allow for non-linear
+dimensionality reduction.
+#+BEGIN_SRC python
+  from sklearn.decomposition import PCA, KernelPCA
+  from sklearn.datasets import make_circles
+  # make_circles makes linearly inseparable data;
+  # specifically, one class is surrounded on all sides by the other class
+  features, _ = make_circles(n_samples=1000, random_state=1, noise=0.1, factor=0.1)
+  # apply kernel PCA with radius basis function (RBF) kernel
+  kpca = KernelPCA(kernel="rbf", gamma=15, n_components=1)
+  features_kpca = kpca.fit_transform(features)
+  return "original number of features: {}, reduced number of features: {}\n".format(features.shape[1], features_kpca.shape[1])
+#+END_SRC
+
+#+RESULTS:
+: original number of features: 2, reduced number of features: 1
+
+** Reducing features by maximizing class separability
+#+BEGIN_SRC python
+  from sklearn import datasets
+  from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+  
+  iris = datasets.load_iris()
+  features = iris.data
+  target = iris.target
+  
+  lda = LinearDiscriminantAnalysis(n_components=1)
+  features_lda = lda.fit(features, target).transform(features)
+  
+  return "Original number of features: {}, reduced: {}\nexplained variance ratio: {}\n".format(features.shape[1], features_lda.shape[1], lda.explained_variance_ratio_)
+#+END_SRC
+
+#+RESULTS:
+: Original number of features: 4, reduced: 1
+: explained variance ratio: [0.99147248]
+
+** Reducing features using matrix factorization
+Use non-negative matrix factorization (NMF).
+#+BEGIN_SRC python
+  from sklearn.decomposition import NMF
+  from sklearn import datasets
+  
+  digits = datasets.load_digits()
+  features = digits.data
+  
+  nmf = NMF(n_components=10, random_state=1)
+  features_nmf = nmf.fit_transform(features)
+  
+  return "origin features: {}, reduced: {}\n".format(features.shape[1], features_nmf.shape[1])
+#+END_SRC
+
+#+RESULTS:
+: origin features: 64, reduced: 10
+
+** Reducing features on sparse data
+Use truncated singular value decomposition (TSVD).
+#+BEGIN_SRC python
+  from sklearn.preprocessing import StandardScaler
+  from sklearn.decomposition import TruncatedSVD
+  from scipy.sparse import csr_matrix
+  from sklearn import datasets
+  import numpy as np
+  
+  digits = datasets.load_digits()
+  features = StandardScaler().fit_transform(digits.data)
+  features_sparse = csr_matrix(features)
+  tsvd = TruncatedSVD(n_components=10)
+  features_sparse_tsvd = tsvd.fit(features_sparse).transform(features_sparse)
+  return "origin: {}, reduced: {}\n".format(features_sparse.shape[1], features_sparse_tsvd.shape[1])
+#+END_SRC
+
+#+RESULTS:
+: origin: 64, reduced: 10
+
+* Dimensionality Reduction Using Feature Selection
+** Thresholding numerical feature variance
+You have a set of numerical features and want to remove those with low
+variance (i.e., likely containing little information).
+
+Variance thresholding will not work correctly if the features have
+been standardized (to mean zero and unit variance).
+
+#+BEGIN_SRC python
+  from sklearn import datasets
+  from sklearn.feature_selection import VarianceThreshold
+  
+  iris = datasets.load_iris()
+  features = iris.data
+  target = iris.target
+  thresholder = VarianceThreshold(threshold=.5)
+  features_high_variance = thresholder.fit_transform(features)
+  return features_high_variance[0:3]
+#+END_SRC
+
+#+RESULTS:
+| 5.1 | 1.4 | 0.2 |
+| 4.9 | 1.4 | 0.2 |
+| 4.7 | 1.3 | 0.2 |
+
+** Thresholding binary feature variance
+You have a set of binary features and want to remove those with low
+variance.
+
+In binary features (i.e., Bernoulli random variables), variance is
+calculated as:
+Var(x) = p(1-p)
+where p is the proportion of observations of class 1.
+
+#+BEGIN_SRC python
+  from sklearn.feature_selection import VarianceThreshold
+  
+  features = [[0,1,0], [0,1,1], [0,1,0], [0,1,1], [1,0,0]]
+  thresholder = VarianceThreshold(threshold=(.75*.25))
+  return thresholder.fit_transform(features)
+#+END_SRC
+
+#+RESULTS:
+| 0 |
+| 1 |
+| 0 |
+| 1 |
+| 0 |
+
+** Handling highly correlated features
+Use a correlation matrix to check for highly correlated features. If
+highly correlated features exist, consider dropping one of the
+correlated features.
+
+#+BEGIN_SRC python
+  import pandas as pd
+  import numpy as np
+  
+  features = np.array([[1,1,1],
+                       [2,2,0],
+                       [3,3,1],
+                       [4,4,0],
+                       [5,5,1],
+                       [6,6,0],
+                       [7,7,1],
+                       [8,7,0],
+                       [9,7,1]])
+  dataframe = pd.DataFrame(features)
+  # create correlation matrix
+  corr_matrix = dataframe.corr().abs()
+  # select upper triangle of correlation matrix
+  upper = corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k=1).astype(np.bool))
+  # find index of feature columns with correlation greater than 0.95
+  to_drop = [column for column in upper.columns if any(upper[column] > 0.95)]
+  return dataframe.drop(dataframe.columns[to_drop], axis=1).head(3)
+#+END_SRC
+
+#+RESULTS:
+: 0  2
+: 0  1  1
+: 1  2  0
+: 2  3  1
+
+** Removing irrelevant features for classification
+If the features are categorical, calculate a chi-square statistics
+between each feature and the target vector.
+
+#+BEGIN_SRC python
+  from sklearn.datasets import load_iris
+  from sklearn.feature_selection import SelectKBest
+  from sklearn.feature_selection import chi2, f_classif
+  
+  iris = load_iris()
+  features = iris.data
+  target = iris.target
+  
+  # convert to categorical data by converting data to integers
+  features = features.astype(int)
+  
+  # select two features with highest chi-squared statistics
+  chi2_selector = SelectKBest(chi2, k=2)
+  features_kbest = chi2_selector.fit_transform(features, target)
+  
+  return "origin number of features: {}, reduced: {}\n".format(features.shape[1], features_kbest.shape[1])
+#+END_SRC
+
+#+RESULTS:
+: origin number of features: 4, reduced: 2
+
+
+If the features are quantitative, compute the ANOVA F-value between
+each feature and target vector.
+
+#+BEGIN_SRC python
+  from sklearn.datasets import load_iris
+  from sklearn.feature_selection import SelectKBest
+  from sklearn.feature_selection import chi2, f_classif
+  
+  iris = load_iris()
+  features = iris.data
+  target = iris.target
+  
+  fvalue_selector = SelectKBest(f_classif, k=2)
+  features_kbest = fvalue_selector.fit_transform(features, target)
+  
+  return "origin number of features: {}, reduced: {}\n".format(features.shape[1], features_kbest.shape[1])
+#+END_SRC
+
+#+RESULTS:
+: origin number of features: 4, reduced: 2
+
+Instead of selecting a specific number of features, we can also use
+SelectPercentile to select the top n percent of features.
+
+#+BEGIN_SRC python
+  from sklearn.datasets import load_iris
+  from sklearn.feature_selection import SelectPercentile
+  from sklearn.feature_selection import chi2, f_classif
+  
+  iris = load_iris()
+  features = iris.data
+  target = iris.target
+  
+  fvalue_selector = SelectPercentile(f_classif, percentile=75)
+  features_kbest = fvalue_selector.fit_transform(features, target)
+  
+  return "origin number of features: {}, reduced: {}\n".format(features.shape[1], features_kbest.shape[1])
+#+END_SRC
+
+#+RESULTS:
+: origin number of features: 4, reduced: 3
+
+** Recursively eliminating features
+Use scikit-learn's RFECV to conduct recursive feature elimination
+(RFE) using cross-validation (CV). That is, repeatedly train a model,
+each time removing a feature until model performance (e.g., accuracy)
+becomes worse. The remaining features are the best.
+
+#+BEGIN_SRC python
+  import warnings
+  from sklearn.datasets import make_regression
+  from sklearn.feature_selection import RFECV
+  from sklearn import datasets, linear_model
+  
+  # suppress an annoying but harmless warning
+  warnings.filterwarnings(action="ignore", module="scipy", message="^internal gelsd")
+  features, target = make_regression(n_samples=10000,
+                                     n_features=100,
+                                     n_informative=2,
+                                     random_state=1)
+  ols = linear_model.LinearRegression()
+  
+  rfecv = RFECV(estimator=ols, step=1, scoring="neg_mean_squared_error")
+  rfecv.fit(features, target)
+  rfecv.transform(features)
+  return features.shape
+#+END_SRC
+
+#+RESULTS:
+| 10000 | 100 |
+
+* Model Evaluation
