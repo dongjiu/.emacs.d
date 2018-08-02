@@ -58,6 +58,7 @@
 	("gr" "git revert --no-commit")
 	("ga" "git add")
 	("gp" "git pull")
+	("gpom" "git pull origin master")
 	("gst" "git stash")
 	("gsp" "git stash pop")
 	("gc" "" z-shell-git-commit)

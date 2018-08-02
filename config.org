@@ -255,7 +255,17 @@ Substitute y-or-n-p for yes-or-no-p.
 By default, 'C-o' is used to call (open-line). I use it as a prefix
 for most custom functions.
 #+BEGIN_SRC emacs-lisp
-  (global-unset-key "\C-o")
+  (global-unset-key (kbd "\C-o"))
+
+  (defun z-dired-hook ()
+    "dired hook."
+    (local-unset-key (kbd "\C-o")))
+  (add-hook 'dired-mode-hook 'z-dired-hook)
+
+  (defun z-occur-hook ()
+    "dired hook."
+    (local-unset-key (kbd "\C-o")))
+  (add-hook 'occur-mode-hook 'z-occur-hook)
 #+END_SRC
 
 * Programming
