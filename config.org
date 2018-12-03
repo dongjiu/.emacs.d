@@ -294,6 +294,8 @@ for most custom functions.
                   (c-set-offset 'inexpr-class 0))
               (hs-minor-mode)
               (local-set-key (kbd "C-o C-o C-h") 'z-csharp-hide-methods)))
+
+  (add-to-list 'auto-mode-alist '("\\.csproj?\\'" . xml-mode))
 #+END_SRC
 
 ** java

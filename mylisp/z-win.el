@@ -72,5 +72,5 @@
       (progn
         (switch-to-buffer buf-name)
         (shell (current-buffer))
-        (insert "C:\\Users\\donzhu\\source\\repos\\SkypeDirectoryWatcher\\SkypeDirectoryWatcher\\bin\\Debug\\SkypeDirectoryWatcher.exe")
+        (insert "C:\\Users\\donzhu\\repos\\SkypeDirectoryWatcher\\SkypeDirectoryWatcher\\bin\\Debug\\SkypeDirectoryWatcher.exe")
         (comint-send-input)))))
