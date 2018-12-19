@@ -6,7 +6,7 @@
   (puthash " " "%20" url-special-char-escape)
   (puthash "#" "%23" url-special-char-escape)
   (puthash "$" "%24" url-special-char-escape)
-;  (puthash "%" "%25" url-special-char-escape)
+                                        ;  (puthash "%" "%25" url-special-char-escape)
   (puthash "&" "%26" url-special-char-escape)
   (puthash "@" "%40" url-special-char-escape)
   (puthash "`" "%60" url-special-char-escape)
@@ -279,7 +279,7 @@ Otherwise, do nothing."
 			(message "Cannot find class in TAGS file")))
 	  (message "No TAGS file found:%s" tag-file))
 	class-file))
-		  
+
 (defun z-java-view-class (dir class &optional mem)
   (let ((file (z-java-find-class-file-in-tag class))
 		(buffer))
@@ -303,7 +303,7 @@ Otherwise, do nothing."
 	  (setq base default-directory))
 	(setq base (replace-regexp-in-string "\n" "" base))
 	base
-  ))
+    ))
 
 (defun z-java-goto-variable-class ()
   (interactive)
@@ -473,7 +473,7 @@ Otherwise, do nothing."
 		  (insert-file-contents file))
 		(re-search-forward regex nil t)
 	  nil)))
-  
+
 
 (defun z-chrome (&optional url)
   "Open URL in chrome."
@@ -483,3 +483,10 @@ Otherwise, do nothing."
   (when url
 	(w32-shell-execute "open" "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe" url)))
 
+
+(defun z-ps (&optional start-dir)
+  "Open a new PowerShell console."
+  (interactive)
+  (when start-dir
+    (setq start-dir (z-string-win-style-path start-dir)))
+  (w32-shell-execute "open" "C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe" (concat "-noexit -command \"cd " start-dir "\"")))
