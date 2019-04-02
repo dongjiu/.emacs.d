@@ -490,3 +490,16 @@ Otherwise, do nothing."
   (when start-dir
     (setq start-dir (z-string-win-style-path start-dir)))
   (w32-shell-execute "open" "C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe" (concat "-noexit -command \"cd " start-dir "\"")))
+
+(defun z-prepend-line-numbers ()
+  "Add line numbers at the beginning of each lines."
+  (interactive)
+  (let* ((beg (line-number-at-pos (region-beginning)))
+         (end (line-number-at-pos (region-end)))
+         (line beg))
+    (while (<= line end)
+      (goto-line line)
+      (beginning-of-line)
+      (insert (format "%d," line))
+      (setq line (1+ line)))))
+

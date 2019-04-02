@@ -45,32 +45,32 @@
 	(setq dir (z-string-win-style-path dir))
 	(w32-shell-execute "runas" "cmd" (concat " /K cd /d " dir (when cmd (concat " && " cmd))))))
 
-(defun z-ucmba ()
-  "Run UCM Business Analytics shell."
-  (interactive)
-  (z-cmd-here "cd /d D:\\work\\UCM-BusinessAnalytics && title Business Analytics && set PATH=C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\MSBuild\\15.0\\Bin;%PATH% && init.cmd"))
+;; (defun z-ucmba ()
+;;   "Run UCM Business Analytics shell."
+;;   (interactive)
+;;   (z-cmd-here "cd /d D:\\work\\UCM-BusinessAnalytics && title Business Analytics && set PATH=C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Enterprise\\MSBuild\\15.0\\Bin;%PATH% && init.cmd"))
 
-(defun z-set-cl-env ()
-  "Set environment variables for cl.exe."
-  (setenv "LIB" "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\LIB;C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\ATLMFC\\LIB;C:\\Program Files (x86)\\Windows Kits\\10\\lib\\10.0.10240.0\\ucrt\\x86;C:\\Program Files (x86)\\Windows Kits\\NETFXSDK\\4.6.1\\lib\\um\\x86;C:\\Program Files (x86)\\Windows Kits\\8.1\\lib\\winv6.3\\um\\x86;")
-  (setenv "INCLUDE" "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\INCLUDE;C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\ATLMFC\\INCLUDE;C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.10240.0\\ucrt;C:\\Program Files (x86)\\Windows Kits\\NETFXSDK\\4.6.1\\include\\um;C:\\Program Files (x86)\\Windows Kits\\8.1\\include\\shared;C:\\Program Files (x86)\\Windows Kits\\8.1\\include\\um;C:\\Program Files (x86)\\Windows Kits\\8.1\\include\\winrt;")
-  (let ((cl-path "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\bin"))
-	(unless (member cl-path (z-path-dirs))
-	  (setenv "PATH" (concat cl-path ";" (getenv "PATH"))))))
+;; (defun z-set-cl-env ()
+;;   "Set environment variables for cl.exe."
+;;   (setenv "LIB" "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\LIB;C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\ATLMFC\\LIB;C:\\Program Files (x86)\\Windows Kits\\10\\lib\\10.0.10240.0\\ucrt\\x86;C:\\Program Files (x86)\\Windows Kits\\NETFXSDK\\4.6.1\\lib\\um\\x86;C:\\Program Files (x86)\\Windows Kits\\8.1\\lib\\winv6.3\\um\\x86;")
+;;   (setenv "INCLUDE" "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\INCLUDE;C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\ATLMFC\\INCLUDE;C:\\Program Files (x86)\\Windows Kits\\10\\include\\10.0.10240.0\\ucrt;C:\\Program Files (x86)\\Windows Kits\\NETFXSDK\\4.6.1\\include\\um;C:\\Program Files (x86)\\Windows Kits\\8.1\\include\\shared;C:\\Program Files (x86)\\Windows Kits\\8.1\\include\\um;C:\\Program Files (x86)\\Windows Kits\\8.1\\include\\winrt;")
+;;   (let ((cl-path "C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\bin"))
+;; 	(unless (member cl-path (z-path-dirs))
+;; 	  (setenv "PATH" (concat cl-path ";" (getenv "PATH"))))))
 
-(defun z-set-cl-env-2 ()
-  "Set environment variables for cl.exe."
-  (setenv "LIB" "C:\\Program Files\\Microsoft Visual Studio 14.0\\VC\\lib")
-  (setenv "INCLUDE" "C:\\Program Files\\Microsoft Visual Studio 14.0\\VC\\include;C:\\Program Files\\Windows Kits\\10\\Include\\10.0.15063.0\\ucrt;C:\\Program Files\\Windows Kits\\10\\Include\\10.0.15063.0\\um"))
+;; (defun z-set-cl-env-2 ()
+;;   "Set environment variables for cl.exe."
+;;   (setenv "LIB" "C:\\Program Files\\Microsoft Visual Studio 14.0\\VC\\lib")
+;;   (setenv "INCLUDE" "C:\\Program Files\\Microsoft Visual Studio 14.0\\VC\\include;C:\\Program Files\\Windows Kits\\10\\Include\\10.0.15063.0\\ucrt;C:\\Program Files\\Windows Kits\\10\\Include\\10.0.15063.0\\um"))
 
-(defun z-watch-skype-dir ()
-  "Start a buffer to call SkypeDirectoryWatcher."
-  (let* ((buf-name "*Skype Directory Watcher*")
-         (buf (get-buffer buf-name)))
-    (if buf
-        (switch-to-buffer buf)
-      (progn
-        (switch-to-buffer buf-name)
-        (shell (current-buffer))
-        (insert "C:\\Users\\donzhu\\repos\\SkypeDirectoryWatcher\\SkypeDirectoryWatcher\\bin\\Debug\\SkypeDirectoryWatcher.exe")
-        (comint-send-input)))))
+;; (defun z-watch-skype-dir ()
+;;   "Start a buffer to call SkypeDirectoryWatcher."
+;;   (let* ((buf-name "*Skype Directory Watcher*")
+;;          (buf (get-buffer buf-name)))
+;;     (if buf
+;;         (switch-to-buffer buf)
+;;       (progn
+;;         (switch-to-buffer buf-name)
+;;         (shell (current-buffer))
+;;         (insert "C:\\Users\\donzhu\\repos\\SkypeDirectoryWatcher\\SkypeDirectoryWatcher\\bin\\Debug\\SkypeDirectoryWatcher.exe")
+;;         (comint-send-input)))))

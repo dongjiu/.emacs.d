@@ -822,12 +822,6 @@ Update file content:
     (load-file "~/.emacs.d/mylisp/z-win.el"))
 #+END_SRC
 
-** AutoHotKey
-#+BEGIN_SRC emacs-lisp
-  (when (eq system-type 'windows-nt)
-    (load-file "~/.emacs.d/mylisp/z-ahk.el"))
-#+END_SRC
-
 ** 7z
 Define a variable to point to the 7z exe file.
 #+BEGIN_SRC emacs-lisp
@@ -921,12 +915,6 @@ Convert path in region to standard Windows path.
       (insert (z-string-win-style-path file))))
 #+END_SRC
 
-** Watch Skype directory
-#+BEGIN_SRC emacs-lisp
-(when (string= (system-name) "DONZHU-WORK")
-    (save-excursion
-      (z-watch-skype-dir)))
-#+END_SRC
 
 * COMMENT Unused config that may be useful in the future
 ;; run as server
@@ -1034,3 +1022,12 @@ Convert path in region to standard Windows path.
 ;;(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
   ;; buffer-menu
   ;;(global-set-key (kbd "C-x C-b") 'buffer-menu)
+
+** Watch Skype directory
+;;(when (string= (system-name) "DONZHU-WORK")
+;;    (save-excursion
+;;      (z-watch-skype-dir)))
+
+** AutoHotKey
+;;  (when (eq system-type 'windows-nt)
+;;    (load-file "~/.emacs.d/mylisp/z-ahk.el"))
