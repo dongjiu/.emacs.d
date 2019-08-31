@@ -21,6 +21,12 @@ On Linux, use HOME environment variable.
     (setq z-home (getenv "HOME")))
 #+END_SRC
 
+On Linux, use HOME environment variable.
+#+BEGIN_SRC emacs-lisp
+  (when (eq system-type 'darwin)
+    (setq z-home (getenv "HOME")))
+#+END_SRC
+
 ** System bits
 On windows, use the "/wmic os get osarchitecture/" command to determine
 whether the system is 32-bit or 64-bit.
