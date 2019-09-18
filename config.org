@@ -344,6 +344,28 @@ is required for this function to work.
       (insert json)))
 #+END_SRC
 
+#+BEGIN_SRC emacs-lisp
+  (defun z-python-pretty-print-json ()
+    "Pretty print JSON in Python."
+    (interactive)
+    (let ((file)
+          (json (buffer-substring-no-properties (region-beginning) (region-end)))
+          (cmd))
+      (with-temp-buffer
+        (find-file "~/.emacs.d/tmp.json")
+        (erase-buffer)
+        (insert json)
+        (save-buffer)
+        (setq file (buffer-file-name))
+        (kill-buffer))
+      (setq cmd (concat "python "
+                        (replace-regexp-in-string "/" "\\\\" (expand-file-name "~/.emacs.d/python/pretty_print_json.py ")) " "
+                        (replace-regexp-in-string "/" "\\\\" file)))
+      (setq json (shell-command-to-string cmd))
+      (delete-region (region-beginning) (region-end))
+      (insert json)))
+#+END_SRC
+
 ** html
 Use web-mode to edit html files.
 #+BEGIN_SRC emacs-lisp
