@@ -503,3 +503,28 @@ Otherwise, do nothing."
       (insert (format "%d," line))
       (setq line (1+ line)))))
 
+(defun z-correct-slash-in-file-name (file-name)
+  "Replace slash with backslash if on Windows."
+  (if (eq system-type 'windows-nt)
+      (replace-regexp-in-string "/" "\\\\" (expand-file-name file-name))
+    file-name))
+
+(defun z-process-region-with-cmd (cmd)
+  "Process text in region using a command."
+  (interactive)
+  (let ((file)
+        (json (buffer-substring-no-properties (region-beginning) (region-end))))
+    (with-temp-buffer
+      (setq file (make-temp-file "z-util"))
+      (find-file file)
+      (erase-buffer)
+      (insert json)
+      (save-buffer)
+      (kill-buffer))
+    (setq cmd-line (concat cmd
+                           " "
+                           (z-correct-slash-in-file-name file)))
+    (setq json (shell-command-to-string cmd-line))
+    (delete-file file)
+    (delete-region (region-beginning) (region-end))
+    (insert json)))

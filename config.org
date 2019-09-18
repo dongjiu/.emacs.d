@@ -320,50 +320,14 @@ for most custom functions.
 (add-to-list 'auto-mode-alist '("\\.t?\\'" . cperl-mode))
 #+END_SRC
 ** json
-The following function can be used to beautify json in region. *node*
-is required for this function to work.
-#+BEGIN_SRC emacs-lisp
-  (defun z-node-beautify-json ()
-    "Beautify JSON in region."
-    (interactive)
-    (let ((file)
-          (json (buffer-substring-no-properties (region-beginning) (region-end)))
-          (cmd))
-      (with-temp-buffer
-        (find-file "~/.emacs.d/tmp.json")
-        (erase-buffer)
-        (insert json)
-        (save-buffer)
-        (setq file (buffer-file-name))
-        (kill-buffer))
-      (setq cmd (concat "node.exe "
-                        (replace-regexp-in-string "/" "\\\\" (expand-file-name "~/.emacs.d/javascript/beautify_json.js ")) " "
-                        (replace-regexp-in-string "/" "\\\\" file)))
-      (setq json (shell-command-to-string cmd))
-      (delete-region (region-beginning) (region-end))
-      (insert json)))
-#+END_SRC
+The following function can be used to beautify json in region.
 
 #+BEGIN_SRC emacs-lisp
   (defun z-python-pretty-print-json ()
     "Pretty print JSON in Python."
     (interactive)
-    (let ((file)
-          (json (buffer-substring-no-properties (region-beginning) (region-end)))
-          (cmd))
-      (with-temp-buffer
-        (find-file "~/.emacs.d/tmp.json")
-        (erase-buffer)
-        (insert json)
-        (save-buffer)
-        (setq file (buffer-file-name))
-        (kill-buffer))
-      (setq cmd (concat "python "
-                        (replace-regexp-in-string "/" "\\\\" (expand-file-name "~/.emacs.d/python/pretty_print_json.py ")) " "
-                        (replace-regexp-in-string "/" "\\\\" file)))
-      (setq json (shell-command-to-string cmd))
-      (delete-region (region-beginning) (region-end))
-      (insert json)))
+    (z-process-region-with-cmd
+     (concat "python " (expand-file-name "~/.emacs.d/python/pretty_print_json.py"))))
 #+END_SRC
 
 ** html
