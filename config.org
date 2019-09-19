@@ -4,6 +4,7 @@ be loaded first.
 #+BEGIN_SRC emacs-lisp
   (load-file "~/.emacs.d/mylisp/z-string.el")
   (load-file "~/.emacs.d/mylisp/z-util.el")
+  (load-file "~/.emacs.d/mylisp/z-m365.el")
 #+END_SRC
 
 * Environment
