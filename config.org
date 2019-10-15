@@ -262,7 +262,7 @@ Substitute y-or-n-p for yes-or-no-p.
 #+BEGIN_SRC emacs-lisp
   (defun z-browse-url-chrome-incognito (url &rest args)
     "Browse URL using in chrome incognito mode."
-    (w32-shell-execute "open" "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe" (concat " -incognito " url)))
+    (w32-shell-execute "open" "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe" (concat " -incognito \"" url "\"")))
 
   (when (eq system-type 'windows-nt)
     (setq browse-url-browser-function 'z-browse-url-chrome-incognito))
