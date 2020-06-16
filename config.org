@@ -48,7 +48,7 @@ Define the directories to add to PATH.
                   "C:\\Program Files\\Git\\bin"
                   "C:\\Program Files\\GVFS"
                   (concat z-home "\\softwares\\SearchFileContent")
-                  (concat z-home "\\softwares\\ES-1.1.0.8"))
+                  (concat z-home "\\softwares\\ES-1.1.0.18"))
 
           ;; non windows paths
           '("/Users/dzhu/bin"
