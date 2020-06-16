@@ -45,6 +45,9 @@ Define the directories to add to PATH.
         (if (eq system-type 'windows-nt)
             ;; windows paths
             (list "C:\\Program Files\\Git\\usr\\bin" ; diff
+                  "C:\\Program Files\\Git\\bin"
+                  "C:\\Program Files\\GVFS"
+                  (concat z-home "\\softwares\\SearchFileContent")
                   (concat z-home "\\softwares\\ES-1.1.0.8"))
 
           ;; non windows paths
@@ -239,7 +242,7 @@ Enable babel for perl and python.
 
 Use Python 3 by default.
 #+BEGIN_SRC emacs-lisp
-  (setq org-babel-python-command "python3.6")
+  (setq org-babel-python-command "python")
 #+END_SRC
 
 Redisplay inline images after executing babel code blocks.

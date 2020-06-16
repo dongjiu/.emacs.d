@@ -14,7 +14,8 @@
   "Run perl find_text."
   nil
   '(setq v1 default-directory)
-  "async-shell-command 'es " v1 " " _ " | perl " (expand-file-name "~/.emacs.d/perl/filter_files.pl") " '")
+  ;;"async-shell-command 'es " v1 " " _ " | perl " (expand-file-name "~/.emacs.d/perl/filter_files.pl") " '")
+  "async-shell-command 'es " v1 " " _ " | SearchFileContent.exe '")
 
 (define-skeleton z-shell-git-commit
   "git commit."
