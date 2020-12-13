@@ -267,8 +267,8 @@ Substitute y-or-n-p for yes-or-no-p.
     "Browse URL using in chrome incognito mode."
     (w32-shell-execute "open" "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe" (concat " -incognito \"" url "\"")))
 
-  (when (eq system-type 'windows-nt)
-    (setq browse-url-browser-function 'z-browse-url-chrome-incognito))
+;  (when (eq system-type 'windows-nt)
+;    (setq browse-url-browser-function 'z-browse-url-chrome-incognito))
 #+END_SRC
 
 * unset key bindings
@@ -538,6 +538,12 @@ corresponding modes through the above minor modes.
 #+END_SRC
 
 * GPG
+#+BEGIN_SRC emacs-lisp
+(require 'epa-file)
+(custom-set-variables '(epg-gpg-program "C:/Program Files/Git/usr/bin/gpg.exe"))
+(epa-file-enable)
+#+END_SRC
+
 The following function encrypts a file using GPG.
 #+BEGIN_SRC emacs-lisp
   (defun z-encrypt-file (file key-name &optional output-file)
