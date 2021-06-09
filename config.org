@@ -28,6 +28,10 @@ On Linux, use HOME environment variable.
     (setq z-home (getenv "HOME")))
 #+END_SRC
 
+#+BEGIN_SRC emacs-lisp
+  (setq z-home (replace-regexp-in-string "\\\\" "/" z-home))
+#+END_SRC
+
 ** System bits
 On windows, use the "/wmic os get osarchitecture/" command to determine
 whether the system is 32-bit or 64-bit.
@@ -44,11 +48,11 @@ Define the directories to add to PATH.
   (setq z-path-dirs-to-add
         (if (eq system-type 'windows-nt)
             ;; windows paths
-            (list "C:\\Program Files\\Git\\usr\\bin" ; diff
-                  "C:\\Program Files\\Git\\bin"
-                  "C:\\Program Files\\GVFS"
-                  (concat z-home "\\softwares\\SearchFileContent")
-                  (concat z-home "\\softwares\\ES-1.1.0.18"))
+            (list "C:/Program Files/Git/usr/bin" ; diff
+                  "C:/Program Files/Git/bin"
+                  "C:/Program Files/GVFS"
+                  (concat z-home "/softwares/SearchFileContent")
+                  (concat z-home "/softwares/ES-1.1.0.18"))
 
           ;; non windows paths
           '("/Users/dzhu/bin"
