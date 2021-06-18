@@ -1,7 +1,10 @@
 (require 'package)
 (require 'org)
+
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/"))
+             '("gnu" . "https://elpa.gnu.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/") t)
 
 (package-initialize)
 
